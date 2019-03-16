@@ -6,13 +6,23 @@ const htmlController = require('../../controllers/htmlController');
 
 //url: / 
 router
-    .route("/")
+    .route('/')
     .get(htmlController.loadHome)
+
+router
+    .route('/about')
+    .get(htmlController.loadAbout)
 
 //url: /magazine
 router
-    .route("/magazine")
+    .route('/magazine')
     .get(htmlController.loadMagView)
+
+// for the subscription page
+//url /subscribe
+router
+    .route('/subscribe')
+    .get(htmlController.loadSubscribe)
 
 //use this by default if incorrect URl is input
 router

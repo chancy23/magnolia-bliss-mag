@@ -1,12 +1,21 @@
 body {
     background-color: grey;
     color: white;
-    margin-left: 25%;
-    margin-bottom: 10%;
+   
+}
+
+nav {
+    background-color: black;
 }
 
 #container {
     position: relative;
     width: 800px;
     height: 600px;
+    margin-left: 25%;
+    margin-bottom: 10%;
+}
+
+ul li {
+    list-style: none;
 }

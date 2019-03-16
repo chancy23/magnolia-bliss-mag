@@ -1,17 +1,7 @@
-//this goes imports the items from each file in the html folder (sends to index.js in routes folder)
-
 const router = require("express").Router();
-const htmlRoutes = require("./html");
+const html = require("./html");
 
-// url: magnoliablissmag/ (just the "/" will load main page)
-router.use("/", htmlRoutes);
-
-// url: magnoliablissmag/magazine
-router.use("/magazine", htmlRoutes);
-
-// if no route is hit correctly, routes to the home page
-router.use("*", htmlRoutes);
-
-
+//tell the index file in the routes foder to use the html routes in the html folder
+router.use("/", html);
 
 module.exports = router;

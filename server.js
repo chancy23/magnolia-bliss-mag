@@ -2,9 +2,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require('path');
-// const mongoose = require("mongoose");
-
-
+const mongoose = require("mongoose");
 
 //defines as express as our server
 const app = express();
@@ -15,13 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Set Handlebars.
-
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Serve up static assets (usually on heroku)
 app.use(express.static("public"));
-
 
 // Add routes for both HTML and API
 const routes = require("./routes");
@@ -30,8 +26,14 @@ app.use(routes);
 // require("./routes/apiRoutes")(app);
 // require("./routes/htmlRoutes")(app);
 
-// Connect to the Mongo DB
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/NAME OF YOUR DB HERE");
+// Connect to the Mongo DB sets up to use in production and in dev
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/magnolia_bliss_db"
+mongoose.connect(
+  MONGODB_URI,
+  { useNewUrlParser: true }
+);
+
+console.log(MONGODB_URI);;
 
 // Start the the server
 app.listen(PORT, function() {

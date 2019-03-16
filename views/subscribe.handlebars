@@ -1,0 +1,73 @@
+<h1>Subscribe to Magnolia Bliss</h1>
+
+{{!-- 
+
+form getting their information
+
+first name
+last name 
+email address
+password
+continue button, cancel button
+
+-------then next window appears once that is put in DB and verified (use jquery to hide and show based on buttons pushed)
+(use jquery to hide and show based on buttons pushed)
+
+
+pick the number of issues (drop down):
+6 issues (1 year) $29.99
+3 issues (1/2 year) $14.99
+1 issues $4.99
+
+continue button, cancel button
+
+-------once selected then pop up paypal payment buttons
+--use the API to make the payment
+--update the DB with number of issues purchased, and mark as paid
+
+continue button, cancel button
+
+---once payment is complete show button or link to read magazine and redirect to that view
+--}}
+<main class='container'>
+    <div id='createAcct'>
+        <h3>Create Account</h3>
+        <form>
+            <input type="text" name='First Name' placeholder="First Name">
+            <input type="text" name='Last Name' placeholder="Last Name">
+            <input type="email" name='Email' placeholder="Email">
+            <input type="text" name='Password' placeholder="Password">
+
+        </form>
+        <button>Continue</button> 
+        {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+        <button>Cancel</button>
+    </div>
+
+    <div id='subscriptionType'>
+        <h3>Pick Your Number of Issues</h3>
+        <form>
+            <select name='Number of Issues'>
+                <option value='' selected>Choose One...</option>
+                <option value='6'>6 Issues (1 year) - $30</option>
+                <option value='3'>3 Issues (1/2 year) - $15</option>
+                <option value='1'>Single Issue- $5</option>
+            </select>
+        </form>
+
+        <button>Continue</button> 
+        {{!-- this cancel would clear out the user from the db and reset both forms--}}
+        <button>Cancel</button>
+
+    </div>
+
+    <div id='paymentMethod'>
+        <h3>Payment</h3>
+        <p>Pay Pal buttons will go here that tie to the API</p>
+
+        <button>Finalize</button> 
+        {{!-- this cancel would clear out the user from the db and reset all forms --}}
+        <button>Cancel</button> 
+    </div>
+
+</main>
