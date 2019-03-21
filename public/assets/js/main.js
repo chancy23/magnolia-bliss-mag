@@ -1,5 +1,9 @@
+// import { format } from "url";
+
 $(document).ready(function () {
 
+    
+    //for the magazine flipbook
     $("#container").flipBook({
         pages:[
             {src:"/images/book/page1.jpg", 

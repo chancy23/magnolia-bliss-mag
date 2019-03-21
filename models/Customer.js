@@ -21,18 +21,16 @@ const CustomerSchema = new Schema({
         require: true
     },
     resetPasswordToken: {
-        type: String,
-        require: false
+        type: String
     },
     resetPasswordExpires: {
-        type: Date,
-        require: false
+        type: Date
     },
     //put in an array since they can have more than one subscription if they renew for a new one, etc
-    subscriptionData: [{
+    subscriptionData: {
         type: Schema.Types.ObjectId,
         ref: "Subscription"
-    }]
+    }
 })
 
 const Customer = mongoose.model("Customer", CustomerSchema);

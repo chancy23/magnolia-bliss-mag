@@ -1,14 +1,39 @@
 //Dependencies
-const express = require("express");
-const exphbs = require("express-handlebars");
+const express = require('express');
+const session = require('express-session')
+const exphbs = require('express-handlebars');
 const path = require('path');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const routes = require("./routes");
 
 //defines as express as our server
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Define middleware here, parses data to and from DB
+// ================ Middlewares ================================================
+//setup sessions
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false
+    }
+  })
+);
+
+//sets up the user object for the first time the user comes into the app
+function userSetup(req, res, next) {
+  if (!req.session.customer) {
+    req.session.customer = {};
+    req.session.customer.loggedIn = false
+  }
+  next();
+};
+app.use(userSetup);
+
+// parses data to and from DB
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -20,7 +45,6 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 
 // Add routes for both HTML and API
-const routes = require("./routes");
 app.use(routes);
 
 // require("./routes/apiRoutes")(app);
@@ -33,7 +57,7 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-console.log(MONGODB_URI);;
+console.log(MONGODB_URI);
 
 // Start the the server
 app.listen(PORT, function() {

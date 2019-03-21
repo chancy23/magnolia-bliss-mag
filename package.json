@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Electronic Magazine and host website",
   "main": "server.js",
+  "proxy": "http://localhost:3001/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -10,10 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.5",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
+    "express-session": "^1.15.6",
+    "if-env": "^1.0.4",
     "mongoose": "^5.4.19",
-    "npm": "^6.9.0"
+    "npm": "^6.9.0",
+    "stripe": "^6.28.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",

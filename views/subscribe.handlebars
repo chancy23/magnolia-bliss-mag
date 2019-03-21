@@ -14,11 +14,6 @@ continue button, cancel button
 (use jquery to hide and show based on buttons pushed)
 
 
-pick the number of issues (drop down):
-6 issues (1 year) $29.99
-3 issues (1/2 year) $14.99
-1 issues $4.99
-
 continue button, cancel button
 
 -------once selected then pop up paypal payment buttons
@@ -33,41 +28,59 @@ continue button, cancel button
     <div id='createAcct'>
         <h3>Create Account</h3>
         <form>
-            <input type="text" name='First Name' placeholder="First Name">
-            <input type="text" name='Last Name' placeholder="Last Name">
-            <input type="email" name='Email' placeholder="Email">
-            <input type="text" name='Password' placeholder="Password">
+            <input type="text" name='First Name' id='firstName' placeholder="First Name">
+            <input type="text" name='Last Name' id='lastName' placeholder="Last Name">
+            <input type="email" name='Email' id='email' placeholder="Email">
+            <input type="text" name='Password' id='password' placeholder="Password">
 
         </form>
-        <button>Continue</button> 
+        {{!-- on click of this button will send the customer details to the auth route and controller --}}
+        <button id='submitCustomer'>Continue</button>
         {{!-- this cancel would reset form only, nothing sent to DB yet --}}
         <button>Cancel</button>
     </div>
 
-    <div id='subscriptionType'>
-        <h3>Pick Your Number of Issues</h3>
-        <form>
-            <select name='Number of Issues'>
+    <div id='subscription'>
+        {{!-- <h3>Pick Your Plan</h3> --}}
+        {{!-- <form id='subsForm'>
+            <select name='planLevel' id='planLevel'>
                 <option value='' selected>Choose One...</option>
-                <option value='6'>6 Issues (1 year) - $30</option>
-                <option value='3'>3 Issues (1/2 year) - $15</option>
-                <option value='1'>Single Issue- $5</option>
+                <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
+                <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
             </select>
+        </form> --}}
+
+        {{!-- for credit card --}}
+        <form action="/api/subscription/new" method="post" id="payment-form">
+        <div class='form-row'>
+             <h3>Pick Your Plan</h3>
+            <select name='planLevel' id='planLevel'>
+                <option value='' selected>Choose One...</option>
+                <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
+                <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
+            </select>
+            </div>
+            <div class="form-row">
+                <label for="card-element">
+                    Credit or debit card
+                </label>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+
+            <button id='submitPayment'>Submit Payment</button>
+            {{!-- this cancel would clear out the user from the db and reset both forms--}}
+            <button>Cancel</button>
         </form>
 
-        <button>Continue</button> 
-        {{!-- this cancel would clear out the user from the db and reset both forms--}}
-        <button>Cancel</button>
+        
 
-    </div>
-
-    <div id='paymentMethod'>
-        <h3>Payment</h3>
-        <p>Pay Pal buttons will go here that tie to the API</p>
-
-        <button>Finalize</button> 
-        {{!-- this cancel would clear out the user from the db and reset all forms --}}
-        <button>Cancel</button> 
     </div>
 
 </main>

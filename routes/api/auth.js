@@ -8,11 +8,18 @@ router
     .post(authController.signup)
 
 //route for logging in
-//url is /api/auth/signup
+//url is /api/auth/login
 router
     .route('/login')
     .post(authController.login)
 
-//route for forgot password
+// url /api/auth/session
+router
+    .route('/session')
+    .get(authController.session)
+  
+  router
+    .route('/logout')
+    .get(authController.logout)
 
-//route for reset pass word
+module.exports = router
