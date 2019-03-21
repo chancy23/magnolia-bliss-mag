@@ -27,32 +27,22 @@ continue button, cancel button
 <main class='container'>
     <div id='createAcct'>
         <h3>Create Account</h3>
-        <form>
+        <form id='customerDetails'>
             <input type="text" name='First Name' id='firstName' placeholder="First Name">
             <input type="text" name='Last Name' id='lastName' placeholder="Last Name">
             <input type="email" name='Email' id='email' placeholder="Email">
             <input type="text" name='Password' id='password' placeholder="Password">
-
+        
+            {{!-- on click of this button will send the customer details to the auth route and controller --}}
+            <button id='submitCustomer'>Continue</button>
+            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+            <button id='cancelCustomer'>Cancel</button>
         </form>
-        {{!-- on click of this button will send the customer details to the auth route and controller --}}
-        <button id='submitCustomer'>Continue</button>
-        {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-        <button>Cancel</button>
     </div>
 
     <div id='subscription'>
-        {{!-- <h3>Pick Your Plan</h3> --}}
-        {{!-- <form id='subsForm'>
-            <select name='planLevel' id='planLevel'>
-                <option value='' selected>Choose One...</option>
-                <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
-                <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
-            </select>
-        </form> --}}
-
         {{!-- for credit card --}}
-        <form action="/api/subscription/new" method="post" id="payment-form">
+        <form id="payment-form">
         <div class='form-row'>
              <h3>Pick Your Plan</h3>
             <select name='planLevel' id='planLevel'>
@@ -75,9 +65,10 @@ continue button, cancel button
             </div>
 
             <button id='submitPayment'>Submit Payment</button>
-            {{!-- this cancel would clear out the user from the db and reset both forms--}}
-            <button>Cancel</button>
+           
         </form>
+         {{!-- this cancel would clear out the user from the db and reset both forms--}}
+        <button id='cancelPayment'>Cancel</button>
 
         
 

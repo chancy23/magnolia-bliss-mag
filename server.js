@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
 const routes = require("./routes");
+const dotenv = require('dotenv').config();
 
 //defines as express as our server
 const app = express();
