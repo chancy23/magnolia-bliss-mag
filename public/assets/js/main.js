@@ -2,8 +2,16 @@
 
 $(document).ready(function () {
 
-    
-    //for the magazine flipbook
+    // =================== functions for customizing views based on a loggedin status =======================
+    //might be able to do a if else based on if res.loggedIn show or hide buttons and page parts
+    //before logged in view:
+    $('#navAdminBtn').hide()
+    $('#navLogoutBtn').hide()
+    $('#navSubscribeBtn').show()
+    $('#navLogineBtn').show()
+
+    //====================================for the magazine flipbook=================================
+
     $("#container").flipBook({
         pages:[
             {src:"/images/book/page1.jpg", 
@@ -24,4 +32,65 @@ $(document).ready(function () {
         // viewMode:'swipe',
         layout: 2
     });
+
+    // ====================================login and check subscription status=================================
+
+    $('#login').click(event => {
+        event.preventDefault();
+
+        const loginData = {
+            email: $('#email').val().trim(),
+            password: $('#password').val().trim()
+        };
+
+        console.log('login data', loginData);
+        //send the form data to the login in auth controller
+        $.post('/api/auth/login', loginData, (res, err) => {
+            console.log('response:', res);
+            console.log('err:', err);
+            if (res === 'invalid email') {
+                //replace with modal later
+                alert('We are unable to find the email you provided. Please try again.')
+            }
+            else if (res === 'invalid password') {
+                //replace with modal later
+                alert("The password you provided doesn't match our records. Please try again")
+            }
+            else {
+                console.log('successful login');
+                //clear form fields
+                $('#email, #password').val('');
+
+                //change view to logged in state
+                $('#navAdminBtn').show()
+                $('#navLogoutBtn').show()
+                $('#navSubscribeBtn').hide()
+                $('#navLoginBtn').hide()
+            }
+        })
+    })
+
+    //logout of session
+    $('#navLogoutBtn').click(event => {
+        event.preventDefault();
+        //call the backend logout in auth controller
+        $.get('/api/auth/logout', (res, err) => {
+            console.log('response:', res);
+            // console.log('err:', err);
+            if (res === 'logged out') {
+                //clear form fields
+                $('#email, #password').val('');
+                
+                //reset view back to unlogged in state
+                $('#navAdminBtn').hide()
+                $('#navLogoutBtn').hide()
+                $('#navSubscribeBtn').show()
+                $('#navLoginBtn').show()
+
+                //replace with modal later
+                alert("You've been logged out successfully. May the Bliss be with you!");
+            }
+        })
+    });
+    
 })

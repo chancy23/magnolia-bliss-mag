@@ -28,17 +28,17 @@ $(document).ready(function () {
             console.log('signup data from format', signupData);
 
             //send the data to our signup API route
-            $.post('/api/auth/signup', signupData, function (result, status) {
-                console.log('result:', result);
+            $.post('/api/auth/signup', signupData, function (res, err) {
+                console.log('result:', res);
                 console.log('status:', status);
 
-                if(result === 'invalid') {
+                if(res === 'invalid') {
                     //modal to display that email is already registered
                     console.log('Email is already registered.')
                 }
                 else {
-                    email = result.email;
-                    id = result._id;
+                    email = res.email;
+                    id = res._id;
 
                     //show the next section on the page
                     $('#subscription').show();

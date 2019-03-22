@@ -49,20 +49,23 @@ module.exports = {
     login: (req, res) => {
         // req.body will be the email and password from front end
         //find customer by their email
+        console.log('login data from front', req.body);
         db.Customer.findOne({
             email: req.body.email
         })
         .populate('subscriptionData')
         .then(userData => {
+            console.log('userData:', userData);
             //if no email is found send error
             if (userData === null) {
                 console.log('user not found');
-                res.json('invalid');
+                res.json('invalid email');
             }
             else {
                 //else verify that password matches
                 bcrypt.compare(req.body.password, userData.password, function(err, pwMatch) {
-                    //if password matches then set the session data to the user data
+                    // if password matches then set the session data to the user data
+                    // && check if subscription status is active
                     if (pwMatch === true) {
                         req.session.customer = {
                             _id: userData._id,
@@ -72,8 +75,9 @@ module.exports = {
                             subscriptionData: userData.subscriptionData
                         }
                         req.session.customer.loggedIn = true;
-                        res.json(req.session.customer);
+                        res.status(200).json(req.session.customer);
                     }
+                    //else if subscription status is not active, send a message to display an error on front end
                     else {
                         //else show that invalid password and send err to front end
                         console.log("Passwords don't match");
@@ -88,7 +92,12 @@ module.exports = {
         res.json(req.session.customer);
     },
     logout: (req, res) => {
-        //if logged in then logout
+        if(req.session) {
+            console.log('User logged out');
+            //clear the session object
+            req.session.customer = {};
+            res.status(200).json("logged out")
+        }
     }
 }
 

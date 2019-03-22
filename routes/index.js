@@ -5,10 +5,10 @@ const router = require("express").Router();
 const htmlRoutes = require("./html");
 const apiRoutes = require("./api");
 
+//API Routes (must go before HTML Routes to avoid getting errors and 404 page)
+router.use('/api', apiRoutes)
+
 // HTML Routes
 router.use("/", htmlRoutes);
-
-//API Routes
-router.use('/api', apiRoutes)
 
 module.exports = router;
