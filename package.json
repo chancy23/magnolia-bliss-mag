@@ -17,6 +17,7 @@
     "express-handlebars": "^3.0.2",
     "express-session": "^1.15.6",
     "if-env": "^1.0.4",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.19",
     "npm": "^6.9.0",
     "stripe": "^6.28.0"

@@ -25,7 +25,7 @@ continue button, cancel button
 ---once payment is complete show button or link to read magazine and redirect to that view
 --}}
 <main class='container'>
-    <div id='createAcct'>
+    <section id='createAcct'>
         <h3>Create Account</h3>
         <form id='customerDetails'>
             <input type="text" name='First Name' id='firstName' placeholder="First Name">
@@ -38,13 +38,13 @@ continue button, cancel button
             {{!-- this cancel would reset form only, nothing sent to DB yet --}}
             <button id='cancelCustomer'>Cancel</button>
         </form>
-    </div>
+    </section>
 
-    <div id='subscription'>
+    <section id='subscription'>
         {{!-- for credit card --}}
         <form id="payment-form">
         <div class='form-row'>
-             <h3>Pick Your Plan</h3>
+            <h3>Pick Your Plan</h3>
             <select name='planLevel' id='planLevel' required='true'>
                 <option value='' selected>Choose One...</option>
                 <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
@@ -72,6 +72,6 @@ continue button, cancel button
 
         
 
-    </div>
+    </section>
 
 </main>

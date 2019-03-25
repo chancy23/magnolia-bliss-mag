@@ -8,6 +8,9 @@ module.exports = {
     loadAbout: (req, res) => {
         res.render('about')
     },
+    loadAccount: (req, res) => {
+        res.render('account')
+    },
     loadMagView: (req, res) => {
         res.render('viewMag')
     },

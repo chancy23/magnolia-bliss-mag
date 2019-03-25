@@ -13,6 +13,10 @@ router
     .route('/about')
     .get(htmlController.loadAbout)
 
+router
+    .route('/account')
+    .get(htmlController.loadAccount)
+
 //url: /magazine
 router
     .route('/magazine')

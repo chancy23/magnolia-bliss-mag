@@ -67,6 +67,7 @@ module.exports = {
                     // if password matches then set the session data to the user data
                     // && check if subscription status is active
                     if (pwMatch === true) {
+                        //see about using the get Subscription method from subsController to check sub status on login
                         req.session.customer = {
                             _id: userData._id,
                             firstName: userData.firstName,
