@@ -22,6 +22,7 @@ module.exports = {
             const subData = {
                 status: subscription.status,
                 planName: subscription.plan.nickname,
+                planId: subscription.plan.id,
                 periodEnd: moment.unix(subscription.current_period_end).format('MMM Do YYYY') //convert from unix timestamp
             }
             res.json(subData);

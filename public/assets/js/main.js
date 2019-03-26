@@ -5,10 +5,10 @@ $(document).ready(function () {
     // =================== functions for customizing views based on a loggedin status =======================
     //might be able to do a if else based on if res.loggedIn show or hide buttons and page parts
     //before logged in view:
-    $('#navAdminBtn').hide()
+    $('#navAdmin').hide()
     $('#navLogoutBtn').hide()
-    $('#navSubscribeBtn').show()
-    $('#navLogineBtn').show()
+    // $('#navSubscribe').show()
+    // $('#navLoginBtn').show()
 
     //====================================for the magazine flipbook=================================
 
@@ -62,9 +62,9 @@ $(document).ready(function () {
                 $('#email, #password').val('');
 
                 //change view to logged in state
-                $('#navAdminBtn').show()
+                $('#navAdmin').show()
                 $('#navLogoutBtn').show()
-                $('#navSubscribeBtn').hide()
+                $('#navSubscribe').hide()
                 $('#navLoginBtn').hide()
             }
         })
@@ -80,7 +80,7 @@ $(document).ready(function () {
             if (res === 'logged out') {
                 //clear form fields
                 $('#email, #password').val('');
-                
+
                 //reset view back to unlogged in state
                 $('#navAdminBtn').hide()
                 $('#navLogoutBtn').hide()

@@ -25,11 +25,15 @@
 
 </head>
 <body>
+    {{!-- need to make this get direclty from the req.session 
+    and if loggedIn === true show one version vs. the other --}}
     <nav>
         <ul>
-            <li><button id='navAboutBtn'>About</button></li>
-            <li><button id='navSubscribeBtn'>Subscribe</button></li>
-            <li><button id='navAdminBtn'>User Admin</button></li>
+            <li><a href='/' id='navHome'>Home</a></li>
+            <li><a href='/about' id='navAbout'>About</a></li>
+            <li><a href='/magazine' id='navMagazine'>View Magazine</a></li>
+            <li><a href='/subscribe' id='navSubscribe'>Subscribe</a></li>
+            <li><a href='/account' id='navAdmin'>User Admin</a></li>
             <li><button id='navLoginBtn'>Login</button></li> 
             <li><button id='navLogoutBtn'>Logout</button></li> 
         </ul>

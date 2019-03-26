@@ -8,8 +8,11 @@ module.exports = {
     loadAbout: (req, res) => {
         res.render('about')
     },
+    //user admin page need to get the req.session data passed in from login/home page
     loadAccount: (req, res) => {
-        res.render('account')
+        //this passes the req.session data directyy to the handlebars html view
+        res.render('account', {session: req.session.customer});
+        
     },
     loadMagView: (req, res) => {
         res.render('viewMag')
