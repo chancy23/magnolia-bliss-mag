@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     //depending one what option is pcked from starting form, display the appropriate section
     // if reselect a different option make sure to hide any other forms
-    $('#accountAction').change((event, planID) => {
+    $('#accountAction').change((event) => {
         event.preventDefault();
         if ($('#accountAction').val() === 'info') {
             $('#updateInfo').show();
@@ -37,13 +37,12 @@ $(document).ready(function() {
         else if ($('#accountAction').val() === 'plan') {
             $('#updateInfo, #cancellation').hide();
             $('#changeSub').show();
-        
-            //for current plan make that option disabled in the plan change form
-            if ($('#selectNewPlan').val() === planID) {
-                //how to make that option disabled in the form selection
-                console.log('this option', $(this).option);
-                $(this).option.attr('disabled', true);  
-            }
+
+            // console.log(planID);
+            //for current plan make that option disabled in the plan change
+            const selection = document.getElementById(planID)
+            // console.log(selection);
+            selection.disabled = true;
         }
         else {
             $('#cancellation').show();
@@ -51,10 +50,35 @@ $(document).ready(function() {
         }
     });
 
-    // when submit change plan button send to the backend with new plan info, (user id is from sessions)
-    
-    //when submit cancellation button send to backend tbe session subscription id (stripe)
+    //when updating account info send the update object to the backend
+    $('#submitUpdate').click(event => {
+        event.preventDefault();
+        const updatedInfo = {
+            firstName: $('#firstName').val().trim(),
+            lastName: $('#lastName').val().trim(),
+            email: $('#email').val().trim(),
+        }
+        console.log("updated info", updatedInfo);
+        //send this update to the custController via AJAX PUT
+        $.ajax('/api/customer/update', {
+            type: "PUT",
+            data: updatedInfo
+        }).then(() => {
+            console.log("customer info updated");
+            $.get('/api/auth/session', (res, err) => {
+                window.reload;  
+            })
+        })
+    });
 
+    // when submit change plan button send to the backend with new plan info, (user id is from sessions)
+    // $('#submitPlanChange').click(event => {
+
+    // });
+    //when submit cancellation button send to backend tbe session subscription id (stripe)
+    // $('#submitCancellation').click(event => {
+
+    // });
 
 
 

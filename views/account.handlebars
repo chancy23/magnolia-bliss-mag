@@ -17,7 +17,7 @@
         <h5>What would you like to do?</h5>
         <form id='chooseAction'>
             <select id='accountAction'>
-                <option value='' selectted>Choose One...</option>
+                <option value='' selected>Choose One...</option>
                 <option value='info'>Update Account Information</option>
                 <option value='plan'>Change Plan</option>
                 <option value='cancel'>Cancel Plan/Close Account</option>
@@ -27,9 +27,17 @@
 
     {{!-- need a place to update their user info --}}
     <section id='updateInfo'>
+        <h5>Update Account Details</h5>
         <form id='updateAccount'>
-            {{!-- may need to load form with placeholders from jquery --}}
-
+            {{!-- make all inputs have a default value so that if it's not changed sends the value to the db --}}
+            <input type='text' name='firstName' id='firstName' value='{{session.firstName}}'>
+            <input type='text' name='lastName' id='lastName' value="{{session.lastName}}">
+            <input type='email' name='email' id='email' value="{{session.email}}">
+        
+            {{!-- on click of this button will send the customer details to the auth route and controller --}}
+            <button id='submitUpdate'>Continue</button>
+            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+            <button id='cancelUpdate'>Cancel</button>
         </form>
     </section>
 
@@ -43,9 +51,9 @@
             <select name='selectNewPlan' id='selectNewPlan' required='true'>
                 {{!-- for current plan if value equals it, make it disabled --}}
                 <option value='' selected>Choose One...</option>
-                <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
-                <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                <option value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
+                <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
+                <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
             </select>
             <button id='submitPlanChange'>Change Plan</button>
             <button>Cancel</button>
