@@ -8,8 +8,11 @@
     <p>Name: {{session.firstName}} {{session.lastName}}</p>
     <p>Email/Login: {{session.email}}</p>
     <p>Your Current plan is the <span id='planName'></span></p>
+    {{!-- if next paymetn is last show that sub endds on this date instead --}}
     <p>Your Next Payment is on <span id='dueDate'></span></p>
     {{!-- <p>Your Next Payment amount is: <span></span></p> --}}
+
+    {{!-- if cancelled sub, but before end cycle date show reactivate button here --}}
 </section>
 
     {{!-- on select/change show correct form on page --}}
@@ -46,12 +49,11 @@
         <h5>Change your Subscription</h5>
         <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
         <form id='updateSub'>
-            {{!-- this whole form might be loaded from jquery in order to customize --}}
             <h3>Pick Your Plan</h3>
             <select name='selectNewPlan' id='selectNewPlan' required='true'>
-                {{!-- for current plan if value equals it, make it disabled --}}
                 <option value='' selected>Choose One...</option>
-                <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
+                <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
+                <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
                 <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
                 <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
             </select>
@@ -67,7 +69,7 @@
         <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
             until the last day of your current payment period. At that time your access to Magnolia Bliss will end and you will
             lose any unused coaching sessions.</p>
-        <button id='submitCancellation'>I Agree (Cancel my Subscription)</button>
+        <button id='submitCancellation' data-subid="{{session.subscriptionData.subId}}">I Agree (Cancel my Subscription)</button>
         <button>Cancel</button>
     </section>
 </main>

@@ -3,7 +3,6 @@ const db = require('../models');
 const dotenv = require('dotenv').config();
 const moment = require('moment');
 
-
 const apiKey = process.env.SECRET_KEY
 //require stripeand the secret API key from the .env file
 const stripe = require('stripe')(apiKey);
@@ -12,6 +11,7 @@ module.exports = {
     // retrieve the subscription data either from our DB or from stripe 
     // in order to display details to customer when logged in
     getSubscription: (req, res) => {
+        // console.log('req sub ID from auth', req.subscriptionData.subId);
         console.log('sub ID from sessions', req.session.customer.subscriptionData.subId);
        //currently getting sub info from stripe's server/db
        //may want to use our own to make faster?
@@ -74,12 +74,12 @@ module.exports = {
         db.Customer.findById(req.session.customer._id)
         .populate('subscriptionData')
         .then(customer => {
-            console.log('customer data:', customer);
+            // console.log('customer data:', customer);
             //then send the update to stripe, then update the subscription in our db
             stripe.subscriptions.retrieve(customer.subscriptionData.subId)
             .then(stripeSub => {
-                console.log("subscription retrieved from Stripe", stripeSub);
-                console.log('items data object in sub', stripeSub.items.data[0]);
+                // console.log("subscription retrieved from Stripe", stripeSub);
+                // console.log('items data object in sub', stripeSub.items.data[0]);
                 stripe.subscriptions.update(stripeSub.id, {
                     cancel_at_period_end: false,
                     items: [{
@@ -89,7 +89,7 @@ module.exports = {
                 })
                 //find the stripe subsciption ID & update subscriptions model with new plan 
                 .then(subData => {
-                    console.log('subscription data:', subData);
+                    // console.log('subscription data:', subData);
                     db.Subscriptions.findOneAndUpdate(
                         { subId: subData.id },
                         { $push: {plan: subData.plan.id} },
@@ -101,14 +101,15 @@ module.exports = {
         .catch(err => res.json(err))
     },
     //when cancelling will not delete the subscription for the stripe db, instead change to stop at cycle end
-    //will need to set up a web hook to check if subscription status is active or not, if not block access
     cancelSubscription: (req, res) => {
         console.log('sub ID from sessions', req.session.customer.subscriptionData.subId);
+        console.log('sub ID from obj', req.body.subId);
         stripe.subscriptions.update(req.session.customer.subscriptionData.subId,
             { cancel_at_period_end: true }
         )
         .then(data => {
             console.log('data', data);
+            //update our db and set cancelPending to true based on subID
             res.json(data);
         })
         .catch(err => res.json(err))
@@ -125,9 +126,9 @@ module.exports = {
                 stripe.subscriptions.update(subscription.id,
                     { cancel_at_period_end: false }
                 )
-                //may need to update our db if we add anything to our subs model, currently not needed
                 .then(data => {
                     console.log('data', data);
+                    // /update our db and set cancelPending to false based on subID
                     res.json(data);
                 })
                 .catch(err => res.json(err))
@@ -140,6 +141,7 @@ module.exports = {
         }).catch(err => res.json(err))
     }
 }
+
 
 // Note: Node.js API does not throw exceptions, and instead prefers the
 // asynchronous style of error handling described below.

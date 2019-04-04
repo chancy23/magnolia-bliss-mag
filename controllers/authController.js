@@ -1,5 +1,13 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv').config();
+const moment = require('moment');
+
+const apiKey = process.env.SECRET_KEY
+//require stripe and the secret API key from the .env file
+const stripe = require('stripe')(apiKey);
+
+// const subsController = require('./subsController');
 
 module.exports = {
     //creating an account
@@ -65,27 +73,38 @@ module.exports = {
                 //else verify that password matches
                 bcrypt.compare(req.body.password, userData.password, function(err, pwMatch) {
                     // if password matches then set the session data to the user data
-                    // && check if subscription status is active
                     if (pwMatch === true) {
-                        //see about using the get Subscription method from subsController to check sub status on login
-                        req.session.customer = {
-                            _id: userData._id,
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            email: userData.email,
-                            subscriptionData: userData.subscriptionData
-                        }
-                        req.session.customer.loggedIn = true;
-                        res.status(200).json(req.session.customer);
+                        //call the stripe API to check sub status
+                        stripe.subscriptions.retrieve(userData.subscriptionData.subId)
+                        .then(subscription => {
+                            // console.log('subscription data line 82 of login', subscription);
+                                //if subscription is active, log in
+                                if(subscription.status === 'active' && subscription.cancel_at_period_end === false) {
+                                    req.session.customer = {
+                                        _id: userData._id,
+                                        firstName: userData.firstName,
+                                        lastName: userData.lastName,
+                                        email: userData.email,
+                                        subscriptionData: userData.subscriptionData
+                                    }
+                                    req.session.customer.loggedIn = true;
+                                    res.status(200).json(req.session.customer);
+                                }
+                                //if canceled or not paid send message to front end
+                                else {
+                                    res.status(404).json('no subscription');
+                                }
+                                
+                        })
+                        .catch(err => res.json(err));
                     }
-                    //else if subscription status is not active, send a message to display an error on front end
+                   //else show that invalid password and send err to front end
                     else {
-                        //else show that invalid password and send err to front end
                         console.log("Passwords don't match");
                         res.json('invalid password');
                     }   
                 })
-            }
+            } 
         })
     },
     session: (req, res) => {

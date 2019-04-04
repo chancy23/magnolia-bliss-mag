@@ -49,23 +49,37 @@ $(document).ready(function () {
             console.log('response:', res);
             console.log('err:', err);
             if (res === 'invalid email') {
-                //replace with modal later
+                //TODO: replace with modal later
                 alert('We are unable to find the email you provided. Please try again.')
             }
             else if (res === 'invalid password') {
-                //replace with modal later
+                //TODO: replace with modal later
                 alert("The password you provided doesn't match our records. Please try again")
+            }
+            else if (res === 'no subscription') {
+                //TODO: replace with modal later
+                alert("Uh-oh! It looks like you no longer have an active subscription. To resubscribe, go here <link>.")
             }
             else {
                 console.log('successful login');
                 //clear form fields
                 $('#email, #password').val('');
 
+                //need to drop db to get this to work 
+                //do a get to getSubscription and if status is active and end at cycle end is ture
+                //advise that there subscription is ending at end of cycled
+
+                //if res.subscriptionData.pendingCancel is true, then display modal advising them of such
+
                 //change view to logged in state
                 $('#navAdmin').show()
                 $('#navLogoutBtn').show()
                 $('#navSubscribe').hide()
                 $('#navLoginBtn').hide()
+
+                
+
+                
             }
         })
     })
