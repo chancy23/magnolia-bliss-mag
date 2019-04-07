@@ -6,4 +6,9 @@ router
     .route('/update')
     .put(custController.updateCustInfo)
 
+//url api/customer/update
+router
+    .route('/delete')
+    .delete(custController.deleteCustomer)
+
     module.exports = router;

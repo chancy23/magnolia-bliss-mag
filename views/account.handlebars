@@ -1,75 +1,86 @@
 <main class='container'>
-    <h4>Account</h4>
+    {{#if session.loggedIn}}
+        {{!-- do a get to get this information from stripe --}}
+        <section id='subOverview'>
+            <h5>Account Overview</h5>
 
-{{!-- do a get to get this information from stripe --}}
-<section id='subOverview'>
-    <h5>Account Overview</h5>
+            <p>Name: {{session.firstName}} {{session.lastName}}</p>
+            <p>Email/Login: {{session.email}}</p>
+            <p>Your Current plan is the <span id='planName'></span></p>
+            {{#if session.subscriptionData.pendingCancel}}
+                <p>Your Subscription ends on <span id='dueDate'></span></p>
+                <p>Your estimated final charge will be: <span id='nextInvoiceAmt'></span></p>
+                <p>Reactivate your subscription before this date. <button id='reactivateSub'>Reactivate</button></p>
+            {{else}}
+                <p>Your Next Payment is on <span id='dueDate'></span></p>
+                <p>Your estimated next payment will be: <span id='nextInvoiceAmt'></span></p>
+            {{/if}}
+            
+        </section>
+        <section id='chooseAcctUpdate'>
+            <h5>What would you like to do?</h5>
+            <form id='chooseAction'>
+                <select id='accountAction'>
+                {{#if session.subscriptionData.pendingCancel}}
+                    <option value='' selected>Choose One...</option>
+                    <option value='info'>Update Account Information</option>
+                    <option value='plan'>Change Subscription</option>
+                {{else}}
+                    <option value='' selected>Choose One...</option>
+                    <option value='info'>Update Account Information</option>
+                    <option value='plan'>Change Subscription</option>
+                    <option value='cancel'>Cancel Subscription</option>
+                {{/if}}
+                </select>
+            </form>
+        </section>
+        <section id='updateInfo'>
+            <h5>Update Account Details</h5>
+            <form id='updateAccount'>
+                {{!-- make all inputs have a default value so that if it's not changed sends the value to the db --}}
+                <input type='text' name='firstName' id='firstName' value='{{session.firstName}}'>
+                <input type='text' name='lastName' id='lastName' value="{{session.lastName}}">
+                <input type='email' name='email' id='email' value="{{session.email}}">
+            
+                {{!-- on click of this button will send the customer details to the auth route and controller --}}
+                <button id='submitUpdate'>Continue</button>
+                {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+                <button id='cancelUpdate'>Cancel</button>
+            </form>
+        </section>
+        <section id='changeSub'>
+            <h5>Change your Subscription</h5>
+            <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
+            <form id='updateSub'>
+                <h3>Pick Your Plan</h3>
+                <select name='selectNewPlan' id='selectNewPlan' required='true'>
+                    <option value='' selected>Choose One...</option>
+                    <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
+                    <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
+                    <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                    <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
+                </select>
+                <button id='submitPlanChange'>Change Plan</button>
+                <button>Cancel</button>
+            </form>
+        </section>
 
-    <p>Name: {{session.firstName}} {{session.lastName}}</p>
-    <p>Email/Login: {{session.email}}</p>
-    <p>Your Current plan is the <span id='planName'></span></p>
-    {{!-- if next paymetn is last show that sub endds on this date instead --}}
-    <p>Your Next Payment is on <span id='dueDate'></span></p>
-    {{!-- <p>Your Next Payment amount is: <span></span></p> --}}
-
-    {{!-- if cancelled sub, but before end cycle date show reactivate button here --}}
-</section>
-
-    {{!-- on select/change show correct form on page --}}
-    <section id='chooseAcctUpdate'>
-        <h5>What would you like to do?</h5>
-        <form id='chooseAction'>
-            <select id='accountAction'>
-                <option value='' selected>Choose One...</option>
-                <option value='info'>Update Account Information</option>
-                <option value='plan'>Change Plan</option>
-                <option value='cancel'>Cancel Plan/Close Account</option>
-            </select>
-        </form>
-    </section>
-
-    {{!-- need a place to update their user info --}}
-    <section id='updateInfo'>
-        <h5>Update Account Details</h5>
-        <form id='updateAccount'>
-            {{!-- make all inputs have a default value so that if it's not changed sends the value to the db --}}
-            <input type='text' name='firstName' id='firstName' value='{{session.firstName}}'>
-            <input type='text' name='lastName' id='lastName' value="{{session.lastName}}">
-            <input type='email' name='email' id='email' value="{{session.email}}">
-        
-            {{!-- on click of this button will send the customer details to the auth route and controller --}}
-            <button id='submitUpdate'>Continue</button>
-            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-            <button id='cancelUpdate'>Cancel</button>
-        </form>
-    </section>
-
-    {{!-- place to change their subscription --}}
-    <section id='changeSub'>
-        <h5>Change your Subscription</h5>
-        <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
-        <form id='updateSub'>
-            <h3>Pick Your Plan</h3>
-            <select name='selectNewPlan' id='selectNewPlan' required='true'>
-                <option value='' selected>Choose One...</option>
-                <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
-                <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
-                <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
-            </select>
-            <button id='submitPlanChange'>Change Plan</button>
+        {{!-- if choose cancel plan, show verbiage stating will be active until end of current paid period --}}
+        <section id='cancellation'>
+            <h5>Cancel Your Subscription</h5>
+            <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
+                until the last day of your current payment period. At that time your access to Magnolia Bliss will end and you will
+                lose any unused coaching sessions.</p>
+            <button id='submitCancellation' data-subid="{{session.subscriptionData.subId}}">I Agree (Cancel my Subscription)</button>
             <button>Cancel</button>
-        </form>
-    </section>
+        </section>
+    {{else}}
+        <div>
+            <p>Please sign in to view or update your account information.</p>
+            {{> login}}
+        </div>
+    {{/if}}
 
-    {{!-- place to cancel their subscription --}}
-    {{!-- if choose cancel plan, show verbiage stating will be active until end of current paid period --}}
-    <section id='cancellation'>
-        <h5>Cancel Your Subscription</h5>
-        <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
-            until the last day of your current payment period. At that time your access to Magnolia Bliss will end and you will
-            lose any unused coaching sessions.</p>
-        <button id='submitCancellation' data-subid="{{session.subscriptionData.subId}}">I Agree (Cancel my Subscription)</button>
-        <button>Cancel</button>
-    </section>
+
+    
 </main>

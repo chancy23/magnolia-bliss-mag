@@ -5,14 +5,14 @@ $(document).ready(function () {
     // =================== functions for customizing views based on a loggedin status =======================
     //might be able to do a if else based on if res.loggedIn show or hide buttons and page parts
     //before logged in view:
-    $('#navAdmin').hide()
-    $('#navLogoutBtn').hide()
+    // $('#navAdmin').hide()
+    // $('#navLogoutBtn').hide()
     // $('#navSubscribe').show()
     // $('#navLoginBtn').show()
 
     //====================================for the magazine flipbook=================================
 
-    $("#container").flipBook({
+    $("#magContainer").flipBook({
         pages:[
             {src:"/images/book/page1.jpg", 
             thumb:"/images/book/thumb1.jpg", 
@@ -65,44 +65,41 @@ $(document).ready(function () {
                 //clear form fields
                 $('#email, #password').val('');
 
-                //need to drop db to get this to work 
-                //do a get to getSubscription and if status is active and end at cycle end is ture
-                //advise that there subscription is ending at end of cycled
 
+                //need to drop db and readd to get this to work 
                 //if res.subscriptionData.pendingCancel is true, then display modal advising them of such
+                if (res.subscriptionData.pendingCancel === true) {
+                    alert("Notice: Your subscription over at the end of your current paid period." 
+                    + "If you change your mind, you can reactivate it in your Account Admin");
 
-                //change view to logged in state
-                $('#navAdmin').show()
-                $('#navLogoutBtn').show()
-                $('#navSubscribe').hide()
-                $('#navLoginBtn').hide()
-
-                
-
-                
+                    location.reload();
+                }
+                else {
+                    location.reload();
+                }
             }
         })
     })
 
+    $('#cancelLogin').click(event => {
+        //clear the form fields
+        // TODO how to make it stop, when clicked puts a query string in the URL
+        $('#email, #password').val('');
+    });
+
+
     //logout of session
     $('#navLogoutBtn').click(event => {
         event.preventDefault();
-        //call the backend logout in auth controller
         $.get('/api/auth/logout', (res, err) => {
             console.log('response:', res);
-            // console.log('err:', err);
             if (res === 'logged out') {
-                //clear form fields
                 $('#email, #password').val('');
-
-                //reset view back to unlogged in state
-                $('#navAdminBtn').hide()
-                $('#navLogoutBtn').hide()
-                $('#navSubscribeBtn').show()
-                $('#navLoginBtn').show()
 
                 //replace with modal later
                 alert("You've been logged out successfully. May the Bliss be with you!");
+                // redirect to Home page
+                location.href = '/';
             }
         })
     });

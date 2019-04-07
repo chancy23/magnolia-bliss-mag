@@ -22,5 +22,15 @@ module.exports = {
             console.log('customer info update');
             res.json(data);
         })
+    },
+    //remove customer from our db if they cancel subscribing before paying.
+    deleteCustomer: (req, res) => {
+        console.log('id from sessions', req.session.customer._id);
+        db.Customer.findByIdAndDelete(req.session.customer._id)
+        .then(data => {
+            console.log('customer deleted');
+            res.status(200).json('deleted')
+        })
+        .catch(err => res.json(err));
     }
 }

@@ -71,9 +71,10 @@ $(document).ready(function() {
             // to do: get page to refresh with updated name after update
             //or add message that changes will appear after next login (not ideal)
             console.log("customer info updated");
-            $.get('/api/auth/session', (res, err) => {
-                location.reload;  
-            })
+            // $.get('/api/auth/session', (res, err) => {
+            //     location.reload();  
+            // })
+            location.reload();  
         })
     });
 

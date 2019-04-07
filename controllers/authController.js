@@ -79,7 +79,7 @@ module.exports = {
                         .then(subscription => {
                             // console.log('subscription data line 82 of login', subscription);
                                 //if subscription is active, log in
-                                if(subscription.status === 'active' && subscription.cancel_at_period_end === false) {
+                                if(subscription.status === 'active') {
                                     req.session.customer = {
                                         _id: userData._id,
                                         firstName: userData.firstName,

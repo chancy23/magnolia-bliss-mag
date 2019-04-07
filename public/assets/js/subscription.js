@@ -121,12 +121,15 @@ $(document).ready(function () {
         };
         console.log('data Object to send to backend', dataObj)
 
-        $.post('/api/subscription/new', dataObj, function(err, result){
-            if (result === 'success') {
-                //load a success modal
+        $.post('/api/subscription/new', dataObj, function(err, res){
+            console.log('err', err);
+            console.log('res', res);
+            if (res === 'success') {
+                //TODO: create a success modal
                 console.log('subscription created');
-                //clear form fields or hide forms or redirect to somewhere TBD
+                //clear form fields or hide forms or redirect to view the magazine
                 $('.InputElement').addClass('StripeElement is-empty');
+                location.href = '/magazine';
             }
             else {
                 //load a failure modal
@@ -144,27 +147,17 @@ $(document).ready(function () {
         $('#password').val('')
     })
 
+    //if customer hits ancels before completing payment and subscribing
     $('#cancelPayment').click(event => {
         event.preventDefault();
-        $('.InputElement').addClass('StripeElement is-empty');
-    })
-
-
-
-    // Submit the form with the token ID.
-    // function stripeTokenHandler(token) {
-    //     // Insert the token ID into the form so it gets submitted to the server
-    //     var form = document.getElementById('payment-form');
-    //     var hiddenInput = document.createElement('input');
-    //     hiddenInput.setAttribute('type', 'hidden');
-    //     hiddenInput.setAttribute('name', 'stripeToken');
-    //     hiddenInput.setAttribute('value', token.id);
-    //     form.appendChild(hiddenInput);
-
-    //     // Submit the form
-    //     form.submit();
-    // }
-
-
+        //send a delete to delete customer from DB and reload page
+        $.ajax('/api/customer/delete', {
+            type: "DELETE",
+        })
+        .then((res, err) => {
+            console.log('res', res);
+            location.reload();
+        })
+    });
 
 })

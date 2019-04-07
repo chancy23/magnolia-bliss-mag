@@ -1,10 +1,23 @@
-<h1>Magnolia Bliss Magazine</h1>
+<main>
+    <h1>Magnolia Bliss Magazine</h1>
+    <section>
+        {{> login}}
+    </section>
+    <section id='sampleArticle'>
+        <h3>Sample Article</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+            odit!
+        </p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+            odit!
+        </p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+            odit!...
+        </p>
+        <p>To read the entire article and many more <a href='/subscribe'>subscribe</a> today!</p>
 
-<h4>Existing User Login</h4>
-<form>
-    <input type='email' name='loginEmail' id='email' placeholder='Email'>
-    <input type='password' name='loginPassword' id='password' placeholder='Password'>
-    {{!-- make a show password feature --}}
-    <button id='login'>Login</button>
-    <button id='cancelLogin'>Cancel</button>
-</form>
+    </section>
+</main>
