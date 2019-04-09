@@ -1,56 +1,156 @@
 $(document).ready(function() {
     let planID;
-    //when the page loads get the account information from stripe and our db
-    //may just include this in the req.session info and import direclty to the html view
 
-    //make it so the get isn't done until on this page, throwing an error in terminal due to no session data until logged in
-    // $('#navAdmin').click(() => {
-       
-        // $.get()
+    //not working if I say location.href === '/account'??? 
+    if (location.href === 'http://localhost:3000/account') {
+        getSubDetails()
+    }
+
+    //hide all but the starting form
+    $('#updateAccount, #updatePayment, #changeSub, #cancellation').hide();
+    
+    // ======================== Functions ============================
+    
+    function getSubDetails() {
+       //get sub details
         $.get('/api/subscription/details', (res, err) => {
             console.log('res', res);
             //update the account overview section with the details from the subscription
             $('#planName').append(res.planName);
             $('#dueDate').append(res.periodEnd);
             planID = res.planId;
-            // return res;
-            //saying the items in the ${} is not a function
-            // $('#subOverview').append(
-            //     `<p>Your current plan is the ${res.planName}<p>`
-            //     `<p>Your next payment is on ${res.periodEnd}<p>`
-            //     `<p>Your next payment amount is $ ${res.invoice}<p>`
-            // )
         });
-    // });
+        // get invoice amount
+         $.get('/api/subscription/invoice', (res, err) => {
+             console.log('res from get invoice', res);
+             //if no upcoming invoice (pending cancellation)
+             if(res.statusCode === 404) {
+                $('#nextInvoiceAmt').append('0.00');
+             }
+             else {
+                //make the number into DD.cc format
+                const nextInvoiceAmt = res.amountDue / 100;
+                $('#nextInvoiceAmt').append(nextInvoiceAmt);
+            };
+         })
+    };
 
+    function createStripe() {
+        var style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
 
-    //hide all but the starting form
-    $('#updateInfo, #changeSub, #cancellation').hide();
+        // Create a Stripe client.
+        //see about using process.env here as well?
+        var stripe = Stripe('pk_test_z3NBrSQZCOlhcTjNLJks2STL00Jirr8EqC');
+        
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+        
+        // Create an instance of the card Element.
+        var card = elements.create('card', { style: style });
 
-    //if account is cancelled but before cycle end, display "Reactivate subscription" button in lieu of cancel option
-    //may need to do a partial for the two different sub statuses on this page
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#update-card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        var form = document.getElementById('update-payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    // Inform the user if there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    
+                    console.log('token', result.token);
+                    // Send the token to your server (along with id and email from our DB)
+                    sendUpdate(result.token)
+                }
+            });
+        });
+    };
+    
+    function sendUpdate(token) {
+        //need to send the token, planID, customer _id to /api/subscription/new
+        const dataObj = {
+            token: token.id
+        };
+        console.log('data Object to send to backend', dataObj)
+
+        $.ajax('/api/subscription/updatePayment', {
+            type: "PUT",
+            data: dataObj
+        })
+        .then((err, res) => {
+            // console.log('err', err);
+            // console.log('res', res);
+            if (res === 'success') {
+                //TODO: create a success modal
+                console.log('payment info updated');
+                //clear form fields or hide forms or redirect to view the magazine
+                // $('.InputElement').addClass('StripeElement is-empty');
+                // location.href = '/magazine';
+            }
+            else {
+                //TODO: load a failure modal
+                console.log(err)
+            }
+        })
+    };
+
+    // ======================== Event Handlers ============================
 
     //depending one what option is pcked from starting form, display the appropriate section
     // if reselect a different option make sure to hide any other forms
     $('#accountAction').change((event) => {
         event.preventDefault();
-        if ($('#accountAction').val() === 'info') {
-            $('#updateInfo').show();
-            $('#changeSub, #cancellation').hide();
+        if ($('#accountAction').val() === 'accountInfo') {
+            $('#updateAccount').show();
+            $('#updatePayment, #changeSub, #cancellation').hide();
         }
         else if ($('#accountAction').val() === 'plan') {
-            $('#updateInfo, #cancellation').hide();
             $('#changeSub').show();
-
+            $('#updateAccount, #updatePayment, #cancellation').hide();
+            
             // console.log(planID);
             //for current plan make that option disabled in the plan change
             const selection = document.getElementById(planID)
             // console.log(selection);
             selection.disabled = true;
         }
+        else if ($('#accountAction').val() === 'paymentInfo') {
+            $('#updatePayment').show(); 
+            $('#updateAccount, #changeSub, #cancellation').hide();
+            createStripe();
+            
+        }
         else {
             $('#cancellation').show();
-            $('#updateInfo, #changeSub').hide();
+            $('#updateAccount, #updatePayment, #changeSub').hide();
         }
     });
 
@@ -71,9 +171,6 @@ $(document).ready(function() {
             // to do: get page to refresh with updated name after update
             //or add message that changes will appear after next login (not ideal)
             console.log("customer info updated");
-            // $.get('/api/auth/session', (res, err) => {
-            //     location.reload();  
-            // })
             location.reload();  
         })
     });
@@ -96,14 +193,13 @@ $(document).ready(function() {
                 // TODO: change to modal later
                 alert('Plan Changed Successfully!');
             }
-            else{
+            else {
                 console.log('error', err);
                 //TODO: change to modal later
                 alert('Something went wrong, please try again');
-            }
+            };
         });
     });
-
 
     //when submit cancellation button send to backend tbe session subscription id (stripe)
     $('#submitCancellation').click(event => {
@@ -129,10 +225,9 @@ $(document).ready(function() {
                 console.log('error', err);
                 //TODO: change to modal later
                 alert('Something went wrong, please try again');
-            }
-        })
+            };
+        });
     });
-
 
 
 })

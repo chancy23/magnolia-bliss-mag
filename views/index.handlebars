@@ -1,23 +1,50 @@
 <main>
     <h1>Magnolia Bliss Magazine</h1>
-    <section>
-        {{> login}}
-    </section>
-    <section id='sampleArticle'>
-        <h3>Sample Article</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-            odit!
-        </p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-            odit!
-        </p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-            deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-            odit!...
-        </p>
-        <p>To read the entire article and many more <a href='/subscribe'>subscribe</a> today!</p>
+    {{#if session.loggedIn}}
+        <section>
+            <article>
+                <h4>This Edition's Featured Article</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit!
+                </p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit! [Continue reading in the <a href="#">magazine</a>]
+                </p>
+            </article>
 
-    </section>
+            <article>
+                <h4>This Editon's Featured Author</h4>
+                <img src="https://idolcelebs.com/wp-content/uploads/2018/09/Stephen-King.jpg" alt="featured author">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit!
+                </p>
+            </article>
+            
+            
+        </section>
+    {{else}}
+        <section>
+            {{> login}}
+        </section>
+        <section id='sampleArticle'>
+            <h3>Sample Article</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                odit!
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                odit!
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                odit!...
+            </p>
+            <p>To read the entire article and many more <a href='/subscribe'>subscribe</a> today!</p>
+        </section>
+    {{/if}}
+    
 </main>

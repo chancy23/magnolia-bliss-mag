@@ -8,16 +8,23 @@ nav {
     background-color: black;
 }
 
+ul li {
+    list-style: none;
+}
+
+img {
+    width: 400px;
+    height: auto;
+    margin: 0 10px 10px 0;
+    float: left;
+}
+
 #magContainer {
     position: relative;
     width: 800px;
     height: 600px;
     margin-left: 25%;
     margin-bottom: 10%;
-}
-
-ul li {
-    list-style: none;
 }
 
 /* Stripe Elements */

@@ -13,7 +13,7 @@
                 <p>Reactivate your subscription before this date. <button id='reactivateSub'>Reactivate</button></p>
             {{else}}
                 <p>Your Next Payment is on <span id='dueDate'></span></p>
-                <p>Your estimated next payment will be: <span id='nextInvoiceAmt'></span></p>
+                <p>Your estimated next payment will be: $<span id='nextInvoiceAmt'></span></p>
             {{/if}}
             
         </section>
@@ -27,16 +27,17 @@
                     <option value='plan'>Change Subscription</option>
                 {{else}}
                     <option value='' selected>Choose One...</option>
-                    <option value='info'>Update Account Information</option>
+                    <option value='accountInfo'>Update Account Information</option>
+                    <option value='paymentInfo'>Update Payment Information</option>
                     <option value='plan'>Change Subscription</option>
                     <option value='cancel'>Cancel Subscription</option>
                 {{/if}}
                 </select>
             </form>
         </section>
-        <section id='updateInfo'>
+        <section id='updateAccount'>
             <h5>Update Account Details</h5>
-            <form id='updateAccount'>
+            <form id='updateAccountInfo'>
                 {{!-- make all inputs have a default value so that if it's not changed sends the value to the db --}}
                 <input type='text' name='firstName' id='firstName' value='{{session.firstName}}'>
                 <input type='text' name='lastName' id='lastName' value="{{session.lastName}}">
@@ -48,6 +49,25 @@
                 <button id='cancelUpdate'>Cancel</button>
             </form>
         </section>
+
+         <section id='updatePayment'>
+            <h5>Update Payment Information</h5>
+            <form id='update-payment-form'>
+                <div class="form-row">
+                    <label for="update-card-element">
+                        Enter your new card information (Note: all fields are required):
+                    </label>
+                    <div id="update-card-element">
+                        <!-- A Stripe Element will be inserted here. -->
+                    </div>
+
+                    <!-- Used to display form errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+                <button id='submitUpdatePayment'>Update</button>
+            </form>
+        </section>
+
         <section id='changeSub'>
             <h5>Change your Subscription</h5>
             <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>

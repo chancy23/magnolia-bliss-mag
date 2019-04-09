@@ -9,23 +9,45 @@ const stripe = require('stripe')(apiKey);
 
 module.exports = {
     // retrieve the subscription data either from our DB or from stripe 
-    // in order to display details to customer when logged in
+    // in order to display details to customer when logged in to their account
     getSubscription: (req, res) => {
-        // console.log('req sub ID from auth', req.subscriptionData.subId);
-        console.log('sub ID from sessions', req.session.customer.subscriptionData.subId);
-       //currently getting sub info from stripe's server/db
-       //may want to use our own to make faster?
-       stripe.subscriptions.retrieve(req.session.customer.subscriptionData.subId)
-       .then(subscription => {
-           console.log('subscription data', subscription);
-            //send the status, plan.nickname, current_period_end, current_invoice_amount to front end
-            const subData = {
-                status: subscription.status,
-                planName: subscription.plan.nickname,
-                planId: subscription.plan.id,
-                periodEnd: moment.unix(subscription.current_period_end).format('MMM Do YYYY') //convert from unix timestamp
-            }
-            res.json(subData);
+        db.Customer.findById(req.session.customer._id)
+        .populate('subscriptionData')
+        .then(customer => {
+            console.log('sub ID from customer', customer.subscriptionData.subId);
+            //currently getting sub info from stripe's server/db
+            //may want to use our own to make faster?
+            stripe.subscriptions.retrieve(customer.subscriptionData.subId)
+            .then(subscription => {
+                console.log('subscription data', subscription);
+                //send the status, plan.nickname, current_period_end, current_invoice_amount to front end
+                const subData = {
+                    status: subscription.status,
+                    planName: subscription.plan.nickname,
+                    planId: subscription.plan.id,
+                    periodEnd: moment.unix(subscription.current_period_end).format('MMM Do YYYY') //convert from unix timestamp
+                }
+                res.json(subData);
+                
+            })
+        })
+        .catch(err => res.json(err));
+    },
+    //get the upcoming invoice data to send to account details page (try to combine with get Sub method)
+    getInvoice: (req, res) => {
+        db.Customer.findById(req.session.customer._id)
+        .populate('subscriptionData')
+        .then(customer => {
+            stripe.invoices.retrieveUpcoming(customer.subscriptionData.stripeId)
+            .then(invoice => {
+                console.log('invoice data', invoice);
+                const invoiceData = {
+                    amountDue: invoice.amount_due
+                }
+                console.log('invoice data obj', invoiceData);
+                res.json(invoiceData)
+            })
+            .catch(err => res.json(err))
         })
         .catch(err => res.json(err));
     },
@@ -55,9 +77,11 @@ module.exports = {
                 })
                 .then(sub => {
                     //update the customer model with the subscription info
-                    db.Customer.findByIdAndUpdate(req.body.id,
-                    { $push: {subscriptionData: sub._id} },
-                    { new: true})
+                    db.Customer.findByIdAndUpdate(
+                        req.body.id,
+                        { $push: {subscriptionData: sub._id} },
+                        { new: true}
+                    )
                     .then(data => {
                         console.log('data', data);
                         res.json(data)
@@ -123,7 +147,8 @@ module.exports = {
             //if status is active and cancel_at_period_end is true
             if (subscription.status === 'active' && subscription.cancel_at_period_end === true) {
                 //set to false
-                stripe.subscriptions.update(subscription.id,
+                stripe.subscriptions.update(
+                    subscription.id,
                     { cancel_at_period_end: false }
                 )
                 .then(data => {
@@ -139,6 +164,20 @@ module.exports = {
                 res.json('no pending cancellation')
             } 
         }).catch(err => res.json(err))
+    },
+
+    updatePaymentInfo: (req, res) => {
+        //send a new token to save to the customer in the stripe db
+        console.log('req body', req.body);
+        stripe.customers.update(
+            req.session.customer.subscriptionData.stripeId,
+            { source: req.body.token }
+        )
+        .then(customer => {
+            // console.log('customer payment method updated', customer);
+            res.json('success')
+        })
+        .catch(err => res.status(422).json(err))
     }
 }
 

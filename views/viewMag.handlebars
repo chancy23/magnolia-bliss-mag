@@ -2,12 +2,13 @@
     <section>
         <h1>Current Issue</h1>
         {{#if session.loggedIn}}
-            <div id='magContainer'></div>
+        <div id='magContainer'></div>
         {{else}}
-            <div>
-                <p>You need to have a <a href="/subscribe">Subscription</a> or be signed in to view the magazine.</p>
-                {{> login}}
-            </div>
+        <div>
+            <p>Please sign in to view the magazine. If you don't have a subscription you can see our plans and subscribe
+                <a href="/subscribe">here</a>.</p>
+            {{> login}}
+        </div>
         {{/if}}
     </section>
 </main>
