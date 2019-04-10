@@ -22,11 +22,20 @@ router
     .route('/magazine')
     .get(htmlController.loadMagView)
 
-// for the subscription page
 //url /subscribe
 router
     .route('/subscribe')
     .get(htmlController.loadSubscribe)
+
+//url /forgot-password
+router
+    .route('/forgot-password')
+    .get(htmlController.loadForgotPassword)
+
+//url /reset-password
+router
+    .route('/reset-password')
+    .get(htmlController.loadResetPassword)
 
 //use this by default if incorrect URl is input
 router

@@ -122,6 +122,7 @@ $(document).ready(function () {
     });
 
     //when click the submit button to create an account
+    // TODO: send a check to the API to see if in our db, if so, use that info instread of new values below
     $('#submitCustomer').click(event => {
         event.preventDefault();
         

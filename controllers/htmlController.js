@@ -1,5 +1,7 @@
 //this loads all the views/pages
 
+const db = require('../models');
+
 module.exports = {
     //load main page
     loadHome: (req, res) => {
@@ -10,11 +12,17 @@ module.exports = {
     },
     loadAccount: (req, res) => {
         //this passes the req.session data directly to the handlebars html view
-        res.render('account', {session: req.session.customer});
-        
+        res.render('account', {session: req.session.customer}); 
     },
     loadMagView: (req, res) => {
         res.render('viewMag' , {session: req.session.customer})
+    },
+    loadForgotPassword: (req, res) => {
+        res.render('forgotPassword')
+    },
+    loadResetPassword: (req, res) => { 
+        res.render('resetPassword')
+       
     },
     loadSubscribe: (req, res) => {
         res.render('subscribe' , {session: req.session.customer})
