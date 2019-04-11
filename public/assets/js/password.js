@@ -8,7 +8,7 @@ $(document).ready(function() {
     let token;
 
     // ============================ Event Handlers ===========================
-    
+
     //validate provided code with one in db
     $('#submitCode').click(event => {
         event.preventDefault();
@@ -29,6 +29,19 @@ $(document).ready(function() {
             }
 
             
+        })
+    });
+
+    $('#submitForgotPassword').click(event => {
+        //call the api to generate email with the email address entred
+        const userData = {
+            email: $('#email').val().trim()
+        };
+
+        $.post('/api/password/forgot', userData)
+        .then((res, err) => {
+            console.log('res:', res);
+            console.log('err:', err);
         })
     });
 

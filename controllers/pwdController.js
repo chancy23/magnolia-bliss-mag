@@ -23,8 +23,9 @@ module.exports = {
                 {email: email},
                 { $set: {
                     resetPasswordToken: token,
-                    resetPasswordExpires: Date.now() + 180000
-                } },
+                    resetPasswordExpires: Date.now() + 18000000
+                    } 
+                },
                 {new: true}
             )
             .then(user => {
@@ -42,9 +43,7 @@ module.exports = {
                     }
                     else {
                         resetURL = `http://localhost:3000/reset-password`
-                    }
-
-                    console.log('url', resetURL)
+                    };
 
                     const transporter = nodemailer.createTransport({
                         service: 'gmail',
@@ -55,9 +54,8 @@ module.exports = {
                     });
 
                     const mailOptions = {
-                        from: `chancyleath@gmail.com`,
-                        // to: `${user.email}`,
-                        to: `chancyleath@hotmail.com`,
+                        from: ADDRESS,
+                        to: `${user.email}`,
                         subject: `Link to Reset Your Password`,
                         text: 
                             `You are receiving this email because you, or someone else, has requested the reset of the password for your account.\n\n` +
@@ -67,20 +65,20 @@ module.exports = {
                             `If you did not make this request, ignore this email and your password will remain unchanged.\n\n` +
                             `Note: This mailbox isn't monitored, so please don't reply.\n`
                     };
-                    console.log('sending email');
+                    console.log('sending email'); 
 
-                    transporter.sendMail(mailOptions, (err, res) => {
+                    //TODO: this isn't sending a json object or message when successful..why?
+                    transporter.sendMail(mailOptions, function(err, info) {
                         if (err) {
-                            console.log('there was an error', err)
+                            console.error("there was an error: ", err);
+                        } else {
+                            console.log("here is the result: ", info);
+                            res.json("email sent");
                         }
-                        else {
-                            console.log('email sent successfully', res);
-                            res.status(200).json('email sent successfully');
-                        }
-                    });
+                    })
                 };
             })
-            .catch(err => res.status(404).json(err))
+            .catch(err => res.status(404).json(err));
         };
     },
 
