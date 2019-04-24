@@ -1,9 +1,16 @@
 <div id="loginForm">
     <h4>Login</h4>
     <form>
-        <input type='email' name='loginEmail' id='email' placeholder='Email'>
-        <input type='password' name='loginPassword' id='password' placeholder='Password'>
-        {{!-- make a show password feature --}}
+        <label for='loginEmail'>
+            Email:
+            <input type='email' name='loginEmail' id='email'>
+        </label>
+        <label for='loginPassword'>
+            Password:
+            <input type='password' name='loginPassword' id='password'>
+        </label>
+    
+        {{!TODO: -- make a show password feature --}}
         <button id='login'>Login</button>
         <button id='cancelLogin'>Cancel</button>
     </form>

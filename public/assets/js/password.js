@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
 
     $('#submitForgotPassword').click(event => {
-        //call the api to generate email with the email address entred
+        event.preventDefault();
         const userData = {
             email: $('#email').val().trim()
         };
@@ -42,6 +42,24 @@ $(document).ready(function() {
         .then((res, err) => {
             console.log('res:', res);
             console.log('err:', err);
+
+            let errorMessage;
+
+            if (res === 'email sent') {
+                location.href = '/reset-password';
+            }
+            else if (res === 'no user found') {
+                errorMessage = $('<p>We are unable to find that email address in our system. Please verify you entered the correct email.</p>');
+            }
+            else if (res === 'email required') {
+                errorMessage = $('<p>Please enter the email address for your account.</p>');
+            }
+            else {
+                errorMessage = $('<p>It looks like there was an issue. Please contact the site administrator for assistance.</p>' + err.statusCode);
+    
+            }
+            //display the correct error message on page (remove any previous message first).
+            $('#message').empty().append(errorMessage);
         })
     });
 
@@ -50,14 +68,13 @@ $(document).ready(function() {
 
         const newPassword = $('#newPassword').val().trim();
         const validatePassword = $('#validateNewPassword').val().trim();
+        let errorMessage;
 
         if (newPassword === validatePassword) {
             const resetData = {
                 password: newPassword,
                 token: token
             };
-
-            //call the update password api with new value
             $.ajax('/api/password/update', {
                 type: 'PUT',
                 data: resetData
@@ -68,19 +85,18 @@ $(document).ready(function() {
                 if (res === 'password updated') {
                     // TODO: make a modol or on page message
                     alert('your password has been updated, please login to continue');
-                    //redirect to home page to login
                     location.href = '/';
                 }
                 else {
-                    // TODO: make a modol or on page message
-                    alert('It looks like there was an error, please try again.')
+                    errorMessage = $('<p>It looks like there was an error, please try again. If the problem persists, please contact the site administator</p>' + err)
                 }
             })
         }
         else {
-            // TODO: make a modol or on page message
-            alert('Your passwords do not match, please re-enter.')
-        } 
+            errorMessage =$('<p>Your passwords do not match, please re-enter.</p>')
+        };
+        //display the correct error message on page (remove any previous message first).
+        $('#message').empty().append(errorMessage);
     });
 
 })

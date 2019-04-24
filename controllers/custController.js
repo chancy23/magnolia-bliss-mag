@@ -1,7 +1,15 @@
 const db = require('../models');
 
 module.exports = {
-    //get customer info?
+    //get customer info to display on user admin page, so that when updated can update
+    getCustomerDetails: (req, res) => {
+        db.Customer.findById(req.session.customer._id)
+        .populate('subscriptionData')
+        .then(customer => {
+            console.log('customer data line 9', customer);
+            res.json(customer)
+        }).catch(err => res.json(err))
+    },
 
     //update customer info
     updateCustInfo: (req, res) => {
@@ -29,7 +37,7 @@ module.exports = {
         db.Customer.findByIdAndDelete(req.session.customer._id)
         .then(data => {
             console.log('customer deleted');
-            res.status(200).json('deleted')
+            res.status(200).json('deleted');
         })
         .catch(err => res.json(err));
     }

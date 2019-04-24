@@ -78,23 +78,22 @@ module.exports = {
                         stripe.subscriptions.retrieve(userData.subscriptionData.subId)
                         .then(subscription => {
                             // console.log('subscription data line 82 of login', subscription);
-                                //if subscription is active, log in
-                                if(subscription.status === 'active') {
-                                    req.session.customer = {
-                                        _id: userData._id,
-                                        firstName: userData.firstName,
-                                        lastName: userData.lastName,
-                                        email: userData.email,
-                                        subscriptionData: userData.subscriptionData
-                                    }
-                                    req.session.customer.loggedIn = true;
-                                    res.status(200).json(req.session.customer);
+                            //if subscription is active, log in
+                            if(subscription.status === 'active') {
+                                req.session.customer = {
+                                    _id: userData._id,
+                                    firstName: userData.firstName,
+                                    lastName: userData.lastName,
+                                    email: userData.email,
+                                    subscriptionData: userData.subscriptionData
                                 }
-                                //if canceled or not paid send message to front end
-                                else {
-                                    res.status(404).json('no subscription');
-                                }
-                                
+                                req.session.customer.loggedIn = true;
+                                res.status(200).json(req.session.customer);
+                            }
+                            //if canceled or not paid send message to front end
+                            else {
+                                res.json('no subscription');
+                            };   
                         })
                         .catch(err => res.json(err));
                     }
@@ -118,6 +117,70 @@ module.exports = {
             req.session.customer = {};
             res.status(200).json("logged out")
         }
+    },
+    //used for subscribtion if they stated they had a previous account
+    validateCredentials: (req, res) => {
+        //find customer by their email
+        console.log('credentials from front', req.body);
+        db.Customer.findOne({
+            email: req.body.email
+        })
+        .populate('subscriptionData')
+        .then(userData => {
+            console.log('userData:', userData);
+            //if no email is found send error
+            if (userData === null) {
+                console.log('user not found');
+                res.json('invalid email');
+            }
+            else {
+                //else verify that password matches
+                bcrypt.compare(req.body.password, userData.password, function(err, pwMatch) {
+                    // if password matches then set the session data to the user data
+                    if (pwMatch === true) {
+                        //call the stripe API to check sub status
+                        stripe.subscriptions.retrieve(userData.subscriptionData.subId)
+                        .then(subscription => {
+                            console.log('subscription data line 145 of validateCred', subscription);
+                            //if subscription is active, log in
+                            if(subscription.status === 'canceled') {
+                                req.session.customer = {
+                                    _id: userData._id,
+                                    firstName: userData.firstName,
+                                    lastName: userData.lastName,
+                                    email: userData.email,
+                                    subscriptionData: userData.subscriptionData
+                                };
+                                req.session.customer.loggedIn = true;
+                                res.status(200).json(req.session.customer);
+                            }
+                            //if active send message to front end and advise user to login
+                            else if (subscription.status === 'active')  {
+                                req.session.customer = {
+                                    _id: userData._id,
+                                    firstName: userData.firstName,
+                                    lastName: userData.lastName,
+                                    email: userData.email,
+                                    subscriptionData: userData.subscriptionData
+                                };
+                                req.session.customer.loggedIn = true;
+                                res.status(200).json({
+                                    session: req.session.customer, 
+                                    msg: 'active subscription found'
+                                });
+                            }     
+                        })
+                        .catch(err => res.json(err));
+                    }
+                   //else show that invalid password and send err to front end
+                    else {
+                        console.log("Passwords don't match");
+                        res.json('invalid password');
+                    }   
+                })
+            } 
+        })
+
     }
 }
 

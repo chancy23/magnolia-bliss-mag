@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    let firstName;
+    let lastName;
+    let email;
     let planID;
 
     //not working if I say location.href === '/account'??? 
@@ -12,9 +15,19 @@ $(document).ready(function() {
     // ======================== Functions ============================
     
     function getSubDetails() {
+        //get customer etails
+        $.get('api/customer/details', (res, err) => {
+            console.log('res', res);
+            firstName = res.firstName;
+            lastName = res.lastName;
+            email = res.email;
+            $('#userName').append(firstName + ' ' + lastName);
+            $('#userEmail').append(email);
+        });
+
        //get sub details
         $.get('/api/subscription/details', (res, err) => {
-            console.log('res', res);
+            // console.log('res', res);
             //update the account overview section with the details from the subscription
             $('#planName').append(res.planName);
             $('#dueDate').append(res.periodEnd);
@@ -22,7 +35,7 @@ $(document).ready(function() {
         });
         // get invoice amount
          $.get('/api/subscription/invoice', (res, err) => {
-             console.log('res from get invoice', res);
+            //  console.log('res from get invoice', res);
              //if no upcoming invoice (pending cancellation)
              if(res.statusCode === 404) {
                 $('#nextInvoiceAmt').append('0.00');
@@ -32,7 +45,7 @@ $(document).ready(function() {
                 const nextInvoiceAmt = res.amountDue / 100;
                 $('#nextInvoiceAmt').append(nextInvoiceAmt);
             };
-         })
+        });
     };
 
     function createStripe() {
@@ -129,6 +142,11 @@ $(document).ready(function() {
     $('#accountAction').change((event) => {
         event.preventDefault();
         if ($('#accountAction').val() === 'accountInfo') {
+            //show default values from database when form is displayed
+            $('#firstName').val(firstName)
+            $('#lastName').val(lastName);
+            $('#email').val(email);
+
             $('#updateAccount').show();
             $('#updatePayment, #changeSub, #cancellation').hide();
         }
@@ -168,8 +186,6 @@ $(document).ready(function() {
             type: "PUT",
             data: updatedInfo
         }).then(() => {
-            // to do: get page to refresh with updated name after update
-            //or add message that changes will appear after next login (not ideal)
             console.log("customer info updated");
             location.reload();  
         })
@@ -204,6 +220,7 @@ $(document).ready(function() {
     //when submit cancellation button send to backend tbe session subscription id (stripe)
     $('#submitCancellation').click(event => {
         event.preventDefault();
+        alert("Please confirm that you would like to cancel your Magnolia Bliss subscription and Life Coaching package.")
         const subObj = {
             subId: $('#submitCancellation').attr('data-subid')
         };
@@ -211,23 +228,51 @@ $(document).ready(function() {
         console.log('sub ID Object', subObj);
 
         $.ajax('/api/subscription/cancel', {
-            type: "PUT",
+            type: 'PUT',
             data: subObj
         })
         .then((res, err) => {
             console.log('response from cancel sub:', res),
             console.log('err:', err);
-            if(err === "success") {
-                // TODO: change to modal later
+            if (res.pendingCancel === true) {
+                // TODO: change to modal later and include a prompt to verify they want to continue
                 alert('Cancelled Subscription Successfully. If you wish to reactivate your subscription, you can do so before your cycle end date.');
             }
-            else{
+            else {
                 console.log('error', err);
                 //TODO: change to modal later
                 alert('Something went wrong, please try again');
             };
         });
     });
+
+    $('#submitReactivate').click(event => {
+        event.preventDefault();
+
+        const subObj = {
+            subId: $('#submitReactivate').attr('data-subid')
+        };
+        console.log('subobj', subObj);
+        //call the api to reactivate the subscription
+        $.ajax('api/subscription/reactivate', {
+        type: 'PUT',
+        data: subObj
+        })
+        .then((res, err) => {
+            console.log('err:', err);
+            console.log('res:', res);
+            if (res.pendingCancel === false) {
+                // TODO: change to modal later and include a prompt to verify they want to continue
+                alert('You have successfully reactivated your subscription. Enjoy!');
+            }
+            else {
+                console.log('error', err);
+                //TODO: change to modal later
+                alert('Something went wrong, please try again');
+            };
+
+        })
+    })
 
 
 })

@@ -21,4 +21,8 @@ router
     .route('/logout')
     .get(authController.logout)
 
+    // url /api/auth/validateCredentials  
+router
+    .route('/validateCredentials')
+    .post(authController.validateCredentials)
 module.exports = router

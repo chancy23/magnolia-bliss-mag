@@ -3,54 +3,105 @@ new subscription instead of the create Account form. --}}
 
 <main class='container'>
     <h1>Subscribe to Magnolia Bliss</h1>
-    <section id='createAcct'>
-        <h3>Create Account</h3>
-        <form id='customerDetails'>
-            <input type="text" name='First Name' id='firstName' placeholder="First Name">
-            <input type="text" name='Last Name' id='lastName' placeholder="Last Name">
-            <input type="email" name='Email' id='email' placeholder="Email">
-            <input type="text" name='Password' id='password' placeholder="Password">
-        
-            {{!-- on click of this button will send the customer details to the auth route and controller --}}
-            <button id='submitCustomer'>Continue</button>
-            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-            <button id='cancelCustomer'>Cancel</button>
+
+    <section id='subscribeStart'>
+        <h3>Have you had an account on Magnolia Bliss before?</h3>
+        <form>
+           <select name='determinePrevAcct' id='determinePrevAcct'>
+                <option value='' selected>Choose One...</option>
+                <option value='yes'>Yes</option>
+                <option value='no'>No</option>
+            </select>
         </form>
     </section>
 
+    <section id='checkCustomer'>
+         <h3>Enter the login details for this account.</h3>
+         <form>
+            <label for='emailCheck'>
+                Email:
+                <input type="email" name='emailCheck' id='emailCheck'>
+            </label>
+            <label for='passwordCheck'>
+                Password:
+                <input type="text" name='passwordCheck' id='passwordCheck'>
+            </label>
+            <button id='submitCheckCustomer'>Continue</button>
+            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+            <button id='cancelCheck'>Cancel</button>
+        </form>
+
+        <div id='activeSubscriptionMsg'>
+            <p>It looks like you have an active subscription. <a href='/magazine'>Go to the Magazine</a><br/>
+            </p>
+        </div>
+        <div id='emailNotFoundMsg'>
+            <p>We are unable to find the email you provided. Please try again or create a <a id='createAcctLink' href='#'>New Account</a>.</p>
+        </div>
+        <div id='passwordNoMatchMsg'>
+            <p>The password you provided doesn't match our records. Please try again or you can<a href='/forgot-password'>reset it</a>.</p>
+        </div>
+    </section>
+
+    <section id='createAcct'>
+        <h3>Create a New Account</h3>
+        <form id='customerDetails'>
+            <label for='firstName'>
+                First Name:
+                <input type="text" name='firstName' id='firstName'>
+            </label>
+            <label for='lastName'>
+                Last Name:
+                <input type="text" name='lastName' id='lastName'>
+            </label>
+            <label for='email'>
+                Email:
+                <input type="email" name='email' id='email'>
+            </label>
+            <label for='password'>
+                Password:
+                <input type="text" name='password' id='password'>
+            </label>
+            <label for='validatePassword'>
+                Re-enter Password:
+                <input type='text' name='validatePassword' id='validatePassword'>
+            </label>
+        
+            {{!-- on click of this button will send the customer details to the auth route and controller --}}
+            <button id='submitCreateCustomer'>Continue</button>
+            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+            <button id='cancelCustomer'>Cancel</button>
+        </form>
+        <div id='message'></div>
+    </section>
+
     <section id='subscription'>
-        {{!-- for credit card --}}
+        <h3>Pick Your Plan and Enter Your Payment Details</h3>
         <form id="payment-form">
-        <div class='form-row'>
-            <h3>Pick Your Plan</h3>
-            <select name='planLevel' id='planLevel' required='true'>
-                <option value='' selected>Choose One...</option>
-                <option value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option>
-                <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
-                <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
-            </select>
+            <div class='form-row'>
+                <label for='planLevel'>
+                    Pick your Plan
+                    <select name='planLevel' id='planLevel' required='true'>
+                        <option value='' selected>Choose One...</option>
+                        <option value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option>
+                        <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
+                        <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                        <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
+                    </select>
+                </label>
             </div>
             <div class="form-row">
                 <label for="card-element">
-                    Credit or debit card
+                    Credit or Debit Card:
                 </label>
-                <div id="card-element">
-                    <!-- A Stripe Element will be inserted here. -->
-                </div>
-
-                <!-- Used to display form errors. -->
+                <div id="card-element"></div>
                 <div id="card-errors" role="alert"></div>
             </div>
-
             <button id='submitPayment'>Submit Payment</button>
-           
         </form>
-         {{!-- this cancel would clear out the user from the db and reset both forms--}}
+        {{!-- this cancel would clear out the user from the db and reload page--}}
         <button id='cancelPayment'>Cancel</button>
-
-        
-
+        <div id='subErrorMessage'></div>
     </section>
 
 </main>

@@ -56,12 +56,11 @@ module.exports = {
                     const mailOptions = {
                         from: ADDRESS,
                         to: `${user.email}`,
-                        subject: `Link to Reset Your Password`,
+                        subject: `Password Reset Code`,
                         text: 
                             `You are receiving this email because you, or someone else, has requested the reset of the password for your account.\n\n` +
                             `Your reset code is ${token}.\n\n` +
-                            `Please go to the following link (or paste the url into your browser) to complete the process within 30 minutes of receiving it: \n\n` +
-                            resetURL + `\n\n` + 
+                            `Enter this code within 30 minutes of receiving it at: ${resetURL} \n\n` +
                             `If you did not make this request, ignore this email and your password will remain unchanged.\n\n` +
                             `Note: This mailbox isn't monitored, so please don't reply.\n`
                     };
@@ -71,6 +70,7 @@ module.exports = {
                     transporter.sendMail(mailOptions, function(err, info) {
                         if (err) {
                             console.error("there was an error: ", err);
+                            res.json('error')
                         } else {
                             console.log("here is the result: ", info);
                             res.json("email sent");
@@ -82,7 +82,6 @@ module.exports = {
         };
     },
 
-    //
     resetPwd: (req, res) => {
         console.log('this is the token', req.params.token)
         //get the token either from req.body or req.params
@@ -102,7 +101,6 @@ module.exports = {
                 res.json('reset code valid')
             }
         })
-
     },
 
     //updates our db with the new password and empties the time and token fields
@@ -134,8 +132,6 @@ module.exports = {
                 })
             })
         })
-
-
     }
 
 }

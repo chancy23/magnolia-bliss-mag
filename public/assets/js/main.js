@@ -1,17 +1,7 @@
 // import { format } from "url";
 
 $(document).ready(function () {
-
-    // =================== functions for customizing views based on a loggedin status =======================
-    //might be able to do a if else based on if res.loggedIn show or hide buttons and page parts
-    //before logged in view:
-    // $('#navAdmin').hide()
-    // $('#navLogoutBtn').hide()
-    // $('#navSubscribe').show()
-    // $('#navLoginBtn').show()
-
     //====================================for the magazine flipbook=================================
-
     $("#magContainer").flipBook({
         pages:[
             {src:"/images/book/page1.jpg", 
@@ -33,7 +23,12 @@ $(document).ready(function () {
         layout: 2
     });
 
-    // ====================================login and check subscription status=================================
+    // ==================================== Event Handlers for login/logout =================================
+
+    $('#cancelLogin').click(event => {
+        // TODO how to make it stop, when clicked puts a query string in the URL
+        $('#email, #password').val('');
+    });
 
     $('#login').click(event => {
         event.preventDefault();
@@ -79,14 +74,7 @@ $(document).ready(function () {
                 }
             }
         })
-    })
-
-    $('#cancelLogin').click(event => {
-        //clear the form fields
-        // TODO how to make it stop, when clicked puts a query string in the URL
-        $('#email, #password').val('');
     });
-
 
     //logout of session
     $('#navLogoutBtn').click(event => {
@@ -96,7 +84,7 @@ $(document).ready(function () {
             if (res === 'logged out') {
                 $('#email, #password').val('');
 
-                //replace with modal later
+                //TODO: replace with modal later
                 alert("You've been logged out successfully. May the Bliss be with you!");
                 // redirect to Home page
                 location.href = '/';

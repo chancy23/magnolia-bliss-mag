@@ -73,18 +73,19 @@ module.exports = {
                 db.Subscriptions.create({
                     stripeId: subDetails.customer,
                     subId: subDetails.id,
-                    plan: req.body.plan
+                    plan: req.body.plan,
+                    // status: subDetails.status,
+                    pendingCancel: subDetails.cancel_at_period_end
                 })
                 .then(sub => {
-                    //update the customer model with the subscription info
-                    db.Customer.findByIdAndUpdate(
-                        req.body.id,
-                        { $push: {subscriptionData: sub._id} },
+                    console.log('sub from line 79', sub);
+                    db.Customer.findByIdAndUpdate(req.body.id,
+                        { $set: {subscriptionData: sub._id} },
                         { new: true}
                     )
                     .then(data => {
                         console.log('data', data);
-                        res.json(data)
+                        res.json({data: data, message:'subscription created'})
                     })
                     .catch(err => res.json(err))
                 });
@@ -126,22 +127,27 @@ module.exports = {
     },
     //when cancelling will not delete the subscription for the stripe db, instead change to stop at cycle end
     cancelSubscription: (req, res) => {
-        console.log('sub ID from sessions', req.session.customer.subscriptionData.subId);
         console.log('sub ID from obj', req.body.subId);
-        stripe.subscriptions.update(req.session.customer.subscriptionData.subId,
+        stripe.subscriptions.update(req.body.subId,
             { cancel_at_period_end: true }
         )
-        .then(data => {
-            console.log('data', data);
+        .then(subData => {
+            console.log('sub Data line 136:', subData);
             //update our db and set cancelPending to true based on subID
-            res.json(data);
+            db.Subscriptions.findByIdAndUpdate(
+                req.session.customer.subscriptionData._id,
+                { $set: { pendingCancel: true } },
+                { new: true }
+            )
+            .then(data => res.json(data))
+            .catch(err => res.status(422).json(err))
+            
         })
-        .catch(err => res.json(err))
+        .catch(err => res.status(422).json(err))
     },
     //make it so that if subscription status is still active but cancel_at_period_end is true to change it back to false
     reactivateSubscription: (req, res) => {
-        console.log('sub ID from sessions', req.session.customer.subscriptionData.subId);
-        stripe.subscriptions.retrieve(req.session.customer.subscriptionData.subId)
+        stripe.subscriptions.retrieve(req.body.subId)
         .then(subscription => {
             // console.log('subscription', subscription);
             //if status is active and cancel_at_period_end is true
@@ -151,12 +157,18 @@ module.exports = {
                     subscription.id,
                     { cancel_at_period_end: false }
                 )
-                .then(data => {
-                    console.log('data', data);
-                    // /update our db and set cancelPending to false based on subID
-                    res.json(data);
+                .then(subData => {
+                    console.log('sub Data line 163:', subData);
+                    //update our db and set cancelPending to false based on subID
+                    db.Subscriptions.findByIdAndUpdate(
+                        req.session.customer.subscriptionData._id,
+                        { $set: { pendingCancel: false } },
+                        { new: true }
+                    )
+                    .then(data => res.json(data))
+                    .catch(err => res.status(422).json(err)) 
                 })
-                .catch(err => res.json(err))
+                .catch(err => res.status(422).json(err))
             } else {
                 //else return error message 
                 console.log('data not found');
