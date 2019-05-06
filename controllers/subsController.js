@@ -117,9 +117,10 @@ module.exports = {
                     // console.log('subscription data:', subData);
                     db.Subscriptions.findOneAndUpdate(
                         { subId: subData.id },
-                        { $push: {plan: subData.plan.id} },
+                        { $set: {plan: subData.plan.id} },
                         { new: true })
                     .then(data => res.json(data))
+                    .catch(err => res.json(err))
                 })
             })
         })
@@ -127,7 +128,8 @@ module.exports = {
     },
     //when cancelling will not delete the subscription for the stripe db, instead change to stop at cycle end
     cancelSubscription: (req, res) => {
-        console.log('sub ID from obj', req.body.subId);
+        // console.log('req.body', req.body);
+        // console.log('sub ID from obj', req.body.subId);
         stripe.subscriptions.update(req.body.subId,
             { cancel_at_period_end: true }
         )
@@ -135,15 +137,15 @@ module.exports = {
             console.log('sub Data line 136:', subData);
             //update our db and set cancelPending to true based on subID
             db.Subscriptions.findByIdAndUpdate(
-                req.session.customer.subscriptionData._id,
+                req.body.customerSubId,
                 { $set: { pendingCancel: true } },
                 { new: true }
             )
             .then(data => res.json(data))
-            .catch(err => res.status(422).json(err))
+            .catch(err => res.json(err))
             
         })
-        .catch(err => res.status(422).json(err))
+        .catch(err => res.json(err))
     },
     //make it so that if subscription status is still active but cancel_at_period_end is true to change it back to false
     reactivateSubscription: (req, res) => {
@@ -161,7 +163,7 @@ module.exports = {
                     console.log('sub Data line 163:', subData);
                     //update our db and set cancelPending to false based on subID
                     db.Subscriptions.findByIdAndUpdate(
-                        req.session.customer.subscriptionData._id,
+                        req.body.customerSubId,
                         { $set: { pendingCancel: false } },
                         { new: true }
                     )

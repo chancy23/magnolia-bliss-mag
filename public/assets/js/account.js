@@ -3,6 +3,8 @@ $(document).ready(function() {
     let lastName;
     let email;
     let planID;
+    //this is the id from our database (not stripes)
+    let customerSubId;
 
     //not working if I say location.href === '/account'??? 
     if (location.href === 'http://localhost:3000/account') {
@@ -18,16 +20,20 @@ $(document).ready(function() {
         //get customer etails
         $.get('api/customer/details', (res, err) => {
             console.log('res', res);
+            console.log('sub ID', res.subscriptionData.subId)
             firstName = res.firstName;
             lastName = res.lastName;
             email = res.email;
+            customerSubId = res.subscriptionData._id;
             $('#userName').append(firstName + ' ' + lastName);
             $('#userEmail').append(email);
+            $('#submitCancellation').attr('data-subid', res.subscriptionData.subId);
+            $('#submitReactivate').attr('data-subid', res.subscriptionData.subId)
         });
 
        //get sub details
         $.get('/api/subscription/details', (res, err) => {
-            // console.log('res', res);
+            console.log('sub res', res);
             //update the account overview section with the details from the subscription
             $('#planName').append(res.planName);
             $('#dueDate').append(res.periodEnd);
@@ -164,7 +170,6 @@ $(document).ready(function() {
             $('#updatePayment').show(); 
             $('#updateAccount, #changeSub, #cancellation').hide();
             createStripe();
-            
         }
         else {
             $('#cancellation').show();
@@ -208,6 +213,7 @@ $(document).ready(function() {
             if(err === "success") {
                 // TODO: change to modal later
                 alert('Plan Changed Successfully!');
+                location.reload();
             }
             else {
                 console.log('error', err);
@@ -220,9 +226,11 @@ $(document).ready(function() {
     //when submit cancellation button send to backend tbe session subscription id (stripe)
     $('#submitCancellation').click(event => {
         event.preventDefault();
+        // TODO: change to modal with yes and no buttons
         alert("Please confirm that you would like to cancel your Magnolia Bliss subscription and Life Coaching package.")
         const subObj = {
-            subId: $('#submitCancellation').attr('data-subid')
+            subId: $('#submitCancellation').attr('data-subid'),
+            customerSubId: customerSubId
         };
 
         console.log('sub ID Object', subObj);
@@ -232,16 +240,17 @@ $(document).ready(function() {
             data: subObj
         })
         .then((res, err) => {
-            console.log('response from cancel sub:', res),
-            console.log('err:', err);
+            console.log('response from cancel sub:', res);
+            // console.log('err:', err);
             if (res.pendingCancel === true) {
                 // TODO: change to modal later and include a prompt to verify they want to continue
                 alert('Cancelled Subscription Successfully. If you wish to reactivate your subscription, you can do so before your cycle end date.');
+                location.reload()
             }
             else {
-                console.log('error', err);
                 //TODO: change to modal later
                 alert('Something went wrong, please try again');
+                // TODO: make a log in the error db
             };
         });
     });
@@ -250,29 +259,30 @@ $(document).ready(function() {
         event.preventDefault();
 
         const subObj = {
-            subId: $('#submitReactivate').attr('data-subid')
+            subId: $('#submitReactivate').attr('data-subid'),
+            customerSubId: customerSubId
         };
+
         console.log('subobj', subObj);
-        //call the api to reactivate the subscription
+
         $.ajax('api/subscription/reactivate', {
         type: 'PUT',
         data: subObj
         })
         .then((res, err) => {
-            console.log('err:', err);
+            // console.log('err:', err);
             console.log('res:', res);
             if (res.pendingCancel === false) {
                 // TODO: change to modal later and include a prompt to verify they want to continue
                 alert('You have successfully reactivated your subscription. Enjoy!');
+                location.reload();
             }
             else {
-                console.log('error', err);
+                // console.log('error', err);
                 //TODO: change to modal later
                 alert('Something went wrong, please try again');
             };
-
-        })
-    })
-
+        });
+    });
 
 })

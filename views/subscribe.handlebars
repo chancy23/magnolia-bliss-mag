@@ -1,34 +1,54 @@
 {{!-- if the user has an account in our db, need to use that info (from sessions) to create a 
 new subscription instead of the create Account form. --}}
-
+{{> heroSmall}}
 <main class='container'>
-    <h1>Subscribe to Magnolia Bliss</h1>
-
-    <section id='subscribeStart'>
-        <h3>Have you had an account on Magnolia Bliss before?</h3>
+    {{!-- <h1 class='header-content header-centered'>Subscribe to Magnolia Bliss</h1> --}}
+    <section class='lg-section-center plan-section'>
+        <div class='plan-card'>
+            <h4>Plan 1</h4>
+        </div>
+        <div class='plan-card'>
+            <h4>Plan 2</h4>
+        </div>
+        <div class='plan-card'>
+            <h4>Plan 3</h4>
+        </div>
+        <div class='plan-card'> 
+            <h4>Plan 4</h4>
+        </div>
+    </section>
+    <section class='sm-section-center' id='subscribeStart'>
+        <h3 class='header-centered'>Let's Get Started</h3>
         <form>
-           <select name='determinePrevAcct' id='determinePrevAcct'>
-                <option value='' selected>Choose One...</option>
-                <option value='yes'>Yes</option>
-                <option value='no'>No</option>
-            </select>
+            <label for='determinePrevAcct'>
+                Do you already have an account?
+                <select name='determinePrevAcct' id='determinePrevAcct'>
+                    <option value='' selected>Choose One...</option>
+                    <option value='yes'>Yes</option>
+                    <option value='no'>No</option>
+                </select>
+            </label>
+           
         </form>
     </section>
 
-    <section id='checkCustomer'>
-         <h3>Enter the login details for this account.</h3>
+    <section class='sm-section-center' id='checkCustomer'>
+         <h3 class='header-centered'>Enter the login details for your account.</h3>
          <form>
-            <label for='emailCheck'>
+            <label for='emailCheck' class='row-form'>
                 Email:
                 <input type="email" name='emailCheck' id='emailCheck'>
             </label>
-            <label for='passwordCheck'>
+            <label for='passwordCheck' class='row-form'>
                 Password:
                 <input type="text" name='passwordCheck' id='passwordCheck'>
             </label>
-            <button id='submitCheckCustomer'>Continue</button>
-            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-            <button id='cancelCheck'>Cancel</button>
+            <div class='row-buttons'>
+                <button id='submitCheckCustomer'>Continue</button>
+                {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+                <button class='cancel' id='cancelCheck'>Cancel</button>
+            </div>
+        
         </form>
 
         <div id='activeSubscriptionMsg'>
@@ -43,40 +63,42 @@ new subscription instead of the create Account form. --}}
         </div>
     </section>
 
-    <section id='createAcct'>
-        <h3>Create a New Account</h3>
+    <section class='sm-section-center' id='createAcct'>
+        <h3 class='header-centered'>Create a New Account</h3>
         <form id='customerDetails'>
-            <label for='firstName'>
+            <label for='firstName' class='row-form'>
                 First Name:
                 <input type="text" name='firstName' id='firstName'>
             </label>
-            <label for='lastName'>
+            <label for='lastName' class='row-form'>
                 Last Name:
                 <input type="text" name='lastName' id='lastName'>
             </label>
-            <label for='email'>
+            <label for='email' class='row-form'>
                 Email:
                 <input type="email" name='email' id='email'>
             </label>
-            <label for='password'>
+
+            <label for='password' class='row-form'>
                 Password:
                 <input type="text" name='password' id='password'>
             </label>
-            <label for='validatePassword'>
+            <label for='validatePassword' class='row-form'>
                 Re-enter Password:
                 <input type='text' name='validatePassword' id='validatePassword'>
             </label>
-        
-            {{!-- on click of this button will send the customer details to the auth route and controller --}}
-            <button id='submitCreateCustomer'>Continue</button>
-            {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-            <button id='cancelCustomer'>Cancel</button>
+            <div class='row-buttons'>
+                {{!-- on click of this button will send the customer details to the auth route and controller --}}
+                <button id='submitCreateCustomer'>Continue</button>
+                {{!-- this cancel would reset form only, nothing sent to DB yet --}}
+                <button class='cancel'id='cancelCustomer'>Cancel</button>
+            </div>   
         </form>
         <div id='message'></div>
     </section>
 
-    <section id='subscription'>
-        <h3>Pick Your Plan and Enter Your Payment Details</h3>
+    <section class='sm-section-center' id='subscription'>
+        <h3 class='header-centered'>Pick Your Plan and Enter Your Payment Details</h3>
         <form id="payment-form">
             <div class='form-row'>
                 <label for='planLevel'>
@@ -105,3 +127,4 @@ new subscription instead of the create Account form. --}}
     </section>
 
 </main>
+{{> footer}}

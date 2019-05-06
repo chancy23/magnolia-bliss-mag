@@ -1,25 +1,8 @@
 <main class='container'>
+    <h1 class='header'>Manage Your Account</h1>
     {{#if session.loggedIn}}
-        {{!-- do a get to get this information from stripe --}}
-        <section id='subOverview'>
-            <h5>Account Overview</h5>
-
-            {{!-- <p>Name: {{session.firstName}} {{session.lastName}}</p>
-            <p>Email/Login: {{session.email}}</p> --}}
-            <p>Name: <span id='userName'></span></p>
-            <p>Email/Login: <span id='userEmail'></span></p>
-            <p>Your Current plan is the <span id='planName'></span></p>
-            {{#if session.subscriptionData.pendingCancel}}
-                <p>Your Subscription ends on <span id='dueDate'></span> <button id='submitReactivate' data-subid='{{session.subscriptionData.subId}}'>Reactivate</button></p>
-                <p>Your estimated final charge will be: $ <span id='nextInvoiceAmt'></span></p>
-            {{else}}
-                <p>Your Next Payment is on <span id='dueDate'></span></p>
-                <p>Your estimated next payment will be: $<span id='nextInvoiceAmt'></span></p>
-            {{/if}}
-            
-        </section>
-        <section id='chooseAcctUpdate'>
-            <h5>What would you like to do?</h5>
+        <aside id='chooseAcctUpdate'class='col-4'>
+            <h3>Account Actions</h3>
             <form id='chooseAction'>
                 <select id='accountAction'>
                 {{#if session.subscriptionData.pendingCancel}}
@@ -34,9 +17,24 @@
                 {{/if}}
                 </select>
             </form>
+        </aside>
+        {{!-- do a get to get this information from stripe --}}
+        <section id='subOverview' class='col-7'>
+            <h3>Account Overview</h3>
+            <p>Reader: <span id='userName'></span></p>
+            <p>Email (Login): <span id='userEmail'></span></p>
+            <p>Current Plan: <span id='planName'></span></p>
+            {{#if session.subscriptionData.pendingCancel}}
+                <p>Your subscription ends on: <span id='dueDate'></span> <button id='submitReactivate'>Reactivate</button></p>
+                <p>Your estimated final charge will be: $ <span id='nextInvoiceAmt'></span></p>
+            {{else}}
+                <p>Your Next payment is on <span id='dueDate'></span> for $<span id='nextInvoiceAmt'></span> (estimated)</p>
+            {{/if}}
+            
         </section>
-        <section id='updateAccount'>
-            <h5>Update Account Details</h5>
+        
+        <section id='updateAccount' class='col-8'>
+            <h3>Update Account Details</h3>
             <form id='updateAccountInfo'>
                 <input type='text' name='firstName' id='firstName'>
                 <input type='text' name='lastName' id='lastName'>
@@ -49,8 +47,8 @@
             </form>
         </section>
 
-         <section id='updatePayment'>
-            <h5>Update Payment Information</h5>
+         <section id='updatePayment' class='col-8'>
+            <h3>Update Payment Information</h3>
             <form id='update-payment-form'>
                 <div class="form-row">
                     <label for="update-card-element">
@@ -67,30 +65,34 @@
             </form>
         </section>
 
-        <section id='changeSub'>
-            <h5>Change your Subscription</h5>
+        <section id='changeSub' class='col-8'>
+            <h3>Change your Subscription</h3>
             <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
             <form id='updateSub'>
-                <h3>Pick Your Plan</h3>
-                <select name='selectNewPlan' id='selectNewPlan' required='true'>
-                    <option value='' selected>Choose One...</option>
-                    <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
-                    <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
-                    <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                    <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
-                </select>
-                <button id='submitPlanChange'>Change Plan</button>
-                <button>Cancel</button>
+                <label for='selectNewPlan' class='form-row'>
+                    Select Your Plan:
+                    <select name='selectNewPlan' id='selectNewPlan' required='true'>
+                        <option value='' selected>Choose One...</option>
+                        <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
+                        <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
+                        <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
+                        <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
+                    </select>
+                </label>
+                <div class='form-row'>
+                    <button id='submitPlanChange'>Change Plan</button>
+                    <button>Cancel</button>
+                </div>
             </form>
         </section>
 
         {{!-- if choose cancel plan, show verbiage stating will be active until end of current paid period --}}
-        <section id='cancellation'>
-            <h5>Cancel Your Subscription</h5>
+        <section id='cancellation' class='col-11'>
+            <h3>Cancel Your Subscription</h3>
             <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
                 until the end of your current payment period. At that time your access to the magazine will end and you will
                 lose any unused coaching sessions.</p>
-            <button id='submitCancellation' data-subid='{{session.subscriptionData.subId}}'>I Agree (Cancel my Subscription)</button>
+            <button id='submitCancellation'>I Agree (Cancel my Subscription)</button>
             <button>Cancel</button>
         </section>
     {{else}}

@@ -1,50 +1,72 @@
-<main>
-    <h1>Magnolia Bliss Magazine</h1>
+{{!-- <header class='hero'>
+    {{> nav}}
+    <div class="hero-text-box">
+        <h1 class='hero-header'>
+            <span class="hero-header--main">Magnolia Bliss</span>
+            <span class="hero-header--sub">Magazine</span> 
+        </h1>
+    </div>
+</header> --}}
+
+
+    
     {{#if session.loggedIn}}
-        <section>
-            <article>
-                <h4>This Edition's Featured Article</h4>
+        {{> heroSmall}}
+        <main class='container'>
+            <section class='sm-section-left'>
+                <h3>This Edition's Featured Article</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
                     deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
                     odit!
                 </p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
                     deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-                    odit! [Continue reading in the <a href="#">magazine</a>]
+                    odit!
                 </p>
-            </article>
+                <p>Continue reading in the <a href="#">magazine.</a></p>
+            </section>
 
-            <article>
-                <h4>This Editon's Featured Author</h4>
+            <section class='sm-section-right'>
+                <h3>This Editon's Featured Author</h3>
                 <img src="https://idolcelebs.com/wp-content/uploads/2018/09/Stephen-King.jpg" alt="featured author">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
                     deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
                     odit!
                 </p>
-            </article>
+            </section>
+        </main>
             
-            
-        </section>
     {{else}}
-        <section>
-            {{> login}}
-        </section>
-        <section id='sampleArticle'>
-            <h3>Sample Article</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-                odit!
-            </p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-                odit!
-            </p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
-                deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
-                odit!...
-            </p>
-            <p>To read the entire article and many more <a href='/subscribe'>subscribe</a> today!</p>
-        </section>
+        <header class='hero'>
+        {{> nav}}
+        <div class="hero-text-box">
+            <h1 class='hero-header'>
+                <span class="hero-header--main">Magnolia Bliss</span>
+                <span class="hero-header--sub">Magazine</span> 
+            </h1>
+        </div>
+        </header>
+        <main class='container'>
+            <aside class='med-aside-left'>
+                {{> login}}
+            </aside>
+            <section class='med-section-right' id='sampleArticle'>
+                <h3>Sample Article</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit!
+                </p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit!
+                </p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, expedita id nostrum porro, iste
+                    deserunt esse asperiores culpa quas fuga, velit sapiente! Ipsam accusantium ipsa impedit quasi alias hic
+                    odit!...
+                </p>
+                <p>To read the entire article and many more <a href='/subscribe'>subscribe</a> today!</p>
+            </section>
+        </main>
     {{/if}}
     
-</main>
+{{> footer}}

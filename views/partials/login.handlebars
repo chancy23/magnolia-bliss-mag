@@ -1,18 +1,21 @@
-<div id="loginForm">
-    <h4>Login</h4>
-    <form>
-        <label for='loginEmail'>
-            Email:
-            <input type='email' name='loginEmail' id='email'>
-        </label>
-        <label for='loginPassword'>
-            Password:
-            <input type='password' name='loginPassword' id='password'>
-        </label>
-    
-        {{!TODO: -- make a show password feature --}}
+
+<h3 class='header-centered'>Login</h3>
+<form id='loginForm'>
+    <label class='row-form' for='loginEmail'>
+        Email:
+        <input type='email' name='loginEmail' id='email'>
+    </label>
+    <label class='row-form' for='loginPassword'>
+        Password:
+        <input type='password' name='loginPassword' id='password'>
+    </label>
+
+    {{!TODO: -- make a show password feature --}}
+    <div class='row-form row-buttons'>
         <button id='login'>Login</button>
-        <button id='cancelLogin'>Cancel</button>
-    </form>
-    <a href='/forgot-password'>Forgot Password</a>
+        <button class='cancel' id='cancelLogin'>Cancel</button>
+    </div>
+</form>
+<div id='forgotPasswordArea'>
+    <a class='link--small' href='/forgot-password'>Forgot Password</a>
 </div>

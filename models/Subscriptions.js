@@ -5,7 +5,7 @@ const SubscriptionSchema = new Schema({
     //this stuff will be passed back from the stripe API once they customer purchases a sub
     stripeId: {
         type: String,
-        require: true
+        required: true
     },
     subId: {
         type: String,
