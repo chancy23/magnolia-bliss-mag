@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Assistant|Overpass");
+@keyframes indicatorDown {
+  0% {
+    border-color: #fff; }
+  20% {
+    border-color: #fff; }
+  20.1%, 100% {
+    border-color: #EADB59; } }
+
 * {
   margin: 0;
   padding: 0;
@@ -6,21 +14,6 @@
 
 html {
   font-size: 62.5%; }
-
-button, .cancel {
-  border: none;
-  border-radius: 10rem;
-  color: white;
-  font-size: 1.4rem;
-  margin: 5px;
-  padding: 8px 20px;
-  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4); }
-
-.hero, .hero-small {
-  background-image: linear-gradient(to right bottom, rgba(202, 33, 73, 0.6), rgba(255, 92, 130, 0.6), rgba(252, 166, 186, 0.6)), url("/images/magnolia-bgi.jpeg");
-  background-size: cover;
-  background-position: center;
-  position: relative; }
 
 body {
   margin: 0;
@@ -34,26 +27,85 @@ body {
 p {
   padding: 0.5rem 0; }
 
-.container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 2rem;
-  height: 80vh;
-  margin: 15rem auto 0 auto;
-  max-width: 150rem;
-  width: calc(100vw - 5%); }
+h3 {
+  margin-bottom: 1.5rem; }
+
+.header-centered {
+  text-align: center; }
+
+.header-content {
+  display: block;
+  grid-column: span 12;
+  height: min-content; }
+
+input {
+  height: 2.3rem; }
+  input:focus {
+    border: 0.2rem solid #EADB59;
+    outline: none; }
+  input[type=radio] {
+    margin: 0 0.5rem 0 1rem;
+    padding-top: 0.5rem; }
+
+label {
+  margin-bottom: 1rem; }
+
+.message-display {
+  text-align: center; }
+
+button {
+  background-color: #E33B62;
+  border: none;
+  border-radius: 10rem;
+  color: white;
+  font-size: 1.4rem;
+  margin: 5px;
+  padding: 8px 20px;
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.4); }
+  button:hover {
+    box-shadow: 0 0.2rem 0.2prem rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    transition: all .2s; }
+  button:focus {
+    outline: none;
+    transform: translateY(1px);
+    box-shadow: 0 0.2rem 0.2prem rgba(0, 0, 0, 0.4); }
+  button:active {
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+    transform: translateY(0px); }
+  button:disabled {
+    background-color: #cac9c9;
+    box-shadow: none; }
+
+.btn-cancel {
+  background-color: #209DB3;
+  border: none;
+  border-radius: 10rem;
+  color: white;
+  font-size: 1.4rem;
+  margin: 5px;
+  padding: 8px 20px;
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.4); }
 
 footer {
   background-image: linear-gradient(to right, #E33B62, #991C54, #E33B62);
   color: #fff;
   display: flex;
+  float: left;
   height: 5rem;
   font-size: 1.2rem;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  margin-top: 10rem;
+  width: 100%; }
 
 .hero {
-  height: 95vh; }
+  background-image: linear-gradient(to right bottom, rgba(202, 33, 73, 0.6), rgba(255, 92, 130, 0.6), rgba(252, 166, 186, 0.6)), url("/images/magnolia-bgi.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 95vh;
+  margin-bottom: 6rem;
+  position: relative; }
 
 .hero-text-box {
   position: absolute;
@@ -64,17 +116,50 @@ footer {
 .hero-header {
   color: #fff;
   font-size: 8rem; }
+  .hero-header--main {
+    display: block;
+    text-align: center; }
+  .hero-header--sub {
+    display: block;
+    text-align: center; }
 
-.hero-header--main {
-  display: block;
-  text-align: center; }
-
-.hero-header--sub {
-  display: block;
-  text-align: center; }
+.indicator {
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  transform: rotate(45deg); }
+  .indicator span {
+    position: absolute;
+    box-sizing: border-box;
+    border: none;
+    display: block;
+    border-right: 0.2rem solid #fff;
+    border-bottom: 0.2rem solid #fff;
+    width: 100%;
+    height: 100%;
+    animation: indicatorDown 1s linear infinite; }
+    .indicator span:nth-child(1) {
+      top: -3rem;
+      left: -3rem;
+      animation-delay: 0s; }
+    .indicator span:nth-child(2) {
+      top: -2rem;
+      left: -2rem;
+      animation-delay: 0.2s; }
+    .indicator span:nth-child(3) {
+      top: -1rem;
+      left: -1rem;
+      animation-delay: 0.4s; }
 
 .hero-small {
-  height: 30vh; }
+  background-image: linear-gradient(to right bottom, rgba(202, 33, 73, 0.6), rgba(255, 92, 130, 0.6), rgba(252, 166, 186, 0.6)), url("/images/magnolia-bgi.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 30vh;
+  margin-bottom: 3rem;
+  position: relative; }
 
 .hero-text-box-small {
   position: absolute;
@@ -82,135 +167,59 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%); }
 
-.header-centered {
-  text-align: center; }
-
-.header-content {
-  display: block;
-  grid-column: span 12;
-  height: min-content; }
-
-h3 {
-  margin-bottom: 1.5rem; }
-
-input {
-  height: 2.3rem; }
-
-input:focus {
-  border: 0.2rem solid #EADB59;
-  outline: none; }
-
-label {
-  margin-bottom: 1rem; }
-
-#email,
-#emailCheck {
-  width: 25rem; }
-
-#password,
-#passwordCheck {
-  width: 22rem; }
-
-.sm-aside-left {
-  grid-column: 1 / 3; }
-
-.med-aside-left {
-  grid-column: 2 / 5; }
-
-.sm-section-left {
-  grid-column: 2 / 7; }
-
-.sm-section-right {
-  grid-column: 7 /12; }
-
-.sm-section-center {
-  grid-column: 5 / 9; }
-
-.med-section-right {
-  grid-column: 5 / 12; }
-
-.med-section-center {
-  grid-column: 4 / 10; }
-
-.lg-section-right {
-  grid-column: 3 / 13; }
-
-.lg-section-left {
-  grid-column: 1 / 10; }
-
-.lg-section-center {
-  grid-column: 2 / 12; }
-
-nav {
-  display: flex;
-  justify-content: right;
-  padding: 1.5rem; }
-  nav ul li {
-    list-style: none; }
-  nav li {
-    display: inline-flex;
-    padding-right: .5rem; }
-
-button {
-  background-color: #E33B62; }
-
-button:focus {
-  outline: none;
-  transform: translateY(-1px);
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4); }
-
-a:link,
-a:visited {
-  color: #991C54; }
-
-.nav-link,
-.nav-link:visited {
-  color: #fff;
-  text-decoration: none; }
-
-.nav-link:active {
-  color: #000; }
-
-.link--small {
-  font-size: 1.4rem; }
-
-#forgotPasswordArea {
-  display: flex;
-  justify-content: center; }
-
-.cancel {
-  background-color: #209DB3; }
-
-.row-form {
-  display: block; }
-
-.row-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem; }
-
-.plan-section {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 2rem;
-  margin-bottom: 3rem; }
-
-.plan-card {
-  border: 0.2rem solid grey; }
-
 img {
   width: 20rem;
   height: auto;
   margin: 0 1rem 1rem 0;
   float: left; }
 
-#magContainer {
-  position: relative;
-  width: 80rem;
-  height: 60rem;
-  margin-left: 2.5rem;
-  margin-bottom: 1rem; }
+.thumbnail-mag {
+  width: 15rem;
+  height: 20rem; }
+
+a:link,
+a:visited {
+  color: #991C54; }
+
+.link--small {
+  font-size: 1.4rem; }
+
+nav {
+  display: flex;
+  justify-content: right;
+  padding: 1.5rem; }
+  nav li {
+    display: inline-flex;
+    padding-right: 2rem;
+    line-height: 2rem; }
+    nav li a,
+    nav li a:visited {
+      color: #fff;
+      text-decoration: none; }
+    nav li a:hover,
+    nav li a.active {
+      color: #EADB59; }
+
+.plan--section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  margin-bottom: 3rem; }
+
+.plan--card {
+  border: 0.2rem solid grey;
+  border-radius: 0.6rem;
+  box-shadow: 0 0.6rem 0.6rem rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 1rem; }
+  .plan--card:nth-child(1) {
+    background-color: #991C54; }
+  .plan--card:nth-child(2) {
+    background-color: #EADB59; }
+  .plan--card:nth-child(3) {
+    background-color: #E33B62; }
+  .plan--card:nth-child(4) {
+    background-color: #209DB3; }
 
 /* Stripe Elements */
 .StripeElement {
@@ -223,16 +232,108 @@ img {
   background-color: white;
   box-shadow: 0 0.1rem 0.3rem 0 #e6ebf1;
   -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease; }
+  transition: box-shadow 150ms ease;
+  margin: 1rem 0; }
+  .StripeElement--focus {
+    box-shadow: 0 0.1rem 0.3rem 0 #cfd7df; }
+  .StripeElement--invalid {
+    border-color: #fa755a; }
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important; }
 
-.StripeElement--focus {
-  box-shadow: 0 0.1rem 0.3rem 0 #cfd7df; }
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(min-content, max-content);
+  grid-gap: 2rem;
+  height: 60vh;
+  margin: 0 auto 10rem auto;
+  max-width: 150rem;
+  width: calc(100vw - 5%);
+  justify-content: center; }
+  .container--magazine {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 60rem 40rem;
+    grid-gap: 4rem;
+    height: 100vh;
+    margin: 0 auto 10rem auto;
+    max-width: 150rem;
+    width: calc(100vw - 5%); }
 
-.StripeElement--invalid {
-  border-color: #fa755a; }
+.row-form {
+  display: block;
+  padding: 0 0 1rem 0; }
 
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important; }
+.row-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem 0; }
+
+.sm-aside-left {
+  grid-column: 2 / 4; }
+
+.sm-aside-right {
+  grid-column: 9 / 12; }
+
+.med-aside-left {
+  grid-column: 2 / 5; }
+
+.sm-section-left {
+  grid-column: 3 / 7; }
+
+.sm-section-right {
+  grid-column: 7 /11; }
+
+.sm-section-center {
+  grid-column: 5 / 9; }
+
+.med-section-left {
+  grid-column: 2 / 9; }
+
+.med-section-right {
+  grid-column: 5 / 12; }
+
+.med-section-center {
+  grid-column: 4 / 10; }
+
+.lg-section-right {
+  grid-column: 4 / 12; }
+
+.lg-section-left {
+  grid-column: 2 / 10; }
+
+.lg-section-center {
+  grid-column: 2 / 12; }
+
+#email,
+#emailCheck {
+  width: 25rem; }
+
+#password,
+#passwordCheck {
+  width: 22rem; }
+
+#magContainer {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.flipbook-main-wrapper {
+  background: #f5efb4 !important; }
+
+.flipbook-menu-btn {
+  color: #83dae9 !important; }
+
+.flipbook-currentPageHolder {
+  color: #646363 !important; }
+
+#subscribeStart,
+#checkCustomer,
+#createAcct,
+#forgotPasswordArea {
+  display: block;
+  text-align: center; }
 
 @media only screen and (max-width: 767px) {
   .sm-aside-left,
@@ -241,5 +342,6 @@ img {
   .med-aside-right,
   .sm-section-left,
   .sm-section-right,
-  .med-section-right {
+  .med-section-right,
+  .lg-section-center {
     grid-column: span 12; } }

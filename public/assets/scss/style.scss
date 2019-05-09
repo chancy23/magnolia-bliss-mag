@@ -1,327 +1,33 @@
 @import url('https://fonts.googleapis.com/css?family=Assistant|Overpass');
 
-$body-bgc: #f5f5f5;
-$modal-bgc: #FF9389;
-$primary-font-color: #646363;
-$hero-font-color: #E33B62;
-$primary-button-color: #E33B62;
-// $secondary-button-color: #c5c4c4;
-$secondary-button-color: #209DB3;
-$tertiary-color: #EADB59;
-$link-color:  #991C54;
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/variables';
 
-// #238799, #209DB3, #EADB59, #991C54
+@import 'base/animations'; 
+@import 'base/base';
+@import 'base/typography';
+@import 'base/utilities';
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import 'components/button';
+@import 'components/footer';
+@import 'components/heroLarge';
+@import 'components/heroSmall';
+@import 'components/image';
+@import 'components/link'; 
+@import 'components/nav';
+@import 'components/plans';
+@import 'components/stripe'; 
 
-html {
-    font-size: 62.5%
-}
+@import 'layout/container';
+@import 'layout/rows';
+@import 'layout/sections'; 
 
-%button-shared {
-    border: none;
-    border-radius: 10rem;
-    color: white;
-    font-size: 1.4rem;
-    margin: 5px;
-    padding: 8px 20px;
-    box-shadow: 0 0.2rem 0.2rem rgba(0,0,0,.4);
-}
+@import 'pages/login';
+@import 'pages/magazine';
+@import 'pages/subscribe';
 
-%hero-shared {
-    background-image: linear-gradient(
-        to right bottom, 
-        rgba(202, 33, 73, 0.6), 
-        rgba(255, 92, 130, 0.6),
-        rgba(252, 166, 186, 0.6)),
-    url('/images/magnolia-bgi.jpeg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
 
-body {
-    margin: 0;
-    background: $body-bgc;
-    color: $primary-font-color;
-    font-family: 'Overpass', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.5;
-    color: #777;
-    // justify-content: center;
-}
-
-p {
-    padding: 0.5rem 0;
-}
-
-.container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    // grid-auto-rows: minmax(100vh, auto);
-    grid-gap: 2rem;
-    height: 80vh;
-    margin: 15rem auto 0 auto;
-    max-width: 150rem;
-    width: calc(100vw - 5%);
-}
-
-footer {
-    // background-color: $primary-button-color;
-    background-image: linear-gradient(to right, $primary-button-color, $link-color, $primary-button-color);
-    color: #fff;
-    display: flex;
-    height: 5rem;
-    font-size: 1.2rem;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero {
-    @extend %hero-shared;
-    height: 95vh;
-}
-
-.hero-text-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.hero-header {
-    color: #fff;
-    font-size: 8rem;
-}
-
-.hero-header--main {
-    display: block;
-    text-align: center;
-
-}
-
-.hero-header--sub {
-    display: block;
-    text-align: center;
-
-}
-
-.hero-small {
-    @extend %hero-shared;
-    height: 30vh;
-}
-
-.hero-text-box-small {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.header-centered {
-    text-align: center;
-}
-
-.header-content {
-    display: block;
-    grid-column: span 12;
-    height: min-content;
-}
-
-h3 {
-    margin-bottom: 1.5rem;
-}
-
-input {
-    height: 2.3rem;
-}
-
-//TODO: not changing color
-input:focus {
-    border:  0.2rem solid $tertiary-color;
-    outline: none;
-}
-
-label {
-    margin-bottom: 1rem;
-}
-
-#email,
-#emailCheck {
-    width: 25rem;
-}
-
-#password,
-#passwordCheck {
-    width: 22rem;
-}
-
-.sm-aside-left {
-    grid-column: 1 / 3;
-}
-
-.med-aside-left {
-    grid-column: 2 / 5;
-}
-
-.sm-section-left {
-    grid-column: 2 / 7;
-}
-
-.sm-section-right {
-    grid-column: 7 /12;
-}
-
-.sm-section-center {
-    grid-column: 5 / 9
-}
-
-.med-section-right {
-    grid-column: 5 / 12;
-}
-
-.med-section-center {
-    grid-column: 4 / 10
-}
-
-.lg-section-right {
-    grid-column: 3 / 13;
-}
-
-.lg-section-left {
-    grid-column: 1 / 10;
-}
-
-.lg-section-center {
-    grid-column: 2 / 12;
-}
-
-nav {
-    display: flex;
-    justify-content: right;
-    padding: 1.5rem;
-    ul li {
-        list-style: none;
-    }
-    li {
-        display: inline-flex;
-        padding-right: .5rem;
-    }
-}
-
-button {
-    background-color: $primary-button-color;
-    @extend %button-shared;
-}
-
-button:focus {
-    outline: none;
-    transform: translateY(-1px);
-    box-shadow: 0 5px 5px rgba(0,0,0,.4);
-}
-
-a:link,
-a:visited {
-    color: $link-color;
-}
-
-.nav-link,
-.nav-link:visited {
-    color: #fff;
-    text-decoration: none;
-}
-
-// TODO: adjust so stays the color
-.nav-link:active {
-    color: #000;
-    
-}
-
-.link--small {
-    font-size: 1.4rem;
-}
-
-#forgotPasswordArea {
-    display: flex;
-    justify-content: center;
-}
-
-.cancel {
-    background-color: $secondary-button-color;
-    @extend %button-shared;
-}
-
-.row-form {
-    display: block
-}
-
-.row-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-.plan-section {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.plan-card {
-    border: 0.2rem solid grey;
-
-}
-
-img {
-    width: 20rem;
-    height: auto;
-    margin: 0 1rem 1rem 0;
-    float: left;
-    // margin: 0 calc(-50vw +50)
-}
-
-#magContainer {
-    position: relative;
-    width: 80rem;
-    height: 60rem;
-    margin-left: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-/* Stripe Elements */
-.StripeElement {
-    box-sizing: border-box;
-    width: 40rem;
-    height: 4rem;
-
-    padding: 1rem 1.2rem;
-
-    border: 0.1rem solid transparent;
-    border-radius: 0.4rem;
-    background-color: white;
-
-    box-shadow: 0 0.1rem 0.3rem 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
-}
-  
-.StripeElement--focus {
-    box-shadow: 0 0.1rem 0.3rem 0 #cfd7df;
-}
-
-.StripeElement--invalid {
-    border-color: #fa755a;
-}
-  
-.StripeElement--webkit-autofill {
-background-color: #fefde5 !important;
-}
 
 @media only screen and (max-width: 767px) {
     .sm-aside-left,
@@ -330,7 +36,8 @@ background-color: #fefde5 !important;
     .med-aside-right,
     .sm-section-left,
     .sm-section-right,
-    .med-section-right {
+    .med-section-right,
+    .lg-section-center {
         grid-column: span 12;
     }
 }

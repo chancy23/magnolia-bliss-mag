@@ -1,0 +1,17 @@
+#magContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.flipbook-main-wrapper {
+    background: lighten($tertiary-color, 20%) !important;
+}
+
+.flipbook-menu-btn {
+    color: lighten($secondary-button-color, 30%) !important;
+}
+
+.flipbook-currentPageHolder {
+    color: $primary-font-color !important;
+}

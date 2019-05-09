@@ -1,0 +1,47 @@
+.sm-aside-left {
+    grid-column: 2 / 4;
+}
+
+.sm-aside-right {
+    grid-column: 9 / 12;
+}
+
+.med-aside-left {
+    grid-column: 2 / 5;
+}
+
+.sm-section-left {
+    grid-column: 3 / 7;
+}
+
+.sm-section-right {
+    grid-column: 7 /11;
+}
+
+.sm-section-center {
+    grid-column: 5 / 9
+}
+
+.med-section-left {
+    grid-column: 2 / 9;
+}
+
+.med-section-right {
+    grid-column: 5 / 12;
+}
+
+.med-section-center {
+    grid-column: 4 / 10
+}
+
+.lg-section-right {
+    grid-column: 4 / 12;
+}
+
+.lg-section-left {
+    grid-column: 2 / 10;
+}
+
+.lg-section-center {
+    grid-column: 2 / 12;
+}

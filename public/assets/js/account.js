@@ -6,8 +6,7 @@ $(document).ready(function() {
     //this is the id from our database (not stripes)
     let customerSubId;
 
-    //not working if I say location.href === '/account'??? 
-    if (location.href === 'http://localhost:3000/account') {
+    if (location.pathname === '/account') {
         getSubDetails()
     }
 

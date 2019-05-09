@@ -1,14 +1,26 @@
-<main class='container'>
-    <section>
-        <h1>Current Issue</h1>
-        {{#if session.loggedIn}}
-        <div id='magContainer'></div>
-        {{else}}
-        <div>
+
+{{> heroSmall}}
+<main class='container--magazine'>
+    {{#if session.loggedIn}}
+        <section class='lg-section-center'>
+            <h1>Current Issue</h1>
+            <div id='magContainer'></div>
+        </section>
+        {{!-- <section class="sm-aside-right"> --}}
+        <section class="lg-section-center">
+            <h1>Past Issues</h1>
+            <div>
+                <img class='thumbnail-mag' src="https://timedotcom.files.wordpress.com/2015/12/adele-final.jpg" alt="issue 1">
+                <img class='thumbnail-mag' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp3MECty5aE7Je2bLEM0yvKeFnt0eRDUQUSARhup1h8tQI7A9N" alt="issue 2">
+                <img class='thumbnail-mag' src="https://cdn.mindful.org/603x783-oct-cover.png" alt="issue 3">
+            </div>
+        </section>
+    {{else}}
+        <section class='sm-section-center'>
             <p>Please sign in to view the magazine. If you don't have a subscription you can see our plans and subscribe
-                <a href="/subscribe">here</a>.</p>
+                <a href='/subscribe'>here</a>.</p>
             {{> login}}
-        </div>
-        {{/if}}
-    </section>
+        </section>
+    {{/if}} 
 </main>
+{{> footer}}

@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+    justify-content: right;
+    padding: 1.5rem;
+
+    li {
+        display: inline-flex;
+        padding-right: 2rem;
+        line-height: 2rem;
+    
+        a,
+        a:visited {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a.active {
+            color: $tertiary-color;
+        }
+    }
+}

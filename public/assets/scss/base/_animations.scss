@@ -1,0 +1,13 @@
+@keyframes indicatorDown {
+    0% {
+        border-color: #fff;
+    }
+
+    20% {
+        border-color: #fff;
+    }
+
+    20.1%, 100% {
+        border-color: $tertiary-color;
+    }
+}

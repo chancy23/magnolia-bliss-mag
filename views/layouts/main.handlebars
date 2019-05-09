@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Magnolia Bliss Magazine</title>
+    <link rel='shortcut icon' type='image/png' href='/images/magnolia_icon2.jpeg'>
 
-    <link rel="stylesheet" type="text/css" href="assets/css/flipbook.style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-    <link rel="stylesheet" href='assets/css/style.css'>
+    <link rel='stylesheet' type='text/css' href='assets/css/flipbook.style.css'>
+    <link rel='stylesheet' type='text/css' href='assets/css/font-awesome.css'>
+    <link rel='stylesheet' href='assets/css/style.css'>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    {{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script> --}}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    {{!-- <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script> --}}
    
    {{!-- for stripe tokenization --}}
-   <script src="https://js.stripe.com/v3/"></script>
+   <script src='https://js.stripe.com/v3/'></script>
 
-    {{!-- <script src="assets/js/flipbook.min.js"></script> --}}
-    <script src="assets/js/flipbook/flipbook.js"></script>
+    {{!-- <script src='assets/js/flipbook.min.js'></script> --}}
+    <script src='assets/js/flipbook/flipbook.js'></script>
     <script src='assets/js/main.js'></script> 
     <script src='assets/js/account.js'></script>
     <script src='assets/js/subscription.js'></script>
@@ -26,25 +27,6 @@
 
 </head>
 <body>
-    {{!-- <nav>
-        {{#if session.loggedIn}}
-            <ul>
-                <li><a href='/' class='nav-link' id='navHome'>Home</a></li>
-                <li><a href='/about' class='nav-link' id='navAbout'>About</a></li>
-                <li><a href='#' class='nav-link' id='lifeCoach'>Life Coaching</a></li>
-                <li><a href='/magazine' class='nav-link' id='navMagazine'>View Magazine</a></li>
-                <li><a href='/account' class='nav-link' id='navAdmin'>User Admin</a></li>
-                <li><button id='navLogoutBtn'>Logout</button></li> 
-            </ul>
-        {{else}}
-            <ul>
-                <li><a href='/' class='nav-link' id='navHome'>Home</a></li>
-                <li><a href='/about' class='nav-link' id='navAbout'>About</a></li>
-                <li><a href='/subscribe' class='nav-link' id='navSubscribe'>Subscribe</a></li> 
-            </ul>
-        {{/if}}
-    </nav> --}}
-    
     {{{ body }}} 
 </body>
 </html>

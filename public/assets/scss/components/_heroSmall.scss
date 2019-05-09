@@ -1,0 +1,11 @@
+.hero-small {
+    @include hero-shared(30vh, 3rem);
+    // height: 30vh;
+}
+
+.hero-text-box-small {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

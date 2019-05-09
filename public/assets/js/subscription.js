@@ -134,15 +134,15 @@ $(document).ready(function () {
 
     });
 
-    $('#determinePrevAcct').change(event => {
+    $('.prevAcct').click(event => {
         event.preventDefault();
-        if ($('#determinePrevAcct').val() === 'yes') {
-            //if yes is selcted then show #checkCustomer section
+        if (event.target.value === 'yes') {
+            //if yes is selceted then show #checkCustomer section
             $('#subscribeStart').hide();
             $('#createAcct').hide();
             $('#checkCustomer').show();
         }
-        else {
+        else if (event.target.value === 'no') {
             //if no then display the #createAcct section
             $('#subscribeStart').hide();
             $('#checkCustomer').hide();
@@ -182,9 +182,9 @@ $(document).ready(function () {
                 id = res._id;
                 //show the next section on the page and create the stripe element
                 $('#subscription').show();
-                createStripe()
-                //hide the create account section or make fields disabled
-                $('#checkCustomer').hide();
+                createStripe();
+                //disable the input and buttons on this form
+                $('#checkCustomerForm :input').prop('disabled', true);
             }
         })
         
@@ -235,9 +235,10 @@ $(document).ready(function () {
                     id = res._id;
                     //show the next section on the page and create the stripe element
                     $('#subscription').show();
-                    createStripe()
-                    //hide the create account section or make fields disabled
-                    $('#createAcct').hide();
+                    createStripe();
+                    //disable customer information form, but still display on page
+                    $('#customerDetails :input').prop('disabled', true);
+        
                 }
             })
         }

@@ -1,0 +1,29 @@
+button {
+    @include button-shared($primary-button-color);
+
+    &:hover {
+        box-shadow: 0 .2rem .2prem rgba($color-black,.4);
+        transform: translateY(-2px);
+        transition: all .2s;
+    }
+
+    &:focus {
+        outline: none;
+        transform: translateY(1px);
+        box-shadow: 0 .2rem .2prem rgba($color-black,.4);
+    }
+
+    &:active {
+        box-shadow: 0 0.4rem 0.4rem rgba($color-black,.4);
+        transform: translateY(0px);
+    }
+
+    &:disabled {
+        background-color: lighten($primary-font-color, 40%);
+        box-shadow: none;
+    }
+}
+
+.btn-cancel {
+    @include button-shared($secondary-button-color);
+}

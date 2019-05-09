@@ -2,6 +2,20 @@
 
 $(document).ready(function () {
     //====================================for the magazine flipbook=================================
+    // var options = {
+    //     pdfUrl:"example.pdf",
+    //     skin:"light"
+    //   }
+       
+    //   options.mobile = {
+    //     pageTextureSize:1500,
+    //     btnPrint:{enabled:false},
+    //     skin:"dark"
+    //   }
+
+    //make it so that it loops in images from a db based on the issue when a past issue is clicked on.
+    //in menatime just make it so that the past image opens a pdf version
+    
     $("#magContainer").flipBook({
         pages:[
             {src:"/images/book/page1.jpg", 
@@ -20,8 +34,49 @@ $(document).ready(function () {
         ],
         viewMode:'3d',
         // viewMode:'swipe',
-        layout: 2
+        layout: 2,
+        skin: 'light',
+        mobile: {
+            layout: 1,
+            pageTextureSize:500,
+            btnPrint:{enabled:false},
+            btnDownloadPages:{enabled:false},
+            btnDownloadPdf:{enabled:false}
+        },
+        google_plus: {enabled: false}
+        // pinterest: {
+        //     url: null,
+        //     image: "/images/book/page1.jpg",
+        //     description: null
+        // }
     });
+
+    // ==================================== Handle Nav Menu Links active state =================================
+
+    if (location.pathname === '/') {
+        $('.nav-link').removeClass('active');
+        $('#navHome').addClass('active');
+    };
+
+    if (location.pathname === '/about') {
+        $('.nav-link').removeClass('active');
+        $('#navAbout').addClass('active');
+    };
+
+    if (location.pathname === '/account') {
+        $('.nav-link').removeClass('active');
+        $('#navAdmin').addClass('active');
+    };
+
+    if (location.pathname === '/magazine') {
+        $('.nav-link').removeClass('active');
+        $('#navMagazine').addClass('active');
+    };
+
+    if (location.pathname === '/subscribe') {
+        $('.nav-link').removeClass('active');
+        $('#navSubscribe').addClass('active');
+    };
 
     // ==================================== Event Handlers for login/logout =================================
 

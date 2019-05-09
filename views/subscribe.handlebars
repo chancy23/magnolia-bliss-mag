@@ -3,38 +3,50 @@ new subscription instead of the create Account form. --}}
 {{> heroSmall}}
 <main class='container'>
     {{!-- <h1 class='header-content header-centered'>Subscribe to Magnolia Bliss</h1> --}}
-    <section class='lg-section-center plan-section'>
-        <div class='plan-card'>
-            <h4>Plan 1</h4>
+    <section class='lg-section-center plan--section'>
+        <div class='plan--card'>
+            <h4 class='header-centered'>Plan 1</h4>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
+                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
+                dolorem ad exercitationem labore.
+            </p>
         </div>
-        <div class='plan-card'>
-            <h4>Plan 2</h4>
+        <div class='plan--card'>
+            <h4 class='header-centered'>Plan 2</h4>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
+                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
+                dolorem ad exercitationem labore.
+            </p>
         </div>
-        <div class='plan-card'>
-            <h4>Plan 3</h4>
+        <div class='plan--card'>
+            <h4 class='header-centered'>Plan 3</h4>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
+                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
+                dolorem ad exercitationem labore.
+            </p>
         </div>
-        <div class='plan-card'> 
-            <h4>Plan 4</h4>
+        <div class='plan--card'>
+            <h4 class='header-centered'>Plan 4</h4>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
+                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
+                dolorem ad exercitationem labore.
+            </p>
         </div>
     </section>
     <section class='sm-section-center' id='subscribeStart'>
-        <h3 class='header-centered'>Let's Get Started</h3>
+        <h3>Let's Get Started</h3>
         <form>
-            <label for='determinePrevAcct'>
+            <label for='determinePrevAcct' class='row-form'>
                 Do you already have an account?
-                <select name='determinePrevAcct' id='determinePrevAcct'>
-                    <option value='' selected>Choose One...</option>
-                    <option value='yes'>Yes</option>
-                    <option value='no'>No</option>
-                </select>
+                <input type='radio' name='determinePrevAcct' class='prevAcct' value='yes'>Yes
+                <input type='radio' name='determinePrevAcct' class='prevAcct' value='no'>No
             </label>
-           
         </form>
     </section>
 
-    <section class='sm-section-center' id='checkCustomer'>
-         <h3 class='header-centered'>Enter the login details for your account.</h3>
-         <form>
+    <section class='sm-section-left' id='checkCustomer'>
+        <h3 class='header-centered'>Enter the login details for your account.</h3>
+        <form id='checkCustomerForm'>
             <label for='emailCheck' class='row-form'>
                 Email:
                 <input type="email" name='emailCheck' id='emailCheck'>
@@ -46,24 +58,26 @@ new subscription instead of the create Account form. --}}
             <div class='row-buttons'>
                 <button id='submitCheckCustomer'>Continue</button>
                 {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-                <button class='cancel' id='cancelCheck'>Cancel</button>
+                <button class='btn-cancel' id='cancelCheck'>Cancel</button>
             </div>
-        
+
         </form>
 
-        <div id='activeSubscriptionMsg'>
-            <p>It looks like you have an active subscription. <a href='/magazine'>Go to the Magazine</a><br/>
+        <div class='message-display' id='activeSubscriptionMsg'>
+            <p>It looks like you have an active subscription. <br> <a href='/magazine'>Go to the Magazine</a>
             </p>
         </div>
-        <div id='emailNotFoundMsg'>
-            <p>We are unable to find the email you provided. Please try again or create a <a id='createAcctLink' href='#'>New Account</a>.</p>
+        <div class='message-display' id='emailNotFoundMsg'>
+            <p>We are unable to find the email you provided. <br> Please try again or create a <a id='createAcctLink'
+                    href='#'>new Account</a>.</p>
         </div>
-        <div id='passwordNoMatchMsg'>
-            <p>The password you provided doesn't match our records. Please try again or you can<a href='/forgot-password'>reset it</a>.</p>
+        <div class='message-display' id='passwordNoMatchMsg'>
+            <p>The password you provided doesn't match our records. <br> Please try again or you can <a
+                    href='/forgot-password'>reset it</a>.</p>
         </div>
     </section>
 
-    <section class='sm-section-center' id='createAcct'>
+    <section class='sm-section-left' id='createAcct'>
         <h3 class='header-centered'>Create a New Account</h3>
         <form id='customerDetails'>
             <label for='firstName' class='row-form'>
@@ -91,40 +105,43 @@ new subscription instead of the create Account form. --}}
                 {{!-- on click of this button will send the customer details to the auth route and controller --}}
                 <button id='submitCreateCustomer'>Continue</button>
                 {{!-- this cancel would reset form only, nothing sent to DB yet --}}
-                <button class='cancel'id='cancelCustomer'>Cancel</button>
-            </div>   
+                <button class='btn-cancel' id='cancelCustomer'>Cancel</button>
+            </div>
         </form>
-        <div id='message'></div>
+        <div class='message-display' id='message'></div>
     </section>
 
-    <section class='sm-section-center' id='subscription'>
-        <h3 class='header-centered'>Pick Your Plan and Enter Your Payment Details</h3>
+    <section class='sm-section-right' id='subscription'>
+        <h3 class='header-centered'>Pick Your Plan and Pay</h3>
         <form id="payment-form">
-            <div class='form-row'>
+            <div class='row-form'>
                 <label for='planLevel'>
-                    Pick your Plan
+                    Pick your Plan:
                     <select name='planLevel' id='planLevel' required='true'>
                         <option value='' selected>Choose One...</option>
                         <option value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option>
                         <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
                         <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                        <option value='plan_EjZrkUO9p4p2uG'>Premium  - $49.99</option>
+                        <option value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
                     </select>
                 </label>
             </div>
-            <div class="form-row">
+            <div class="row-form">
                 <label for="card-element">
                     Credit or Debit Card:
                 </label>
                 <div id="card-element"></div>
                 <div id="card-errors" role="alert"></div>
             </div>
-            <button id='submitPayment'>Submit Payment</button>
+            <div class='row-buttons'>
+                <button id='submitPayment'>Submit Payment</button>
+                {{!-- this cancel would clear out the user from the db and reload page--}}
+                <button class='btn-cancel' id='cancelPayment'>Cancel</button>
+            </div>
         </form>
-        {{!-- this cancel would clear out the user from the db and reload page--}}
-        <button id='cancelPayment'>Cancel</button>
-        <div id='subErrorMessage'></div>
+        <div class='message-display' id='subErrorMessage'></div>
     </section>
 
 </main>
+
 {{> footer}}
