@@ -1,12 +1,13 @@
-footer {
+.footer {
+    position: relative;
+    z-index: 20;
     background-image: linear-gradient(to right, $primary-button-color, $link-color, $primary-button-color);
     color: #fff;
     display: flex;
-    float: left;
     height: 5rem;
     font-size: 1.2rem;
     justify-content: center;
     align-items: center;
-    margin-top: 10rem;
+    margin-top: 25rem;
     width: 100%
 }

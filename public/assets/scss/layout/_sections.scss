@@ -1,3 +1,27 @@
+.section-plans {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    margin-bottom: 3rem;
+
+    @include respond(tab-land) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 3rem;
+    }
+
+    @include respond(phone) {
+        grid-row-gap: 2;
+    }
+}
+
+#chooseAcctUpdate {
+    grid-row: 1 / 2;
+
+    @include respond(tab-port) {
+        grid-row: 2/3;
+    }
+}
+
 .sm-aside-left {
     grid-column: 2 / 4;
 }
@@ -8,14 +32,26 @@
 
 .med-aside-left {
     grid-column: 2 / 5;
+
+    @include respond(tab-port) {
+        grid-column: 1 / 6;  
+    }
 }
 
 .sm-section-left {
     grid-column: 3 / 7;
+
+    @include respond(tab-land) {
+        grid-column: 2 / 6;  
+    }
 }
 
 .sm-section-right {
     grid-column: 7 /11;
+
+    @include respond(tab-land) {
+        grid-column: 6 / 12; 
+    }
 }
 
 .sm-section-center {
@@ -28,6 +64,10 @@
 
 .med-section-right {
     grid-column: 5 / 12;
+
+    @include respond(tab-port) {
+        grid-column: 6 / 13; 
+    }
 }
 
 .med-section-center {
@@ -44,4 +84,33 @@
 
 .lg-section-center {
     grid-column: 2 / 12;
+}
+
+@include respond(tab-land) {
+    
+}
+
+@include respond(tab-port) {
+    .sm-section-center,
+    .sm-section-left,
+    .sm-section-right {
+        grid-column: span 12;
+        margin: 0 10rem;
+    }
+}
+
+@include respond(phone) {
+    .sm-aside-left,
+    .sm-aside-right,
+    .med-aside-left,
+    .med-aside-right,
+    .sm-section-center,
+    .sm-section-left,
+    .sm-section-right,
+    .med-section-right,
+    .lg-section-center {
+        grid-column: span 12;
+        margin: 0 2rem;
+    }
+
 }

@@ -1,21 +1,24 @@
 
-<h3 class='header-centered'>Login</h3>
-<form id='loginForm'>
-    <label class='row-form' for='loginEmail'>
-        Email:
-        <input type='email' name='loginEmail' id='email'>
-    </label>
-    <label class='row-form' for='loginPassword'>
-        Password:
-        <input type='password' name='loginPassword' id='password'>
-    </label>
+
+<form id='loginForm' class='form'>
+    <h3 class='header-centered margin-bottom-small'>Existing User's Login</h3>
+    <div class="form__group">
+        <input type='email' id='email' class='form__input' placeholder='Email'>
+        <label class='form__label' for='email'>Email</label>
+    </div>
+   
+    <div class="form__group">
+        <input type='password' id='password' class='form__input' placeholder='Password'>
+        <label class='form__label' for='password'>Password</label>  
+    </div>
 
     {{!TODO: -- make a show password feature --}}
     <div class='row-form row-buttons'>
         <button id='login'>Login</button>
         <button class='btn-cancel' id='cancelLogin'>Cancel</button>
     </div>
+    <div id='forgotPasswordArea'>
+        <a class='link--small' href='/forgot-password'>Forgot Password</a>
+    </div>
 </form>
-<div id='forgotPasswordArea'>
-    <a class='link--small' href='/forgot-password'>Forgot Password</a>
-</div>
+

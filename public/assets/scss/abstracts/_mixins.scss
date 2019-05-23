@@ -7,8 +7,8 @@
     border-radius: 10rem;
     color: white;
     font-size: 1.4rem;
-    margin: 5px;
-    padding: 8px 20px;
+    margin: .5rem;
+    padding: .8rem 2rem;
     box-shadow: 0 0.4rem 0.4rem rgba(0,0,0,.4);
 }
 
@@ -24,4 +24,46 @@
     height: $vh;
     margin-bottom: $bottom-margin;
     position: relative; 
+}
+
+//used in the cards for the opaque background images
+//use with a ::after puesdo class
+@mixin card-bgi($url) {
+    content: '';
+    background-image: url($url);
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: screen;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1; 
+}
+
+//1 em = 16px, take screen size and divide by 16 to get em units
+
+//media queries
+@mixin respond($breakpoint) {
+    @if $breakpoint == sm-phone {
+        @media only screen and (max-width:25em) { @content }; //400px
+    }
+
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) { @content }; //600px
+    }
+
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content }; // 900px
+    }
+
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) { @content }; //1200px
+    }
+
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content }; //1800px
+    }
 }

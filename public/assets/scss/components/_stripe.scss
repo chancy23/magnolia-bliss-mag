@@ -1,7 +1,8 @@
 /* Stripe Elements */
 .StripeElement {
     box-sizing: border-box;
-    width: 40rem;
+    width: auto;
+    max-width: 40rem;
     height: 4rem;
 
     padding: 1rem 1.2rem;

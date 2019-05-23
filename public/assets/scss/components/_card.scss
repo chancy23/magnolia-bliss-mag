@@ -1,0 +1,139 @@
+.card {
+    position: relative;
+    border: none;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    box-shadow: 0 0.6rem 0.6rem rgba($color-black, 0.3);
+    color: $primary-font-color;
+    font-size: 1.5rem;
+    height: 45rem;
+    padding: 1rem;
+    // transition: all .2s;
+
+    @include respond(phone) {
+        grid-column: span 12;
+        height: 40rem;
+        margin: 0 2rem;
+        //make height smaller her and on front and back
+    }
+
+    &__front {
+        height: 45rem;
+    
+        &--1::after {
+            @include card-bgi('/images/daffodil-card-bgi.jpg');
+        }
+
+
+        &--2::after {
+            @include card-bgi('/images/azalea-card-bgi.jpg');
+        }
+
+        &--3::after {
+            @include card-bgi('/images/dogwood-card-bgi.jpg');
+        }
+
+        &--4::after {
+            @include card-bgi('/images/magnolia-card-bgi.jpg');
+        }
+
+
+        @include respond(phone) {
+            height: 40rem;
+        }
+    }
+
+    &__header {
+        font-size: 2.8rem;
+        padding: 2rem;
+    }
+
+    &__details--front {
+        // margin-top: 1rem;
+        padding: 1rem;
+
+        ul {
+            list-style: none;
+            text-align: center;
+            
+            // &:not(:last-child) > li {
+            //     border-bottom: .1rem solid lighten($secondary-button-color, 30%);
+
+            // }
+
+            li {
+                padding-top: 1rem;
+
+                &:not(:last-child):after{
+                    content: '';
+                    display: block;
+                    margin: 0 auto;
+                    width: 50%;
+                    padding: .5rem 0;
+                    border-bottom: .1rem solid lighten($secondary-button-color, 30%);
+
+                    @include respond(phone) {
+                            width: 40%;
+                        }
+                }
+
+            }
+        }
+    }
+
+    &__price-section {
+        position: absolute;
+        width: 100%;
+        top: 79%;
+        left: 0;
+        display: block;
+        text-align: center;
+        background-color: rgba($tertiary-color, .2);
+    }
+
+    &__button {
+        position: absolute;
+        top: 87%;
+        left: 55%;
+
+        @include respond(phone) {
+            left: 75%;
+        }
+
+        @include respond(sm-phone) {
+            left: 70%;
+        }
+    }
+
+    &__back {
+        background-color: #fff;
+        overflow: auto;
+        height: 45rem;
+        padding: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        @include respond(phone) {
+            height: 40rem;
+        }
+    }
+
+    &__header--back {
+        position: absolute;
+        padding: 1rem;
+        top: 0;
+        left: 0;
+        background-color: rgba($secondary-button-color, .4);
+        display: block;
+        // margin-bottom: 1rem;
+        width: 100%;
+        height: 4rem;
+    }
+
+    &__details--back {
+        display: block;
+        margin-top: 4rem;
+    }
+
+}

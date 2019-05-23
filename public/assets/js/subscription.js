@@ -7,6 +7,8 @@ $(document).ready(function () {
     $('#emailNotFoundMsg').hide();
     $('#passwordNoMatchMsg').hide();
 
+    
+
     //set global variable for user ID or email to be used when subscription is sent to backend
     let email = '';
     let id = '';

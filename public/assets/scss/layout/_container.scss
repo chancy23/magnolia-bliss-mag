@@ -3,22 +3,14 @@
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: minmax(min-content, max-content);
     grid-gap: 2rem;
-    height: 60vh;
-    margin: 0 auto 10rem auto;
+    margin: 0 auto;
     max-width: 150rem;
     width: calc(100vw - 5%);
     justify-content: center;
 
     &--magazine {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: 60rem 40rem;
-        grid-gap: 4rem;
-        height: 100vh;
-        margin: 0 auto 10rem auto;
-        max-width: 150rem;
-        width: calc(100vw - 5%);
-        
+        grid-template-rows: 60rem auto;
+        grid-row-gap: 8rem;  
     }
 }
 

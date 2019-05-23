@@ -2,12 +2,12 @@
 {{> heroSmall}}
 
 <main class='container'>
-    {{!-- <h1>Manage Your Account</h1> --}}
+    {{!-- <h1 class='content-header'>Manage Your Account</h1> --}}
     {{#if session.loggedIn}}
         <aside id='chooseAcctUpdate'class='sm-section-left'>
-            <h3>Account Actions</h3>
-            <form id='chooseAction'>
-                <select id='accountAction'>
+            <form class='form form--small' id='chooseAction'>
+                <h3 class='header-centered margin-bottom-small'>Account Actions</h3>
+                <select class='form__select' id='accountAction'>
                 {{#if session.subscriptionData.pendingCancel}}
                     <option value='' selected>Choose One...</option>
                     <option value='accountInfo'>Update Account Information</option>
@@ -23,7 +23,7 @@
         </aside>
         {{!-- do a get to get this information from stripe --}}
         <section id='subOverview' class='sm-section-right'>
-            <h3>Account Overview</h3>
+            <h3 class='header-centered margin-bottom-small'>Account Overview</h3>
             <p>Reader: <span id='userName'></span></p>
             <p>Email (Login): <span id='userEmail'></span></p>
             <p>Current Plan: <span id='planName'></span></p>
@@ -37,23 +37,19 @@
         </section>
         
         <section id='updateAccount' class='sm-section-right'>
-            <h3>Update Account Details</h3>
-            <form id='updateAccountInfo'>
-                <div class="row-form">
-                    <label for="firstName" >
-                        First Name:
-                        <input type='text' name='firstName' id='firstName'>
-                    </label>
-                    <label for="lastName">
-                        Last Name:
-                        <input type='text' name='lastName' id='lastName'>
-                    </label>
+            <form class='form' id='updateAccountInfo'>
+                <h3 class='header-centered margin-bottom-small'>Update Account Details</h3>
+                <div class="form__group">
+                    <input type='text' class='form__input' id='firstName'>
+                    <label for="firstName" class='form__label'>First Name</label>
                 </div>
-                <div class="row-form">
-                    <label for="email">
-                        Email (Login):
-                        <input type='email' name='email' id='email'>
-                    </label>
+                <div class="form__group">
+                    <input type='text' class='form__input' id='lastName'>
+                    <label for="lastName" class='form__label'>Last Name</label>
+                </div>
+                <div class="form__group">
+                    <input type='email' class='form__input' id='email'>
+                    <label for="email" class='form__label'>Email (Login)</label>
                 </div>
                 <div class="row-buttons">
                     {{!-- on click of this button will send the customer details to the auth route and controller --}}
@@ -65,9 +61,9 @@
         </section>
 
          <section id='updatePayment' class='sm-section-right'>
-            <h3>Update Payment Information</h3>
-            <form id='update-payment-form'>
-                <div class="row-form">
+            <form class='form' id='update-payment-form'>
+                <h3 class='header-centered margin-bottom-small'>Update Payment Information</h3>
+                <div class="form__group">
                     <label for="update-card-element">
                         Enter your new card information (Note: all fields are required):
                     </label>
@@ -86,19 +82,22 @@
         </section>
 
         <section id='changeSub' class='sm-section-right'>
-            <h3>Change your Subscription</h3>
-            <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
-            <form id='updateSub'>
-                <label for='selectNewPlan' class='row-form'>
-                    Select Your Plan:
-                    <select name='selectNewPlan' id='selectNewPlan' required='true'>
+            
+            <form class='form' id='updateSub'>
+                <h3 class=' header-centered margin-bottom-small'>Change your Subscription</h3>
+                <div class="form__group">
+                    <select class='form__select' id='selectNewPlan' required>
                         <option value='' selected>Choose One...</option>
                         <option id='plan_EpHZkxOiWmpiQR' value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option> 
                         <option id='plan_EjZolXa1xLHMFw' value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option> 
                         <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
                         <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
-                    </select>
-                </label>
+                        </select>
+                    <label for='selectNewPlan' class='form__label-select'>Select Your Plan</label>
+                </div>
+                <div>
+                    <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
+                </div>
                 <div class='row-buttons'>
                     <button id='submitPlanChange'>Change Plan</button>
                     <button class='btn-cancel'>Cancel</button>
@@ -108,13 +107,15 @@
 
         {{!-- if choose cancel plan, show verbiage stating will be active until end of current paid period --}}
         <section id='cancellation' class='sm-section-right'>
-            <h3>Cancel Your Subscription</h3>
+            <h3 class='header-centered margin-bottom-small'>Cancel Your Subscription</h3>
             <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
                 until the end of your current payment period. At that time your access to the magazine will end and you will
                 lose any unused coaching sessions.</p>
             <div class="row-buttons">
                 <button id='submitCancellation'>I Agree (Cancel my Subscription)</button>
-                <button class='btn-cancel'>Cancel</button>
+            </div>
+            <div class="row-buttons">
+                <button class='btn-cancel'>Keep My Subscription Active</button>
             </div>
         </section>
     {{else}}

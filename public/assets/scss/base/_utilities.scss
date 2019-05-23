@@ -1,0 +1,25 @@
+.clickable {
+    cursor: pointer;
+}
+
+.header-centered {
+    text-align: center;
+}
+
+.header-content {
+    display: block;
+    grid-column: span 12;
+    height: min-content;
+}
+
+.message-display {
+    text-align: center;
+}
+
+.margin-top-med {
+    margin-top: 6rem;
+}
+
+.margin-bottom-small {
+    margin-bottom: 1.5rem;
+}

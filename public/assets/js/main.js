@@ -1,6 +1,8 @@
 // import { format } from "url";
 
 $(document).ready(function () {
+
+    $('#detailsDaffodil, #detailsAzalea, #detailsDogwood, #detailsMagnolia').hide();
     //====================================for the magazine flipbook=================================
     // var options = {
     //     pdfUrl:"example.pdf",
@@ -145,6 +147,32 @@ $(document).ready(function () {
                 location.href = '/';
             }
         })
+    });
+
+    // ========================other event handlers ===========================================
+
+    //click on animated arrow on main page to go see main page content
+    $('.indicator').click(() => {
+        $('html, body').animate({
+            scrollTop: $('#sampleArticle').offset().top
+        }, 500);
+    });
+
+    //show and hide details back of card for plans on main and subscription pages
+    $('#showDaffodilDetails, #hideDaffodilDetails').click(() => {
+        $('#detailsDaffodil').slideToggle('fast');
+    });
+
+    $('#showAzaleaDetails, #hideAzaleaDetails').click(() => {
+        $('#detailsAzalea').slideToggle('fast');
+    });
+
+    $('#showDogwoodDetails, #hideDogwoodDetails').click(() => {
+        $('#detailsDogwood').slideToggle('fast');
+    });
+
+    $('#showMagnoliaDetails, #hideMagnoliaDetails').click(() => {
+        $('#detailsMagnolia').slideToggle('fast');
     });
     
 })

@@ -27,3 +27,26 @@ button {
 .btn-cancel {
     @include button-shared($secondary-button-color);
 }
+
+.btn-close {
+    color: $white-font-color;
+    cursor: pointer;
+    font-size: 2rem;
+    position: absolute;
+    top: .5rem;
+    right: 1rem; 
+}
+
+.btn-info {
+    background-color: transparent;
+    border-bottom: .2rem solid $primary-button-color;
+    border-radius: 0;
+    box-shadow: none;
+    color: $primary-font-color;
+    padding: 1rem .5rem;
+
+    &:hover {
+        background-color: $primary-button-color;
+        color: $white-font-color;
+    }
+}

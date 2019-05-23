@@ -4,40 +4,27 @@
 @import 'abstracts/mixins';
 @import 'abstracts/variables';
 
-@import 'base/animations'; 
+@import 'base/animations';
 @import 'base/base';
 @import 'base/typography';
 @import 'base/utilities';
 
 @import 'components/button';
+@import 'components/card';
 @import 'components/footer';
+@import 'components/form';
 @import 'components/heroLarge';
 @import 'components/heroSmall';
 @import 'components/image';
 @import 'components/link'; 
 @import 'components/nav';
-@import 'components/plans';
 @import 'components/stripe'; 
 
 @import 'layout/container';
 @import 'layout/rows';
 @import 'layout/sections'; 
 
+@import 'pages/account';
 @import 'pages/login';
 @import 'pages/magazine';
 @import 'pages/subscribe';
-
-
-
-@media only screen and (max-width: 767px) {
-    .sm-aside-left,
-    .sm-aside-right,
-    .med-aside-left,
-    .med-aside-right,
-    .sm-section-left,
-    .sm-section-right,
-    .med-section-right,
-    .lg-section-center {
-        grid-column: span 12;
-    }
-}

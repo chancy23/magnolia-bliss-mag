@@ -1,31 +1,75 @@
 .hero {
     @include hero-shared(95vh, 6rem);
     // height: 95vh;
-}
 
-.hero-text-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
-.hero-header {
-    color: #fff;
-    font-size: 8rem;
+    // &__logo-wrapper {
+    //     width: 100%;
+    //     display: block;
 
-    &--main {
-        display: block;
-        text-align: center;
-    
+    //     &--small {
+    //         width: 50%;
+    //         height: 10rem;
+    //         display: inline-block
+    //     }
+    // }
+
+    &__logo-svg {
+
+        &--large {
+            width: 45%;
+            position: absolute;
+            top: 53%;
+            left: 43%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        &--small {
+            width: 30%;
+            position: absolute;
+            top: 65%;
+            left: 44%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
     }
-    
-    &--sub {
-        display: block;
-        text-align: center;
-    
+
+    &__logo-svg-animated {
+
+        &--large {
+            width: 30%;
+            position: absolute;
+            top: 42%;
+            left: 68%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            // need a media query for small screens to increase width and positinging
+        }
+
+        &--small {
+            width: 20%;
+            position: absolute;
+            top: 43%;
+            left: 61%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+        }
     }
+
+    &__animated-svg {
+        stroke: $secondary-button-color;
+        fill: $secondary-button-color;
+        // change this amount in dev tools until all of the text is visible
+        //smaller values emit some of the outline
+        stroke-dasharray: 2500;
+        opacity: 1;
+        animation: logo-animation 2s cubic-bezier(0, .23, 1, .1);
+
+        // need a media query for small screens to increase width and positinging
+    }
+
 }
+
+
 
 .indicator {
     position: absolute;

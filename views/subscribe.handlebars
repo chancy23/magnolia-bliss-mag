@@ -2,59 +2,31 @@
 new subscription instead of the create Account form. --}}
 {{> heroSmall}}
 <main class='container'>
-    {{!-- <h1 class='header-content header-centered'>Subscribe to Magnolia Bliss</h1> --}}
-    <section class='lg-section-center plan--section'>
-        <div class='plan--card'>
-            <h4 class='header-centered'>Plan 1</h4>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
-                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
-                dolorem ad exercitationem labore.
-            </p>
-        </div>
-        <div class='plan--card'>
-            <h4 class='header-centered'>Plan 2</h4>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
-                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
-                dolorem ad exercitationem labore.
-            </p>
-        </div>
-        <div class='plan--card'>
-            <h4 class='header-centered'>Plan 3</h4>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
-                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
-                dolorem ad exercitationem labore.
-            </p>
-        </div>
-        <div class='plan--card'>
-            <h4 class='header-centered'>Plan 4</h4>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus sit cupiditate inventore debitis
-                quis repellendus libero quisquam nemo commodi possimus eligendi, explicabo esse minima eum? Placeat
-                dolorem ad exercitationem labore.
-            </p>
-        </div>
-    </section>
+    <h2 class='header-content header-centered'>1. Pick a Subscription Plan</h2>
+    {{> plans}}
     <section class='sm-section-center' id='subscribeStart'>
-        <h3>Let's Get Started</h3>
-        <form>
-            <label for='determinePrevAcct' class='row-form'>
-                Do you already have an account?
-                <input type='radio' name='determinePrevAcct' class='prevAcct' value='yes'>Yes
-                <input type='radio' name='determinePrevAcct' class='prevAcct' value='no'>No
-            </label>
+        <h1 class='header-content header-centered margin-bottom-small'>2. Create An Account</h1>
+        <form class='form'>
+            <div class="form__group">
+                <label for='determinePrevAcct' class='form__label-select'>Have you had an account with us before?</label>
+                <input type='radio' class='prevAcct form__input--radio' id='determinePrevAcct' value='yes'>Yes</input>
+                <input type='radio' class='prevAcct form__input--radio' id='determinePrevAcct' value='no'>No</input>
+            </div>
         </form>
     </section>
 
     <section class='sm-section-left' id='checkCustomer'>
-        <h3 class='header-centered'>Enter the login details for your account.</h3>
-        <form id='checkCustomerForm'>
-            <label for='emailCheck' class='row-form'>
-                Email:
-                <input type="email" name='emailCheck' id='emailCheck'>
-            </label>
-            <label for='passwordCheck' class='row-form'>
-                Password:
-                <input type="text" name='passwordCheck' id='passwordCheck'>
-            </label>
+        <form id='checkCustomerForm' class='form'>
+            <h3 class='header-centered margin-bottom-small'>Enter your Login Information</h3>
+            <div class="form__group">
+                <input type="email" class='form__input' id='emailCheck' placeholder='Email'>
+                <label for='emailCheck' class='form__label'>Email</label>
+            </div>
+            <div class="from__group">
+                <input type="text" class='form__input' id='passwordCheck' placeholder='Password'>
+                <label for='passwordCheck' class='form__label'>Password</label>
+            </div>
+            
             <div class='row-buttons'>
                 <button id='submitCheckCustomer'>Continue</button>
                 {{!-- this cancel would reset form only, nothing sent to DB yet --}}
@@ -64,43 +36,48 @@ new subscription instead of the create Account form. --}}
         </form>
 
         <div class='message-display' id='activeSubscriptionMsg'>
-            <p>It looks like you have an active subscription. <br> <a href='/magazine'>Go to the Magazine</a>
+            <p>It looks like you have an active subscription. <br> 
+                <a href='/magazine'>Go to the Magazine</a>
             </p>
         </div>
         <div class='message-display' id='emailNotFoundMsg'>
-            <p>We are unable to find the email you provided. <br> Please try again or create a <a id='createAcctLink'
-                    href='#'>new Account</a>.</p>
+            <p>We are unable to find the email you provided. <br> 
+                Please try again or create a 
+                <a id='createAcctLink'href='#'>new Account</a>.
+            </p>
         </div>
         <div class='message-display' id='passwordNoMatchMsg'>
-            <p>The password you provided doesn't match our records. <br> Please try again or you can <a
-                    href='/forgot-password'>reset it</a>.</p>
+            <p>The password you provided doesn't match our records. <br> 
+                Please try again or you can 
+                <a href='/forgot-password'>reset it</a>.
+            </p>
         </div>
     </section>
 
     <section class='sm-section-left' id='createAcct'>
-        <h3 class='header-centered'>Create a New Account</h3>
-        <form id='customerDetails'>
-            <label for='firstName' class='row-form'>
-                First Name:
-                <input type="text" name='firstName' id='firstName'>
-            </label>
-            <label for='lastName' class='row-form'>
-                Last Name:
-                <input type="text" name='lastName' id='lastName'>
-            </label>
-            <label for='email' class='row-form'>
-                Email:
-                <input type="email" name='email' id='email'>
-            </label>
-
-            <label for='password' class='row-form'>
-                Password:
-                <input type="text" name='password' id='password'>
-            </label>
-            <label for='validatePassword' class='row-form'>
-                Re-enter Password:
-                <input type='text' name='validatePassword' id='validatePassword'>
-            </label>
+        <form class='form' id='customerDetails'>
+            <h3 class='header-centered margin-bottom-small'>Create a New Account</h3>
+            <div class="from__group">
+                <input type="text" class='form__input' id='firstName' placeholder='First Name'>
+                <label for='firstName' class='form__label'>First Name</label>
+            </div>
+            <div class="form__group">
+                <input type="text" class='form__input' id='lastName' placeholder='Last Name'>
+                <label for='lastName' class='form__label'>Last Name</label>
+            </div>
+            <div class="form__group">
+                <input type="email" class='form__input' id='email' placeholder='Email'>
+                <label for='email' class='form__label'>Email</label>
+            </div>
+            <div class="form__group">
+                <input type="text" class='form__input' id='password' placeholder='Password'>
+                <label for='password' class='form__label'>Password</label>
+            </div>
+            <div class="form__group">
+                <input type='text' class='form__input' id='validatePassword' placeholder='Re-enter Password'>
+                <label for='validatePassword' class='form__label'>Re-enter Password</label>
+            </div>
+            <div class='message-display' id='message'></div>
             <div class='row-buttons'>
                 {{!-- on click of this button will send the customer details to the auth route and controller --}}
                 <button id='submitCreateCustomer'>Continue</button>
@@ -108,29 +85,26 @@ new subscription instead of the create Account form. --}}
                 <button class='btn-cancel' id='cancelCustomer'>Cancel</button>
             </div>
         </form>
-        <div class='message-display' id='message'></div>
     </section>
 
     <section class='sm-section-right' id='subscription'>
-        <h3 class='header-centered'>Pick Your Plan and Pay</h3>
-        <form id="payment-form">
-            <div class='row-form'>
-                <label for='planLevel'>
-                    Pick your Plan:
-                    <select name='planLevel' id='planLevel' required='true'>
-                        <option value='' selected>Choose One...</option>
-                        <option value='plan_EpHZkxOiWmpiQR'>Weekly - $10.00</option>
-                        <option value='plan_EjZolXa1xLHMFw'>Basic - $29.99</option>
-                        <option value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
-                        <option value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
-                    </select>
-                </label>
+        
+        <form class='form' id="payment-form">
+            <h3 class='header-centered margin-bottom-small'>Pick Your Plan and Pay</h3>
+            <div class='form__group'>
+                <select class='form__select' id='planLevel' required>
+                    <option value='' selected>Choose One...</option>
+                    <option value='plan_EpHZkxOiWmpiQR'>Daffodil - $5.99/mo</option>
+                    <option value='plan_EjZolXa1xLHMFw'>Azalea - $34.99/6 mos</option>
+                    <option value='plan_EjZrSsfFWBdXpv'>Dogwood - $64.99/yr</option>
+                    <option value='plan_EjZrkUO9p4p2uG'>Magnolia - $29.99/mo</option>
+                </select>
+                <label class='form__label-select' for='planLevel'>Pick your Plan</label>
+                <p>Review our <a href="#">Terms and Conditions</a></p>
             </div>
-            <div class="row-form">
-                <label for="card-element">
-                    Credit or Debit Card:
-                </label>
+            <div class="form__group">
                 <div id="card-element"></div>
+                <label class='form__label-stripe' for="card-element">Credit or Debit Card</label>
                 <div id="card-errors" role="alert"></div>
             </div>
             <div class='row-buttons'>

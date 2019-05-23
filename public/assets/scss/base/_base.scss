@@ -6,58 +6,18 @@
 }
 
 html {
-    font-size: 62.5%
+    font-size: 62.5%;
+
+    @include respond(phone) {
+        font-size: 50%;
+    }
 }
 
 body {
     margin: 0;
     background: $body-bgc;
-    color: $primary-font-color;
-    font-family: 'Overpass', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.5;
-    color: #777;
-    // justify-content: center;
 }
 
 p {
     padding: 0.5rem 0;
-}
-
-h3 {
-    margin-bottom: 1.5rem;
-}
-
-.header-centered {
-    text-align: center;
-}
-
-.header-content {
-    display: block;
-    grid-column: span 12;
-    height: min-content;
-}
-
-
-
-input {
-    height: 2.3rem;
-
-    &:focus {
-        border:  0.2rem solid $tertiary-color;
-        outline: none;
-    }
-
-    &[type=radio] {
-        margin: 0 0.5rem 0 1rem;
-        padding-top: 0.5rem;
-    }
-}
-
-label {
-    margin-bottom: 1rem;
-}
-
-.message-display {
-    text-align: center;
 }

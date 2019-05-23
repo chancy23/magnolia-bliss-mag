@@ -1,0 +1,87 @@
+.form {
+    background-color: $color-med-grey;
+    display: inline-block;
+    width: 100%;
+    padding: 2rem;
+    border-radius: $default-border-radius;
+    box-shadow: 0 .5rem 1.5rem rgba($color-black, .2);
+
+    &__group:not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
+
+    &__input, &__select{
+        background-color: rgba(#fff, .8);
+        border: none;
+        border-bottom:  0.2rem solid transparent;
+        border-radius: $default-border-radius;
+        color: inherit;
+        font-family: inherit;
+        font-size: 1.4rem;
+        height: 2.3rem;
+        padding: 1.5rem 1rem;
+        width: 100%;
+
+
+        &:focus {
+            border-bottom:  0.2rem solid $tertiary-color;
+            outline: none;  
+        }
+
+        &:focus:invalid {
+            border-bottom:  0.2rem solid red;
+        }
+
+        &::-webkit-input-placeholder {
+            color: lighten($primary-font-color, 35%);
+        }
+
+        &--radio {
+            margin: 0 0.5rem 0 1rem;
+            padding-top: 0.5rem;
+            transform: translateY(-.2rem);
+        }
+    }
+
+    &__label {
+        display: block;
+        font-size: 1.2rem;
+        margin-left: 1rem;
+        margin-top: .5rem;
+        transition: all .3s;
+    }
+
+    &__label-select {
+        display: block;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        margin-top: .5rem;
+    }
+
+    &__label-stripe {
+        display: block;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        margin-top: 0;
+    }
+
+    &__input:placeholder-shown + &__label {
+        //the opacity is what we can manipulate to make it dissappear and reappare below the input field
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+
+    &--small {
+        width: 60%;
+
+        @include respond(tab-land) {
+            width: 80%;
+        }
+
+        @include respond(tab-port) {
+            width: 100%;
+        }
+    }
+
+}

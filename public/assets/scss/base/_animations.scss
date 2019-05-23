@@ -11,3 +11,27 @@
         border-color: $tertiary-color;
     }
 }
+
+@keyframes logo-animation {
+    0% {
+        opacity: 0;
+        fill: none;
+        stroke-dashoffset: 2500;
+    }
+
+    30% {
+        opacity: 1;
+        fill: none;
+        stroke-dashoffset: 2500;
+    }
+
+    90% {
+        fill: rgba($secondary-button-color, 0);
+    }
+
+    100% {
+        opacity: 1;
+        fill: rgba($secondary-button-color, 1);
+        stroke-dashoffset: 0;
+    }
+}
