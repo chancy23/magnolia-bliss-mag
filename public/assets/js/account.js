@@ -209,8 +209,10 @@ $(document).ready(function() {
             data: planData
         })
         .then((res, err) => {
-            if(err === "success") {
+            console.log('res', res);
+            if(res.message === "plan change success") {
                 // TODO: change to modal later
+                
                 alert('Plan Changed Successfully!');
                 location.reload();
             }
@@ -244,7 +246,7 @@ $(document).ready(function() {
             if (res.pendingCancel === true) {
                 // TODO: change to modal later and include a prompt to verify they want to continue
                 alert('Cancelled Subscription Successfully. If you wish to reactivate your subscription, you can do so before your cycle end date.');
-                location.reload()
+                // location.reload()
             }
             else {
                 //TODO: change to modal later
