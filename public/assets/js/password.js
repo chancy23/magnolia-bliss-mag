@@ -25,10 +25,10 @@ $(document).ready(function() {
             }
             //else display error message.
             else {
-                alert("Your code is not valid or has expired. Please verify its the correct code, or complete a forgot password again.");
+                $('#PinMessage').empty().append('<p>Your code is not valid or has expired. ' + 
+                'Please verify its the correct code, or complete the forgot password steps again.</p>')
             }
 
-            
         })
     });
 
@@ -83,17 +83,35 @@ $(document).ready(function() {
                 console.log('res', res);
                 console.log('err', err);
                 if (res === 'password updated') {
-                    // TODO: make a modol or on page message
-                    alert('your password has been updated, please login to continue');
-                    location.href = '/';
+                     //logout modal (when the user hits the logout button change the display to block from hidden)
+                    const pwdResetSuccessModal = document.getElementById('pwdResetSuccessModal');
+                    //open modal
+                    pwdResetSuccessModal.style.display = 'block';
+
+                    //close modal when Close button is hit
+                    const closePwdSuccessBtn = document.getElementById('closePwdSuccess');
+                    //close modal when Close button is hit and redirect user to the home page
+                    closePwdSuccessBtn.onclick = function() {
+                        pwdResetSuccessModal.style.display = 'none';
+                        location.href = '/';
+                    };
+                    //close modal if clicked outside of modal and redirect to home page
+                    window.onclick = function(event) {
+                        if (event.target !== pwdResetSuccessModal) {
+                            pwdResetSuccessModal.style.display = 'none';
+                            location.href = '/';
+                        }
+                    };
                 }
                 else {
-                    errorMessage = $('<p>It looks like there was an error, please try again. If the problem persists, please contact the site administator</p>' + err)
+                    // removed the $() from around in case doesn't work later
+                    errorMessage = '<p>It looks like there was an error, please try again. If the problem persists, please contact the site administator</p>' + err;
                 }
             })
         }
         else {
-            errorMessage =$('<p>Your passwords do not match, please re-enter.</p>')
+            // removed the $() from around in case doesn't work later
+            errorMessage ='<p>Your passwords do not match, please re-enter.</p>';
         };
         //display the correct error message on page (remove any previous message first).
         $('#message').empty().append(errorMessage);

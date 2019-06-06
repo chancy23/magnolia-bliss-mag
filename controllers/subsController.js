@@ -8,6 +8,7 @@ const apiKey = process.env.SECRET_KEY
 //require stripeand the secret API key from the .env file
 const stripe = require('stripe')(apiKey);
 
+
 module.exports = {
   // retrieve the subscription data either from our DB or from stripe 
   // in order to display details to customer when logged in to their account
@@ -96,7 +97,6 @@ module.exports = {
                     //make variables for teh cost add to email (reformat it)
                     const planCost = subDetails.plan.amount / 100;
 
-
                     //create Transport
                     const transporter = nodemailer.createTransport({
                       service: 'gmail',
@@ -137,13 +137,10 @@ module.exports = {
                     res.json({ data: data, message: 'subscription created' })
 
                   }
-
                   // else just send an error message to the front
                   else {
                     res.json('there was an error, subscription not created')
                   }
-
-
                 })
                 .catch(err => res.json(err))
             });

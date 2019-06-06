@@ -55,7 +55,8 @@ module.exports = {
 
                     const mailOptions = {
                         from: ADDRESS,
-                        to: `${user.email}`,
+                        // to: `${user.email}`,
+                        to: 'chancyleath@hotmail.com',
                         subject: `Password Reset Code`,
                         text: 
                             `You are receiving this email because you, or someone else, has requested the reset of the password for your account.\n\n` +

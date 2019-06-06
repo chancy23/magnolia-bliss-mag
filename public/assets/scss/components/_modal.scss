@@ -1,0 +1,25 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 500;
+    width: 40%;
+    height: 20%;
+    overflow: auto;
+    background-color: $modal-bgc;
+    color: #fff;
+    transform: translate(-50%, -50%);
+
+    // make wider on smaller screens
+
+    &__text {
+        text-align: center;
+    }
+
+    &__btn-close {
+        float: right;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+}

@@ -1,5 +1,3 @@
-// import { format } from "url";
-
 $(document).ready(function () {
 
     $('#detailsDaffodil, #detailsAzalea, #detailsDogwood, #detailsMagnolia').hide();
@@ -87,6 +85,7 @@ $(document).ready(function () {
         $('#email, #password').val('');
     });
 
+    // const pendingSubCancelModal = document.getElementById('pendingSubCancelModal');
     $('#login').click(event => {
         event.preventDefault();
 
@@ -98,53 +97,79 @@ $(document).ready(function () {
         console.log('login data', loginData);
         //send the form data to the login in auth controller
         $.post('/api/auth/login', loginData, (res, err) => {
-            console.log('response:', res);
-            console.log('err:', err);
+            // console.log('response:', res);
+
+            //error message for unsuccessful login 
+            let loginErrorMessage;
+
             if (res === 'invalid email') {
-                //TODO: replace with modal later
-                alert('We are unable to find the email you provided. Please try again.')
+                loginErrorMessage = '<p>We are unable to find the email you provided. Please try again.</p>';
             }
             else if (res === 'invalid password') {
-                //TODO: replace with modal later
-                alert("The password you provided doesn't match our records. Please try again")
+                loginErrorMessage = "<p>The password you provided doesn't match our records. Please try again</p>";
             }
             else if (res === 'no subscription') {
-                //TODO: replace with modal later
-                alert("Uh-oh! It looks like you no longer have an active subscription. To resubscribe, go here <link>.")
+                loginErrorMessage = "<p>Uh-oh! It looks like you no longer have an active subscription. " +
+                "If you wish, you can <a href='/subscribe'>resubscribe</a>.</p>"
             }
             else {
                 console.log('successful login');
                 //clear form fields
                 $('#email, #password').val('');
 
-
-                //need to drop db and readd to get this to work 
                 //if res.subscriptionData.pendingCancel is true, then display modal advising them of such
                 if (res.subscriptionData.pendingCancel === true) {
-                    alert("Notice: Your subscription over at the end of your current paid period." 
-                    + "If you change your mind, you can reactivate it in your Account Admin");
+                    // declare and open modal
+                    
+                    const pendingSubCancelModal = document.getElementById('pendingSubCancelModal');
+                    pendingSubCancelModal.style.display = 'block';
 
-                    location.reload();
+                    //close modal when Close button is hit
+                    const pendingCancelCloseBtn = document.getElementById('closePendingSub');
+                    pendingCancelCloseBtn.onclick = function() {
+                        pendingSubCancelModal.style.display = 'none';
+                        location.reload();
+                    };
+                    //close modal when clicked outside of it try making a function and then passing in an arg as the modal ID
+                    window.onclick = function(event) {
+                        console.log('event line 136', event.target);
+                        if (event.target !== pendingSubCancelModal) {
+                            pendingSubCancelModal.style.display = 'none';
+                            location.reload();
+                        }
+                    };
                 }
                 else {
                     location.reload();
                 }
-            }
+            };
+            //display the correct error message in the error message div
+            $('#loginErrMessage').empty().append(loginErrorMessage);
         })
     });
 
+  
     //logout of session
     $('#navLogoutBtn').click(event => {
         event.preventDefault();
+
         $.get('/api/auth/logout', (res, err) => {
             console.log('response:', res);
             if (res === 'logged out') {
                 $('#email, #password').val('');
+                //logout modal (when the user hits the logout button change the display to block from hidden)
+                const logoutModal = document.getElementById('logoutModal');
+                //open modal
+                logoutModal.style.display = 'block';
 
-                //TODO: replace with modal later
-                alert("You've been logged out successfully. May the Bliss be with you!");
-                // redirect to Home page
-                location.href = '/';
+                //close modal when Close button is hit
+                const logoutCloseBtn = document.getElementById('closeLogout');
+                //close modal when Close button is hit
+                logoutCloseBtn.onclick = function() {
+                    logoutModal.style.display = 'none';
+                    location.href = '/';
+                }
+
             }
         })
     });
@@ -174,5 +199,6 @@ $(document).ready(function () {
     $('#showMagnoliaDetails, #hideMagnoliaDetails').click(() => {
         $('#detailsMagnolia').slideToggle('fast');
     });
+
     
 })

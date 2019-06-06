@@ -437,6 +437,25 @@ a:visited {
 .link--small {
   font-size: 1.4rem; }
 
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 500;
+  width: 40%;
+  height: 20%;
+  overflow: auto;
+  background-color: #FF9389;
+  color: #fff;
+  transform: translate(-50%, -50%); }
+  .modal__text {
+    text-align: center; }
+  .modal__btn-close {
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: 1rem; }
+
 nav {
   display: flex;
   justify-content: right;
