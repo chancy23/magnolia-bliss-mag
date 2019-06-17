@@ -32,26 +32,8 @@ new subscription instead of the create Account form. --}}
                 {{!-- this cancel would reset form only, nothing sent to DB yet --}}
                 <button class='btn-cancel' id='cancelCheck'>Cancel</button>
             </div>
-
+            <div class='message-display' id='accountStatusMsg'></div>
         </form>
-
-        <div class='message-display' id='activeSubscriptionMsg'>
-            <p>It looks like you have an active subscription. <br> 
-                <a href='/magazine'>Go to the Magazine</a>
-            </p>
-        </div>
-        <div class='message-display' id='emailNotFoundMsg'>
-            <p>We are unable to find the email you provided. <br> 
-                Please try again or create a 
-                <a id='createAcctLink'href='#'>new Account</a>.
-            </p>
-        </div>
-        <div class='message-display' id='passwordNoMatchMsg'>
-            <p>The password you provided doesn't match our records. <br> 
-                Please try again or you can 
-                <a href='/forgot-password'>reset it</a>.
-            </p>
-        </div>
     </section>
 
     <section class='sm-section-left' id='createAcct'>

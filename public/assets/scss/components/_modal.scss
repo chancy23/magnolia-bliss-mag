@@ -1,25 +1,93 @@
 .modal {
-    display: none;
+    display: none; 
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     z-index: 500;
-    width: 40%;
-    height: 20%;
-    overflow: auto;
-    background-color: $modal-bgc;
-    color: #fff;
-    transform: translate(-50%, -50%);
-
+    padding: 20rem 10rem;
+    width: 100%;
+    height: 100%;
+    // this sets the visible part of the screen to darken
+    background-color: rgba(0,0,0,0.6);
+   
     // make wider on smaller screens
+    @media only screen and (min-width: 75em)  {
+        padding: 30rem;
+    }
+
+    @include respond(lg-phone) {
+        padding: 10rem;
+    }
+
+    @include respond(phone) {
+        padding: 20rem 5rem;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-rows: repeat(3, min-content);
+        border-radius: $default-border-radius;
+        // this changes the color of the actual modal
+        background-color: $body-bgc;
+        color: $primary-font-color;
+
+    }
+
+    &__header {
+        background-color: rgba($secondary-button-color, .4);
+        padding: 1rem;
+
+        &--heading {
+            color: $white-font-color;
+        }
+    }
+
+    &__header-alert {
+        background-color: red;
+        padding: 1rem;
+    }
 
     &__text {
         text-align: center;
+        padding: 0.5rem 1rem;
+    }
+
+    &__footer {
+        padding: 1rem 1.5rem 1.5rem 0;
     }
 
     &__btn-close {
         float: right;
-        margin-right: 1rem;
-        margin-bottom: 1rem;
+        margin: 0;
+
+        background-color: transparent;
+        border-bottom: .2rem solid $secondary-button-color;
+        border-radius: 0;
+        box-shadow: none;
+        color: $primary-font-color;
+        padding: 1rem;
+
+        &:hover {
+            background-color: $secondary-button-color;
+            color: $white-font-color;
+        }
+    }
+
+    // TODO change red to something not so bright but still red
+    &__btn-confirm {
+        float: left;
+        margin-left: 1rem;
+
+        background-color: transparent;
+        border-bottom: .2rem solid red;
+        border-radius: 0;
+        box-shadow: none;
+        color: red;
+        padding: 1rem;
+
+        &:hover {
+            background-color: red;
+            color: $white-font-color;
+        }
     }
 }

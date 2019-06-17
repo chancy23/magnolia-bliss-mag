@@ -1,18 +1,18 @@
-<nav>
+<nav class='nav'>
     {{#if session.loggedIn}}
-        <ul>
-            <li><a href='/' id='navHome'>Home</a></li>
-            <li><a href='/about' id='navAbout'>About</a></li>
-            <li><a href='http://karrijmcclure.com/' rel='noreferrer' id='lifeCoach'>Life Coaching</a></li>
-            <li><a href='/magazine' id='navMagazine'>Magazine</a></li>
-            <li><a href='/account' id='navAdmin'>Manage</a></li>
-            <li><button id='navLogoutBtn'>Logout</button></li> 
+        <ul class='nav__list'>
+            <li class='nav__list-item'><a class='nav__link' href='/' id='navHome'>Home</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='/about' id='navAbout'>About</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='http://karrijmcclure.com/' rel='noreferrer' id='lifeCoach'>Life Coaching</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='/magazine' id='navMagazine'>Magazine</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='/account' id='navAdmin'>Manage</a></li>
+            <li class='nav__list-item'><button id='navLogoutBtn'>Logout</button></li> 
         </ul>
     {{else}}
-        <ul>
-            <li><a href='/' id='navHome'>Home</a></li>
-            <li><a href='/about' id='navAbout'>About</a></li>
-            <li><a href='/subscribe' id='navSubscribe'>Subscribe</a></li> 
+        <ul class='nav__list'>
+            <li class='nav__list-item'><a class='nav__link' href='/' id='navHome'>Home</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='/about' id='navAbout'>About</a></li>
+            <li class='nav__list-item'><a class='nav__link' href='/subscribe' id='navSubscribe'>Subscribe</a></li> 
         </ul>
     {{/if}}
 </nav>

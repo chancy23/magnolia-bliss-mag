@@ -1,22 +1,29 @@
-nav {
-    display: flex;
-    justify-content: right;
+.nav {
     padding: 1.5rem;
 
-    li {
-        display: inline-flex;
+    &__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+    }
+
+    &__list-item {
         padding-right: 2rem;
         line-height: 2rem;
-    
-        a,
-        a:visited {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        a:hover,
-        a.active {
-            color: $tertiary-color;
-        }
     }
+
+    &__link,
+    &__link:visited {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    &__link:hover {
+        color: lighten($tertiary-color, 15%);
+    }
+
+    &__link.active {
+        color: $tertiary-color;
+    }
+    
 }

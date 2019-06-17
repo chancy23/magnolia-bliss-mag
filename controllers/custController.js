@@ -34,11 +34,25 @@ module.exports = {
     //remove customer from our db if they cancel subscribing before paying.
     deleteCustomer: (req, res) => {
         console.log('id from sessions', req.session.customer._id);
-        db.Customer.findByIdAndDelete(req.session.customer._id)
-        .then(data => {
-            console.log('customer deleted');
-            res.status(200).json('deleted');
+        db.Customer.findById(req.session.customer._id)
+        .then(customer => {
+            //need to test out after 6/18 on sandy@test.com account
+            //set up new sub but cancel payment
+            if(customer.subscriptionData !== undefined) {
+                console.log('customer has previous sub Data, request ignored')
+                res.status(404).json('customer has subData, not deleted from db')
+            }
+            else {
+                db.Customer.findByIdAndDelete(req.session.customer._id)
+                //if the cusotmer as subscription data then return a message that not deleted
+                //if not sub data then delete customer from db
+                .then(data => {
+                    console.log('customer deleted');
+                    res.status(200).json('deleted');
+                })
+                .catch(err => res.json(err));
+            }
         })
-        .catch(err => res.json(err));
+        .catch(err => res.status(422).json(err));
     }
 }

@@ -80,12 +80,11 @@ $(document).ready(function () {
 
     // ==================================== Event Handlers for login/logout =================================
 
-    $('#cancelLogin').click(event => {
-        // TODO how to make it stop, when clicked puts a query string in the URL
+    $('#cancelLogin').click(() => {
+        // TODO how to make it stop, when clicked puts a "?" in the URL 
         $('#email, #password').val('');
     });
 
-    // const pendingSubCancelModal = document.getElementById('pendingSubCancelModal');
     $('#login').click(event => {
         event.preventDefault();
 
@@ -106,10 +105,10 @@ $(document).ready(function () {
                 loginErrorMessage = '<p>We are unable to find the email you provided. Please try again.</p>';
             }
             else if (res === 'invalid password') {
-                loginErrorMessage = "<p>The password you provided doesn't match our records. Please try again</p>";
+                loginErrorMessage = "<p>The password you provided doesn't match our records. <br> Please try again, or you can reset it by clicking the 'Forgot Password' link</p>";
             }
             else if (res === 'no subscription') {
-                loginErrorMessage = "<p>Uh-oh! It looks like you no longer have an active subscription. " +
+                loginErrorMessage = "<p>Uh-oh! It looks like you no longer have an active subscription. <br>" +
                 "If you wish, you can <a href='/subscribe'>resubscribe</a>.</p>"
             }
             else {
@@ -148,7 +147,6 @@ $(document).ready(function () {
         })
     });
 
-  
     //logout of session
     $('#navLogoutBtn').click(event => {
         event.preventDefault();
@@ -157,19 +155,7 @@ $(document).ready(function () {
             console.log('response:', res);
             if (res === 'logged out') {
                 $('#email, #password').val('');
-                //logout modal (when the user hits the logout button change the display to block from hidden)
-                const logoutModal = document.getElementById('logoutModal');
-                //open modal
-                logoutModal.style.display = 'block';
-
-                //close modal when Close button is hit
-                const logoutCloseBtn = document.getElementById('closeLogout');
-                //close modal when Close button is hit
-                logoutCloseBtn.onclick = function() {
-                    logoutModal.style.display = 'none';
-                    location.href = '/';
-                }
-
+                location.href = '/';
             }
         })
     });
@@ -179,7 +165,7 @@ $(document).ready(function () {
     //click on animated arrow on main page to go see main page content
     $('.indicator').click(() => {
         $('html, body').animate({
-            scrollTop: $('#sampleArticle').offset().top
+            scrollTop: $('#loginArea').offset().top
         }, 500);
     });
 
@@ -199,6 +185,4 @@ $(document).ready(function () {
     $('#showMagnoliaDetails, #hideMagnoliaDetails').click(() => {
         $('#detailsMagnolia').slideToggle('fast');
     });
-
-    
 })

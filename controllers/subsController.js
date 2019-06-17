@@ -352,7 +352,7 @@ module.exports = {
     )
       .then(customer => {
         // console.log('customer payment method updated', customer);
-        res.json('success')
+        res.json('payment method updated')
       })
       .catch(err => res.status(422).json(err))
   }

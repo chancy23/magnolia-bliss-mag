@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    //hide the payments section until after customer creates account 
+    //hide the payments section until after customer creates account;
     $('#activeSubscriptionMsg').hide()
     $('#checkCustomer').hide();
     $('#createAcct').hide();
@@ -92,16 +92,35 @@ $(document).ready(function () {
             console.log('res', res);
             if (res.message === 'subscription created') {
                 console.log('subscription created');
-                //TODO: change to a modal
-                alert('Thank you for subscribing to Magnolia Bliss Magazine. Enjoy!')
+               
+                //sub success modal
+                const subSuccessModal = document.getElementById('subSuccessModal');
+                //open modal
+                subSuccessModal.style.display = 'block';
+
+                //close modal when Close button is hit
+                const subSuccessCloseBtn = document.getElementById('closeSuccess');
+                
+                subSuccessCloseBtn.onclick = function() {
+                    subSuccessModal.style.display = 'none';
+                    location.href = '/magazine';
+                };
+
+                //close modal when clicked outside of it try making a function and then passing in an arg as the modal ID
+                window.onclick = function(event) {
+                    if (event.target !== subSuccessModal) {
+                        subSuccessModal.style.display = 'none';
+                        location.href = '/magazine';
+                    }
+                };
+
                 //clear form fields or hide forms or redirect to view the magazine
                 // $('.InputElement').addClass('StripeElement is-empty');
-                location.href = '/magazine';
             }
             else {
                 //display an error message and log the error message to db
                 console.log(err);
-                $('#subErrorMessage').append('<p>It looks like there was a problem creating your subscription in our system. Please try again. If you continue to have problems contact the site administrator. Details:</p>' + err);
+                $('#subErrorMessage').empty().append('<p>It looks like there was a problem creating your subscription in our system. Please try again. If you continue to have problems contact the site administrator. Details:</p>' + err);
             };
         });
     };
@@ -110,22 +129,27 @@ $(document).ready(function () {
     //cancel button clicks (clear forms) 
     $('#cancelCustomer').click(event => {
         event.preventDefault();
-        $('#firstName').val('')
-        $('#lastName').val('')
-        $('#email').val('')
-        $('#password').val('')
+        $('#firstName').val('');
+        $('#lastName').val('');
+        $('#email').val('');
+        $('#password').val('');
+        $('#validatePassword').val('');
+        location.reload();
     })
 
-    //if customer hits ancels before completing payment and subscribing
+    //if customer hits cancel before completing payment and subscribing
     $('#cancelPayment').click(event => {
         event.preventDefault();
         //send a delete to delete customer from DB and logout of sessions
+        //backend logic in place to determine if they have subscription data (from previous subscription)
+        //if so then won't delete customer from db.
         $.ajax('/api/customer/delete', {
             type: "DELETE",
         })
         .then(() => {
             $.get('/api/auth/logout', () => {
-                location.href = '/';
+                // location.href = '/';
+                location.reload();
             })
         })
     });
@@ -162,54 +186,54 @@ $(document).ready(function () {
         //send the email and passowrd to the db to check if customer is in it
         $.post('/api/auth/validateCredentials', validateData, (res, err) => {
             console.log('res:', res);
+
+            let acctStatusMsg;
+
             if (res.msg === 'active subscription found') {
-                $('#emailNotFoundMsg').hide();
-                $('#passwordNoMatchMsg').hide();
-                $('#activeSubscriptionMsg').show()
-                
+                acctStatusMsg = "<p>It looks like you already have an active subscription. <br> <a href='/magazine'>Go to the Magazine</a>.</p>"
             }
             else if (res === 'invalid email') {
-                $('#activeSubscriptionMsg').hide()
-                $('#passwordNoMatchMsg').hide();
-                $('#emailNotFoundMsg').show();
-                
+                acctStatusMsg =  "<p>We are unable to find the email you provided. Please try again or start over and create a new Account.</p>";
             }
             else if (res === 'invalid password') {
-                $('#activeSubscriptionMsg').hide()
-                $('#emailNotFoundMsg').hide();
-                $('#passwordNoMatchMsg').show();
+                acctStatusMsg = "<p>The password you provided doesn't match our records. <br> Please try again or you can <a href='/forgot-password'>reset it</a>.</p>";
             }
             else {
                 email = res.email;
                 id = res._id;
-                //show the next section on the page and create the stripe element
+                //show the next section on the page and create the stripe element;
                 $('#subscription').show();
                 createStripe();
-                //disable the input and buttons on this form
+                //disable the input and buttons on this form;
                 $('#checkCustomerForm :input').prop('disabled', true);
+                // change button and add class for css to format;
+                $('#submitCheckCustomer').empty().append('<i class="far fa-check-circle"></i>').addClass('after-submit');
+                $('#cancelCheck').hide();
             }
+            //show the correct error message on page;
+            $('#accountStatusMsg').empty().append(acctStatusMsg);
         })
         
     });
 
-    //when click the submit button to create an account
-    // TODO: send a check to the API to see if in our db, if so, use that info instead of new values below
+    //when click the submit button to create an account;
+    // TODO: send a check to the API to see if in our db, if so, use that info instead of new values below;
     $('#submitCreateCustomer').click(event => {
         event.preventDefault();
         let errorMessage;
         
-        //if any field is blank stop and display message (ToDo change to modal from alert)
+        //if any field is blank stop and display message (ToDo change to modal from alert);
         if ($('#firstName').val() === '' ||
         $('#lastName').val() === '' ||
         $('#email').val() === '' ||
         $('#password').val() === '' ||
         $('#validatePassword').val() === '') {
-            errorMessage = $('<p>All fields are required.</p>');
-            // alert("all fields are required");
+
+            errorMessage = '<p>All fields are required.</p>';
         }
         //if password and validate password don't match
         else if ($('#password').val().trim() !== $('#validatePassword').val().trim()) {
-            errorMessage = $('<p>Your passwords do not match. Please re-enter.</p>');
+            errorMessage = '<p>Your passwords do not match. Please re-enter.</p>';
         }
         else {
             const signupData = {
@@ -218,32 +242,36 @@ $(document).ready(function () {
                 email: $('#email').val().trim(),
                 password: $('#password').val().trim()
             };
+
             console.log('signup data from format', signupData);
 
-            //send the data to our signup API route
+            //send the data to our signup API route;
             $.post('/api/auth/signup', signupData, function (res, err) {
                 console.log('result:', res);
                 // console.log('status:', status);
 
                 if(res === 'invalid') {
-                    console.log('Email is already registered')
-                    // TODO: Change to modal
-                    alert('It looks like that email is already registered with us.');
-                    $('#createAcct').hide();
-                    $('#checkCustomer').show();
+                    console.log('Email is already registered');
+
+                    errorMessage = '<p>It looks like that email is already registered with us. <br>' +
+                    'Please use a different one, or if you can start over and select that you have had an account with us before.</p>';
+                    $('#message').empty().append(errorMessage);
                 }
                 else {
                     email = res.email;
                     id = res._id;
-                    //show the next section on the page and create the stripe element
                     $('#subscription').show();
                     createStripe();
-                    //disable customer information form, but still display on page
+                    // disable customer information form, but still display on page;
                     $('#customerDetails :input').prop('disabled', true);
-        
-                }
-            })
-        }
+
+                    // change class to display updated css properties;
+                    
+                    $('#submitCreateCustomer').empty().append('<i class="far fa-check-circle"></i>').addClass('after-submit');
+                    $('#cancelCustomer').hide();
+                };
+            });
+        };
         //display applicable error messages
         $('#message').empty().append(errorMessage);
     });

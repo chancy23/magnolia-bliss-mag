@@ -7,6 +7,11 @@
     @include respond(tab-land) {
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 3rem;
+        margin: 0 10rem;
+    }
+
+    @include respond(tab-port) {
+        margin: 0;
     }
 
     @include respond(phone) {
@@ -55,7 +60,12 @@
 }
 
 .sm-section-center {
-    grid-column: 5 / 9
+    grid-column: 5 / 9;
+
+    @include respond(tab-land) {
+        grid-column: 4 / 10;  
+    }
+
 }
 
 .med-section-left {
@@ -71,7 +81,12 @@
 }
 
 .med-section-center {
-    grid-column: 4 / 10
+    grid-column: 4 / 10;
+
+    @include respond(tab-land) {
+        grid-column: 2 / 6;  
+    }
+    
 }
 
 .lg-section-right {
@@ -84,10 +99,11 @@
 
 .lg-section-center {
     grid-column: 2 / 12;
-}
 
-@include respond(tab-land) {
-    
+    @include respond(phone) {
+        grid-column: span 12;
+            
+    }
 }
 
 @include respond(tab-port) {
@@ -107,8 +123,7 @@
     .sm-section-center,
     .sm-section-left,
     .sm-section-right,
-    .med-section-right,
-    .lg-section-center {
+    .med-section-right {
         grid-column: span 12;
         margin: 0 2rem;
     }

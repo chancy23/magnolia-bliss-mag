@@ -5,6 +5,8 @@ $(document).ready(function() {
     let planID;
     //this is the id from our database (not stripes)
     let customerSubId;
+    let periodEndDate;
+    let pendingCancel;
 
     if (location.pathname === '/account') {
         getSubDetails()
@@ -14,8 +16,13 @@ $(document).ready(function() {
     $('#updateAccount, #updatePayment, #changeSub, #cancellation').hide();
     
     // ======================== Functions ============================
+    //use this in the SetTimeout functions to reload page after various secess messages show
+    function pageReload() {
+        location.reload()
+    };
     
     function getSubDetails() {
+
         //get customer etails
         $.get('api/customer/details', (res, err) => {
             console.log('res', res);
@@ -24,33 +31,44 @@ $(document).ready(function() {
             lastName = res.lastName;
             email = res.email;
             customerSubId = res.subscriptionData._id;
+            pendingCancel = res.subscriptionData.pendingCancel;
             $('#userName').append(firstName + ' ' + lastName);
             $('#userEmail').append(email);
             $('#submitCancellation').attr('data-subid', res.subscriptionData.subId);
             $('#submitReactivate').attr('data-subid', res.subscriptionData.subId)
+
+            if (pendingCancel) {
+                $('#pendingCancelSection').show();
+                $('#nextPaymentArea').hide();
+            }
+            else {
+                $('#pendingCancelSection').hide();
+            }
         });
 
-       //get sub details
+        //get sub details
         $.get('/api/subscription/details', (res, err) => {
             console.log('sub res', res);
+
+            periodEndDate = res.periodEnd;
+            planID = res.planId;
             //update the account overview section with the details from the subscription
             $('#planName').append(res.planName);
-            $('#dueDate').append(res.periodEnd);
-            planID = res.planId;
+            $('.dueDate').append(periodEndDate);
         });
         // get invoice amount
-         $.get('/api/subscription/invoice', (res, err) => {
-            //  console.log('res from get invoice', res);
-             //if no upcoming invoice (pending cancellation)
-             if(res.statusCode === 404) {
-                $('#nextInvoiceAmt').append('0.00');
-             }
-             else {
+        $.get('/api/subscription/invoice', (res, err) => {
+            // console.log('res from get invoice', res);
+            //if no upcoming invoice (pending cancellation)
+            if(res.statusCode === 404) {
+                $('.nextInvoiceAmt').append('0.00');
+            }
+            else {
                 //make the number into DD.cc format
                 const nextInvoiceAmt = res.amountDue / 100;
-                $('#nextInvoiceAmt').append(nextInvoiceAmt);
+                $('.nextInvoiceAmt').append(nextInvoiceAmt);
             };
-        });
+        });   
     };
 
     function createStripe() {
@@ -105,7 +123,7 @@ $(document).ready(function() {
                 } else {
                     
                     console.log('token', result.token);
-                    // Send the token to your server (along with id and email from our DB)
+                    // Send the token to server
                     sendUpdate(result.token)
                 }
             });
@@ -113,7 +131,6 @@ $(document).ready(function() {
     };
     
     function sendUpdate(token) {
-        //need to send the token, planID, customer _id to /api/subscription/new
         const dataObj = {
             token: token.id
         };
@@ -123,19 +140,19 @@ $(document).ready(function() {
             type: "PUT",
             data: dataObj
         })
-        .then((err, res) => {
-            // console.log('err', err);
-            // console.log('res', res);
-            if (res === 'success') {
-                //TODO: create a success modal
+        .then((res, err) => {
+            if (res === 'payment method updated') {
+                
                 console.log('payment info updated');
+                $('#card-errors').empty().append('<p> Your payment information has been updated successfully.<p>');
+                setTimeout(pageReload, 5000);
                 //clear form fields or hide forms or redirect to view the magazine
                 // $('.InputElement').addClass('StripeElement is-empty');
-                // location.href = '/magazine';
             }
             else {
-                //TODO: load a failure modal
                 console.log(err)
+                $('#card-errors').empty().append('<p>There was an issue updating your payment information. Please try again later. If the problem persists please contact the site admin.<p>')
+                //TODO: send error to db
             }
         })
     };
@@ -211,15 +228,15 @@ $(document).ready(function() {
         .then((res, err) => {
             console.log('res', res);
             if(res.message === "plan change success") {
-                // TODO: change to modal later
+                $('#planUpdateMsg').empty().append('<p> Your subscription plan has been updated successfully.<p>');
+                //set a time out of 5 seconds then reload the page
+                setTimeout(pageReload, 5000);
                 
-                alert('Plan Changed Successfully!');
-                location.reload();
             }
             else {
                 console.log('error', err);
-                //TODO: change to modal later
-                alert('Something went wrong, please try again');
+                $('#planUpdateMsg').empty().append('<p>There was an issue updating your subscription. Please try again later. If the problem persists please contact the site admin.<p>')
+                //TODO: send error and code to db
             };
         });
     });
@@ -227,33 +244,53 @@ $(document).ready(function() {
     //when submit cancellation button send to backend tbe session subscription id (stripe)
     $('#submitCancellation').click(event => {
         event.preventDefault();
-        // TODO: change to modal with yes and no buttons
-        alert("Please confirm that you would like to cancel your Magnolia Bliss subscription and Life Coaching package.")
-        const subObj = {
-            subId: $('#submitCancellation').attr('data-subid'),
-            customerSubId: customerSubId
+
+        //sub cancellation confirm modal
+        const cancelConfirmModal = document.getElementById('cancelConfirmModal');
+        //open modal
+        cancelConfirmModal.style.display = 'block';
+
+        //close modal when Yes or No button is hit
+        const cancelConfirmYesBtn= document.getElementById('cancelConfirmYes');
+        const cancelConfirmNoBtn= document.getElementById('cancelConfirmNo');
+        
+        //if hit Yes then hide modal continue with cancellation
+        cancelConfirmYesBtn.onclick = function() {
+            cancelConfirmModal.style.display = 'none';
+
+            const subObj = {
+                subId: $('#submitCancellation').attr('data-subid'),
+                customerSubId: customerSubId
+            };
+    
+            console.log('sub ID Object', subObj);
+    
+            $.ajax('/api/subscription/cancel', {
+                type: 'PUT',
+                data: subObj
+            })
+            .then((res, err) => {
+                console.log('response from cancel sub:', res);
+                // console.log('err:', err);
+                if (res.pendingCancel === true) {
+                    $('#subCancelMsg').empty().append('<p> Your subscription has been cancelled successfully. If you wish to reactivate it, you can do so before your cycle end date on ' + periodEndDate + '.<p>');
+                    //set a time out of 5 seconds then reload the page
+                    setTimeout(pageReload, 5000);
+                }
+                else {
+                    console.log(err);
+                    $('#subCancelMsg').empty().append('<p>There was an issue cancelling your subscription. Please try again later. If the problem persists please contact the site admin.<p>')
+                    //TODO: send error and code to db
+                    
+                };
+            });
         };
 
-        console.log('sub ID Object', subObj);
+        //if no, then close modal but don't contiue to send cancellation to backend
+        cancelConfirmNoBtn.onclick = function() {
+            cancelConfirmModal.style.display = 'none';
+        };
 
-        $.ajax('/api/subscription/cancel', {
-            type: 'PUT',
-            data: subObj
-        })
-        .then((res, err) => {
-            console.log('response from cancel sub:', res);
-            // console.log('err:', err);
-            if (res.pendingCancel === true) {
-                // TODO: change to modal later and include a prompt to verify they want to continue
-                alert('Cancelled Subscription Successfully. If you wish to reactivate your subscription, you can do so before your cycle end date.');
-                // location.reload()
-            }
-            else {
-                //TODO: change to modal later
-                alert('Something went wrong, please try again');
-                // TODO: make a log in the error db
-            };
-        });
     });
 
     $('#submitReactivate').click(event => {
@@ -274,14 +311,14 @@ $(document).ready(function() {
             // console.log('err:', err);
             console.log('res:', res);
             if (res.pendingCancel === false) {
-                // TODO: change to modal later and include a prompt to verify they want to continue
-                alert('You have successfully reactivated your subscription. Enjoy!');
-                location.reload();
+                $('#subReactivateMsg').empty().append('<p>You have successfully reactivated your subscription. Enjoy!<p>');
+                //set a time out of 5 seconds then reload the page
+                setTimeout(pageReload, 5000)
             }
             else {
-                // console.log('error', err);
-                //TODO: change to modal later
-                alert('Something went wrong, please try again');
+                console.log(err);
+                $('#subReactivateMsg').empty().append('<p>There was an issue reactivating your subscription. Please try again later. If the problem persists please contact the site admin.<p>')
+                //TODO: send error and code to db
             };
         });
     });

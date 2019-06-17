@@ -98,7 +98,13 @@ button {
     transform: translateY(0px); }
   button:disabled {
     background-color: #cac9c9;
-    box-shadow: none; }
+    box-shadow: none;
+    transform: translateY(0); }
+
+.after-submit {
+  color: #E33B62;
+  font-size: 24px;
+  transition: all .2s; }
 
 .btn-cancel {
   background-color: #209DB3;
@@ -236,7 +242,7 @@ button {
     @media only screen and (max-width: 37.5em) {
       .card__button {
         left: 75%; } }
-    @media only screen and (max-width: 25em) {
+    @media only screen and (max-width: 26em) {
       .card__button {
         left: 70%; } }
   .card__back {
@@ -343,6 +349,9 @@ button {
   height: 95vh;
   margin-bottom: 6rem;
   position: relative; }
+  @media only screen and (max-width: 26em) {
+    .hero {
+      height: 80vh; } }
   .hero__logo-svg--large {
     width: 45%;
     position: absolute;
@@ -350,6 +359,16 @@ button {
     left: 43%;
     transform: translate(-50%, -50%);
     z-index: 20; }
+    @media only screen and (max-width: 65em) and (orientation: portrait) {
+      .hero__logo-svg--large {
+        width: 50%;
+        top: 52%;
+        left: 42%; } }
+    @media only screen and (max-width: 26em) {
+      .hero__logo-svg--large {
+        width: 55%;
+        left: 40%;
+        top: 50%; } }
   .hero__logo-svg--small {
     width: 30%;
     position: absolute;
@@ -357,24 +376,91 @@ button {
     left: 44%;
     transform: translate(-50%, -50%);
     z-index: 20; }
+    @media only screen and (max-width: 65em) and (orientation: portrait) {
+      .hero__logo-svg--small {
+        width: 38%; } }
+    @media only screen and (max-width: 56.25em) {
+      .hero__logo-svg--small {
+        width: 38%; } }
+    @media only screen and (max-width: 43.75em) {
+      .hero__logo-svg--small {
+        width: 35%;
+        left: 45%; } }
+    @media only screen and (max-width: 37.5em) {
+      .hero__logo-svg--small {
+        width: 50%; } }
+    @media only screen and (max-width: 26em) {
+      .hero__logo-svg--small {
+        left: 43%; } }
   .hero__logo-svg-animated--large {
     width: 30%;
     position: absolute;
     top: 42%;
     left: 68%;
     transform: translate(-50%, -50%) rotate(-20deg); }
+    @media only screen and (max-width: 65em) and (orientation: portrait) {
+      .hero__logo-svg-animated--large {
+        width: 35%;
+        top: 47%;
+        left: 69%; } }
+    @media only screen and (max-width: 26em) {
+      .hero__logo-svg-animated--large {
+        width: 40%;
+        top: 45%;
+        left: 70%; } }
   .hero__logo-svg-animated--small {
     width: 20%;
     position: absolute;
     top: 43%;
     left: 61%;
     transform: translate(-50%, -50%) rotate(-20deg); }
+    @media only screen and (max-width: 65em) and (orientation: portrait) {
+      .hero__logo-svg-animated--small {
+        width: 27%;
+        top: 51%;
+        left: 66%; } }
+    @media only screen and (max-width: 56.25em) {
+      .hero__logo-svg-animated--small {
+        top: 50%;
+        left: 68%;
+        width: 23%; } }
+    @media only screen and (max-width: 43.75em) {
+      .hero__logo-svg-animated--small {
+        top: 53%;
+        left: 63%;
+        width: 20%; } }
+    @media only screen and (max-width: 37.5em) {
+      .hero__logo-svg-animated--small {
+        top: 54%;
+        left: 66%; } }
+    @media only screen and (max-width: 26em) {
+      .hero__logo-svg-animated--small {
+        top: 52%;
+        left: 69%;
+        width: 35%; } }
   .hero__animated-svg {
     stroke: #209DB3;
     fill: #209DB3;
     stroke-dasharray: 2500;
     opacity: 1;
     animation: logo-animation 2s cubic-bezier(0, 0.23, 1, 0.1); }
+
+.hero-small {
+  background-image: linear-gradient(to right bottom, rgba(202, 33, 73, 0.6), rgba(255, 92, 130, 0.6), rgba(252, 166, 186, 0.6)), url("/images/magnolia-bgi.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 30vh;
+  margin-bottom: 3rem;
+  position: relative; }
+  @media only screen and (max-width: 56.25em) and (orientation: landscape) {
+    .hero-small {
+      height: 40vh; } }
+
+.hero-text-box-small {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
 
 .indicator {
   position: absolute;
@@ -383,6 +469,9 @@ button {
   width: 2rem;
   height: 2rem;
   transform: rotate(45deg); }
+  @media only screen and (max-width: 56.25em) {
+    .indicator {
+      left: 48%; } }
   .indicator span {
     position: absolute;
     box-sizing: border-box;
@@ -406,20 +495,6 @@ button {
       left: -1rem;
       animation-delay: 0.4s; }
 
-.hero-small {
-  background-image: linear-gradient(to right bottom, rgba(202, 33, 73, 0.6), rgba(255, 92, 130, 0.6), rgba(252, 166, 186, 0.6)), url("/images/magnolia-bgi.jpeg");
-  background-size: cover;
-  background-position: center;
-  height: 30vh;
-  margin-bottom: 3rem;
-  position: relative; }
-
-.hero-text-box-small {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%); }
-
 img {
   width: 45%;
   height: auto;
@@ -440,37 +515,82 @@ a:visited {
 .modal {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
   z-index: 500;
-  width: 40%;
-  height: 20%;
-  overflow: auto;
-  background-color: #FF9389;
-  color: #fff;
-  transform: translate(-50%, -50%); }
+  padding: 20rem 10rem;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); }
+  @media only screen and (min-width: 75em) {
+    .modal {
+      padding: 30rem; } }
+  @media only screen and (max-width: 43.75em) {
+    .modal {
+      padding: 10rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .modal {
+      padding: 20rem 5rem; } }
+  .modal__content {
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    border-radius: 0.2rem;
+    background-color: #f5f5f5;
+    color: #646363; }
+  .modal__header {
+    background-color: rgba(32, 157, 179, 0.4);
+    padding: 1rem; }
+    .modal__header--heading {
+      color: #fff; }
+  .modal__header-alert {
+    background-color: red;
+    padding: 1rem; }
   .modal__text {
-    text-align: center; }
+    text-align: center;
+    padding: 0.5rem 1rem; }
+  .modal__footer {
+    padding: 1rem 1.5rem 1.5rem 0; }
   .modal__btn-close {
     float: right;
-    margin-right: 1rem;
-    margin-bottom: 1rem; }
+    margin: 0;
+    background-color: transparent;
+    border-bottom: 0.2rem solid #209DB3;
+    border-radius: 0;
+    box-shadow: none;
+    color: #646363;
+    padding: 1rem; }
+    .modal__btn-close:hover {
+      background-color: #209DB3;
+      color: #fff; }
+  .modal__btn-confirm {
+    float: left;
+    margin-left: 1rem;
+    background-color: transparent;
+    border-bottom: .2rem solid red;
+    border-radius: 0;
+    box-shadow: none;
+    color: red;
+    padding: 1rem; }
+    .modal__btn-confirm:hover {
+      background-color: red;
+      color: #fff; }
 
-nav {
-  display: flex;
-  justify-content: right;
+.nav {
   padding: 1.5rem; }
-  nav li {
-    display: inline-flex;
+  .nav__list {
+    display: flex;
+    align-items: center;
+    list-style: none; }
+  .nav__list-item {
     padding-right: 2rem;
     line-height: 2rem; }
-    nav li a,
-    nav li a:visited {
-      color: #fff;
-      text-decoration: none; }
-    nav li a:hover,
-    nav li a.active {
-      color: #EADB59; }
+  .nav__link, .nav__link:visited {
+    color: #fff;
+    text-decoration: none; }
+  .nav__link:hover {
+    color: #f3ea9d; }
+  .nav__link.active {
+    color: #EADB59; }
 
 /* Stripe Elements */
 .StripeElement {
@@ -523,7 +643,11 @@ nav {
   @media only screen and (max-width: 75em) {
     .section-plans {
       grid-template-columns: repeat(2, 1fr);
-      grid-gap: 3rem; } }
+      grid-gap: 3rem;
+      margin: 0 10rem; } }
+  @media only screen and (max-width: 56.25em) {
+    .section-plans {
+      margin: 0; } }
   @media only screen and (max-width: 37.5em) {
     .section-plans {
       grid-row-gap: 2; } }
@@ -560,6 +684,9 @@ nav {
 
 .sm-section-center {
   grid-column: 5 / 9; }
+  @media only screen and (max-width: 75em) {
+    .sm-section-center {
+      grid-column: 4 / 10; } }
 
 .med-section-left {
   grid-column: 2 / 9; }
@@ -572,6 +699,9 @@ nav {
 
 .med-section-center {
   grid-column: 4 / 10; }
+  @media only screen and (max-width: 75em) {
+    .med-section-center {
+      grid-column: 2 / 6; } }
 
 .lg-section-right {
   grid-column: 4 / 12; }
@@ -581,6 +711,9 @@ nav {
 
 .lg-section-center {
   grid-column: 2 / 12; }
+  @media only screen and (max-width: 37.5em) {
+    .lg-section-center {
+      grid-column: span 12; } }
 
 @media only screen and (max-width: 56.25em) {
   .sm-section-center,
@@ -597,8 +730,7 @@ nav {
   .sm-section-center,
   .sm-section-left,
   .sm-section-right,
-  .med-section-right,
-  .lg-section-center {
+  .med-section-right {
     grid-column: span 12;
     margin: 0 2rem; } }
 

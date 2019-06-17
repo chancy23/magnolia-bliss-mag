@@ -15,25 +15,25 @@
                     <option value='' selected>Choose One...</option>
                     <option value='accountInfo'>Update Account Information</option>
                     <option value='paymentInfo'>Update Payment Information</option>
-                    <option value='plan'>Change Subscription</option>
+                    <option value='plan'>Change Subscription Plan</option>
                     <option value='cancel'>Cancel Subscription</option>
                 {{/if}}
                 </select>
             </form>
         </aside>
-        {{!-- do a get to get this information from stripe --}}
+
         <section id='subOverview' class='sm-section-right'>
             <h3 class='header-centered margin-bottom-small'>Account Overview</h3>
             <p>Reader: <span id='userName'></span></p>
             <p>Email (Login): <span id='userEmail'></span></p>
             <p>Current Plan: <span id='planName'></span></p>
-            {{#if session.subscriptionData.pendingCancel}}
-                <p>Your subscription ends on: <span id='dueDate'></span> <button id='submitReactivate'>Reactivate</button></p>
-                <p>Your estimated final charge will be: $ <span id='nextInvoiceAmt'></span></p>
-            {{else}}
-                <p>Your Next payment is on <span id='dueDate'></span> for $<span id='nextInvoiceAmt'></span> (estimated)</p>
-            {{/if}}
-            
+            <p id='nextPaymentArea'>Your Next payment is on <span class='dueDate'></span> for $<span class='nextInvoiceAmt'></span> (estimated)</p>
+           {{!-- show below when there is a pending cancel for customer in DB --}}
+            <div id="pendingCancelSection">
+                <p>Your subscription ends on: <span class='dueDate'></span> <button id='submitReactivate'>Reactivate</button></p>
+                <p>Your estimated final charge will be: $<span class='nextInvoiceAmt'></span></p>
+                <div id="subReactivateMsg"></div>
+            </div>
         </section>
         
         <section id='updateAccount' class='sm-section-right'>
@@ -78,6 +78,7 @@
                     <button id='submitUpdatePayment'>Update</button>
                     <button class='btn-cancel'>Cancel</button>
                 </div>
+                
             </form>
         </section>
 
@@ -93,13 +94,14 @@
                         <option id='plan_EjZrSsfFWBdXpv' value='plan_EjZrSsfFWBdXpv'>Mid Tier - $39.99</option>
                         <option id='plan_EjZrkUO9p4p2uG' value='plan_EjZrkUO9p4p2uG'>Premium - $49.99</option>
                         </select>
-                    <label for='selectNewPlan' class='form__label-select'>Select Your Plan</label>
+                    <label for='selectNewPlan' class='form__label-select'>Select Your New Plan</label>
                 </div>
                 <div>
                     <p>Note: when you change your plan, you will be charged/credited the prorated difference on your next payment date (plus the cost of the month's new plan)</p>
                 </div>
+                <div id="planUpdateMsg"></div>
                 <div class='row-buttons'>
-                    <button id='submitPlanChange'>Change Plan</button>
+                    <button id='submitPlanChange'>Change</button>
                     <button class='btn-cancel'>Cancel</button>
                 </div>
             </form>
@@ -110,7 +112,10 @@
             <h3 class='header-centered margin-bottom-small'>Cancel Your Subscription</h3>
             <p>By clicking and confirming your subscription cancellation you acknowledge that your subscription will remain active
                 until the end of your current payment period. At that time your access to the magazine will end and you will
-                lose any unused coaching sessions.</p>
+                lose any unused coaching sessions.
+            </p>
+
+            <div id="subCancelMsg"></div>
             <div class="row-buttons">
                 <button id='submitCancellation'>I Agree (Cancel my Subscription)</button>
             </div>

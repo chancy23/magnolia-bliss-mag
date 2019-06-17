@@ -42,9 +42,6 @@ module.exports = {
                             req.session.customer = userObj;
                             console.log('req.session.customer', req.session.customer);
                             req.session.customer.loggedIn = true;
-                            //return the customer document 
-                            // res.json(userData)
-                            //or session
                             res.json(req.session.customer)
                         })
                         //if an error throw err
@@ -128,6 +125,7 @@ module.exports = {
         .populate('subscriptionData')
         .then(userData => {
             console.log('userData:', userData);
+
             //if no email is found send error
             if (userData === null) {
                 console.log('user not found');
@@ -138,39 +136,57 @@ module.exports = {
                 bcrypt.compare(req.body.password, userData.password, function(err, pwMatch) {
                     // if password matches then set the session data to the user data
                     if (pwMatch === true) {
-                        //call the stripe API to check sub status
-                        stripe.subscriptions.retrieve(userData.subscriptionData.subId)
-                        .then(subscription => {
-                            console.log('subscription data line 145 of validateCred', subscription);
-                            //if subscription is active, log in
-                            if(subscription.status === 'canceled') {
-                                req.session.customer = {
-                                    _id: userData._id,
-                                    firstName: userData.firstName,
-                                    lastName: userData.lastName,
-                                    email: userData.email,
-                                    subscriptionData: userData.subscriptionData
-                                };
-                                req.session.customer.loggedIn = true;
-                                res.status(200).json(req.session.customer);
-                            }
-                            //if active send message to front end and advise user to login
-                            else if (subscription.status === 'active')  {
-                                req.session.customer = {
-                                    _id: userData._id,
-                                    firstName: userData.firstName,
-                                    lastName: userData.lastName,
-                                    email: userData.email,
-                                    subscriptionData: userData.subscriptionData
-                                };
-                                req.session.customer.loggedIn = true;
-                                res.status(200).json({
-                                    session: req.session.customer, 
-                                    msg: 'active subscription found'
-                                });
-                            }     
-                        })
-                        .catch(err => res.json(err));
+                        console.log('user data subscription data line 142', userData.subscriptionData);
+                        //if there is no subscription data, by pass calling stripe, and let them continue to payment detials
+                        //from user falling out of signing up process after submitting create account, but before submitting payment
+                        if (userData.subscriptionData === undefined) {
+                            console.log('user Data line 147', userData);
+                            let userObj = {
+                                _id: userData._id,
+                                firstName: userData.firstName,
+                                lastName: userData.lastName,
+                                email: userData.email
+                            };
+                            req.session.customer = userObj;
+                            console.log('req.session.customer line 152', req.session.customer);
+                            req.session.customer.loggedIn = true;
+                            res.status(200).json(req.session.customer)
+                        }
+                        // else call the stripe API to check sub status
+                        else {
+                            stripe.subscriptions.retrieve(userData.subscriptionData.subId)
+                            .then(subscription => {
+                                console.log('subscription data line 145 of validateCred', subscription);
+                                //if subscription is active, log in
+                                if(subscription.status === 'canceled') {
+                                    req.session.customer = {
+                                        _id: userData._id,
+                                        firstName: userData.firstName,
+                                        lastName: userData.lastName,
+                                        email: userData.email,
+                                        subscriptionData: userData.subscriptionData
+                                    };
+                                    req.session.customer.loggedIn = true;
+                                    res.status(200).json(req.session.customer);
+                                }
+                                //if active send message to front end and advise user to login
+                                else if (subscription.status === 'active')  {
+                                    req.session.customer = {
+                                        _id: userData._id,
+                                        firstName: userData.firstName,
+                                        lastName: userData.lastName,
+                                        email: userData.email,
+                                        subscriptionData: userData.subscriptionData
+                                    };
+                                    req.session.customer.loggedIn = true;
+                                    res.status(200).json({
+                                        session: req.session.customer, 
+                                        msg: 'active subscription found'
+                                    });
+                                }     
+                            })
+                            .catch(err => res.json(err));
+                        }
                     }
                    //else show that invalid password and send err to front end
                     else {
