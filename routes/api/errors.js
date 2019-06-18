@@ -1,13 +1,14 @@
 const router = require('express').Router();
+const errorsController = require('../../controllers/errorsIssuesController');
 
-const errorsController = require('../../controllers/errorsController');
-
+// url /api/errors/create
 router
-    .route('/api/errors/create')
-    .post(errorsController.createError);
+    .route('/create')
+    .post(errorsController.createError)
 
+// url /api/errors/sendIssue
 router
-    .route('/api/errors/create')
-    .get(errorsController.viewAllErrors);
+    .route('/sendIssue')
+    .post(errorsController.sendIssue)
 
 module.exports = router;

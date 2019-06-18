@@ -1,32 +1,66 @@
+
 {{> heroSmall}}
 <main class='container'>
     <section class='lg-section-center'>
-        <h1>About the Magazine</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quis in, rerum consequuntur nesciunt
-            laboriosam. Commodi ad cumque praesentium molestiae perspiciatis, cum perferendis dolore modi asperiores,
-            inventore minima, amet delectus. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quis vitae
-            iure optio accusamus autem corrupti, sit quidem enim sequi ad, neque molestias! Commodi at, earum quidem
-            consectetur maxime debitis!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quis in, rerum consequuntur nesciunt
-            laboriosam. Commodi ad cumque praesentium molestiae perspiciatis, cum perferendis dolore modi asperiores,
-            inventore minima, amet delectus. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quis vitae
-            iure optio accusamus autem corrupti, sit quidem enim sequi ad, neque molestias! Commodi at, earum quidem
-            consectetur maxime debitis!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quis in, rerum consequuntur nesciunt
-            laboriosam. Commodi ad cumque praesentium molestiae perspiciatis, cum perferendis dolore modi asperiores,
-            inventore minima, amet delectus. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quis vitae
-            iure optio accusamus autem corrupti, sit quidem enim sequi ad, neque molestias! Commodi at, earum quidem
-            consectetur maxime debitis!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quis in, rerum consequuntur nesciunt
-            laboriosam. Commodi ad cumque praesentium molestiae perspiciatis, cum perferendis dolore modi asperiores,
-            inventore minima, amet delectus. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quis vitae
-            iure optio accusamus autem corrupti, sit quidem enim sequi ad, neque molestias! Commodi at, earum quidem
-            consectetur maxime debitis!</p>
+        <h1>About Magnolia Bliss</h1>
+        <p>Magnolia Bliss is an American digital magazine founded in 2019 by life coach and author Karri J. McClure.
+            It's
+            published monthly and promotes positive entertainment centered around self-love, growth and
+            achievement. In addition to life enriching content, the reader will find helpful tips, tricks, recipes and
+            suggestions to help subscribers enjoy their lives and live smart in an ever-changing and fast-paced world.
+        </p>
+        <p>Magnolia Bliss is also a forum for both novice and experienced writers to share content that motivates and
+            inspires readers to believe in themselves and to live their best lives. All submitted articles will be
+            considered for publication.
+        </p>
+        <p>Ready to <a href='/subscribe'>subscribe</a>?</p>
+
     </section>
-    <section class='lg-section-center'>
-        <h3 class='margin-bottom-small'>Contact</h3>
-        <p>Email: magnoliablissmagazine@gmail.com</p>
-        <p>To report issues with the site click <a href='#'>here</a>.</p>
+    <section class='sm-section-left'>
+        <h3 class='margin-bottom-small'>Contact Us</h3>
+        <p>
+            <ul class='contact__list'>
+                <li class='contact__list-item'>General inquiries or to submit an article: 
+                   <a href='mailto:magnoliablissmagazine@gmail.com?Subject=Magnolia%20Bliss%20Magazine%20Inquiry'>magnoliablissmagazine@gmail.com</a></li>
+                <li class='contact__list-item'>Contact Karri directly at <a href='http://www.karrijmcclure.com' target='_blank' rel='noopener noreferrer'>karrijmcclure.com</a></li>
+            </ul>
+        </p>
+    </section>
+    <section class='sm-section-right'>
+        <form class='form' id='siteFeedback'>
+            <h3 class='header-centered margin-bottom-small'>Submit Feedback or Report Issues</h3>
+            <div class='form__group'>
+                <select class='form__select' id='contactType'>
+                    <option value='' selected>Choose One...</option>
+                    <option value='Feedback'>Feedback/Suggestion</option>
+                    <option value='Problem'>Report a Problem</option>
+                </select>
+                <label class='form__label-select' for='contactType'>Reason for Contact</label>
+            </div>
+
+            <div class='form__group'>
+                <input type='text' class='form__input' id='firstName' placeholder='First Name'>
+                <label for='firstName' class='form__label'>First Name</label>
+            </div>
+            <div class='form__group'>
+                <input type='text' class='form__input' id='lastName' placeholder='Last Name'>
+                <label for='lastName' class='form__label'>Last Name</label>
+            </div>
+            <div class='form__group'>
+                <input type='email' class='form__input' id='email' placeholder='Email'>
+                <label for='email' class='form__label'>Email</label>
+            </div>
+            <div class='form__group'>
+                <textarea class='form__textarea' id='feedbackDetails' form='siteFeedback' placeholder='Feedback or Issue Details'></textarea>
+                <label for='feedbackDetails' class='form__label'>Include date/times and any applicable error codes for site issues.</label>
+            </div>
+
+            <div class='row-buttons'>
+                <button id='submitFeedback'>Submit</button>
+                <button class='btn-cancel' id='cancelFeedback'>Cancel</button>
+            </div>
+            <div class='message-details' id='feedbackMessage'></div>
+        </form>
     </section>
 </main>
 {{> footer}}

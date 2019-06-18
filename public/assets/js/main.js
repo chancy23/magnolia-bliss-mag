@@ -169,6 +169,61 @@ $(document).ready(function () {
         }, 500);
     });
 
+    $('#submitFeedback').click((event) => {
+        event.preventDefault();
+        
+        if ($('#contactType').val() === '' ||
+        $('#firstName').val() === '' ||
+        $('#lastName').val() === '' ||
+        $('#email').val() === '' ||
+        $('#feedbackDetails').val() === '') {
+            $('#feedbackMessage').empty().append('<p>All fields are required. Please fill in any blank fields.</p>');
+        }
+        else {
+            const feedbackData = {
+                contactReason: $('#contactType').val(),
+                submitterFirstName: $('#firstName').val().trim(),
+                submitterLastName: $('#lastName').val().trim(),
+                submitterEmail: $('#email').val().trim(),
+                feedbackDetails: $('#feedbackDetails').val().trim(),
+            };
+
+            console.log('feedback details', feedbackData);
+
+            $.post('/api/errors/sendIssue', feedbackData, (res, err) => {
+                console.log('res', res);
+                console.log('err', err);
+                let message;
+
+                if (res === 'email sent to admin') {
+                    message = '<p> Thank You! Your feedback or issue was submitted successfully!</p>';
+                    //reset form fields
+                    $('#contactType').val('');
+                    $('#firstName').val('');
+                    $('#lastName').val('');
+                    $('#email').val('');
+                    $('#feedbackDetails').val('');
+                }
+                else {
+                    message = '<p> There was an issue submitting your email. Please try again.</p>';
+                };
+
+                $('#feedbackMessage').empty().append(message);
+            });
+        };
+    });
+
+    $('#cancelFeedback').click(event => {
+        event.preventDefault();
+        
+        //reset form fields
+        $('#contactType').val('');
+        $('#firstName').val('');
+        $('#lastName').val('');
+        $('#email').val('');
+        $('#feedbackDetails').val('');
+    });
+
     //show and hide details back of card for plans on main and subscription pages
     $('#showDaffodilDetails, #hideDaffodilDetails').click(() => {
         $('#detailsDaffodil').slideToggle('fast');

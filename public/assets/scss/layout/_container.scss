@@ -2,11 +2,15 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: minmax(min-content, max-content);
-    grid-gap: 2rem;
+    grid-gap: 4rem;
     margin: 0 auto;
     max-width: 150rem;
     width: calc(100vw - 5%);
     justify-content: center;
+
+    @include respond(phone) {
+        grid-gap: 2rem;
+    }
 
     &--magazine {
         grid-template-rows: 60rem auto;

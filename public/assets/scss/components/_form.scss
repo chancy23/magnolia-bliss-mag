@@ -10,7 +10,9 @@
         margin-bottom: 1.5rem;
     }
 
-    &__input, &__select{
+    &__input, 
+    &__select,
+    &__textarea {
         background-color: rgba(#fff, .8);
         border: none;
         border-bottom:  0.2rem solid transparent;
@@ -43,26 +45,27 @@
         }
     }
 
+    &__textarea {
+        min-height: 7rem;
+    }
+
     &__label {
-        display: block;
-        font-size: 1.2rem;
-        margin-left: 1rem;
-        margin-top: .5rem;
+        @include form-label(.5rem);
         transition: all .3s;
     }
 
     &__label-select {
+        @include form-label(.5rem);
+    }
+
+    &__label-radio {
         display: block;
-        font-size: 1.5rem;
-        margin-left: 1rem;
-        margin-top: .5rem;
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
     }
 
     &__label-stripe {
-        display: block;
-        font-size: 1.5rem;
-        margin-left: 1rem;
-        margin-top: 0;
+        @include form-label(0);
     }
 
     &__input:placeholder-shown + &__label {

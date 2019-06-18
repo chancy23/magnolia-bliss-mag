@@ -25,4 +25,5 @@ router
 router
     .route('/validateCredentials')
     .post(authController.validateCredentials)
+    
 module.exports = router
