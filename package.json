@@ -21,7 +21,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.5.13",
     "nodemailer": "^6.2.1",
-    "npm": "^6.9.0",
+    "npm": "^6.13.4",
     "stripe": "^6.36.0"
   },
   "devDependencies": {
