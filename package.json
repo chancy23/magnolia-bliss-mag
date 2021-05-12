@@ -20,7 +20,7 @@
     "if-env": "^1.0.4",
     "moment": "^2.24.0",
     "mongoose": "^5.5.13",
-    "nodemailer": "^6.2.1",
+    "nodemailer": "^6.4.16",
     "npm": "^6.9.0",
     "stripe": "^6.36.0"
   },
