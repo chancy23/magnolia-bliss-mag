@@ -19,7 +19,7 @@
     "express-session": "^1.16.1",
     "if-env": "^1.0.4",
     "moment": "^2.24.0",
-    "mongoose": "^5.5.13",
+    "mongoose": "^5.7.5",
     "nodemailer": "^6.2.1",
     "npm": "^6.9.0",
     "stripe": "^6.36.0"
